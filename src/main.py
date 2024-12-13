@@ -52,7 +52,6 @@ if __name__ == '__main__':
 
     # Modules
     import src.algorithms.interface
-    import src.elements.arguments
     import src.functions.cache
     import src.functions.expecting
     import src.functions.service
