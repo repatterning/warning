@@ -51,13 +51,13 @@ class Interface:
     def exc(self, architecture: str):
         """
 
-        :param architecture: The name of a machine learning architecture
+        :param architecture: The name of a machine learning architecture.
         :return:
         """
 
         data = self.__data()
         logging.info(data)
 
-        path = os.path.join(self.__configurations.storage, f'{architecture}.csv')
+        path = os.path.join(self.__configurations.storage, architecture, 'data.csv')
         message = self.__persist(blob=data, path=path)
         logging.info(message)
