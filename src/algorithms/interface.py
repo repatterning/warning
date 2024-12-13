@@ -1,32 +1,63 @@
-
-import os
+"""Module interface.py"""
 import logging
+import os
 
-import pandas as pd
 import numpy as np
+import pandas as pd
 
 import config
 import src.functions.streams
 
+
 class Interface:
+    """
+    Interface
+    """
 
     def __init__(self):
+        """
+        Constructor
+        """
 
+        # Configurations
         self.__configurations = config.Config()
 
-        self.__streams = src.functions.streams.Streams()
+    @staticmethod
+    def __persist(blob: pd.DataFrame, path: str) -> str:
+        """
 
-    def __persist(self, blob: pd.DataFrame, path: str):
+        :param blob:
+        :param path:
+        :return:
+        """
 
-        return self.__streams.write(blob=blob, path=path)
+        streams = src.functions.streams.Streams()
 
-    def exc(self, architecture: str):
+        return streams.write(blob=blob, path=path)
+
+    @staticmethod
+    def __data() -> pd.DataFrame:
+        """
+
+        :return:
+        """
 
         abscissae = np.linspace(start=0, stop=1, num=101)
         ordinates = np.power(2, abscissae)
-        data = pd.DataFrame(data={'abscissa': abscissae, 'ordinate': ordinates})
+
+        return pd.DataFrame(
+            data={'abscissa': abscissae, 'ordinate': ordinates})
+
+    def exc(self, architecture: str):
+        """
+
+        :param architecture: The name of a machine learning architecture
+        :return:
+        """
+
+        data = self.__data()
+        logging.info(data)
 
         path = os.path.join(self.__configurations.storage, f'{architecture}.csv')
         message = self.__persist(blob=data, path=path)
-
         logging.info(message)
