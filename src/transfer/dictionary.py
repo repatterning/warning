@@ -18,7 +18,7 @@ class Dictionary:
         """
 
         # Metadata
-        self.__metadata = dict(desc='A synthetic data set for sandbox investigations.')
+        self.__metadata = {'desc': 'A synthetic data set for sandbox investigations.'}
 
     @staticmethod
     def __local(path: str, extension: str) -> pd.DataFrame:
