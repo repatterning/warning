@@ -1,19 +1,38 @@
+"""Module points.py"""
 import logging
+
 import src.functions.objects
 
 
 class Points:
+    """
+    <b>Notes</b><br>
+    ------<br>
+    """
 
     def __init__(self):
+        """
+        Constructor
+        """
 
         self.__objects = src.functions.objects.Objects()
 
-    def exc(self):
+        self.__url = ('https://timeseries.sepa.org.uk/KiWIS/KiWIS?service=kisters&type=queryServices&datasource=0'
+                      '&request=getTimeseriesValues&ts_id={ts_id}&period={period}&from={datestr}'
+                      '&returnfields=Timestamp,Value,Quality Code&metadata=true'
+                      '&md_returnfields=ts_id,ts_name,ts_unitname,ts_unitsymbol,station_no,station_id,'
+                      'catchment_no,catchment_id,parametertype_id,parametertype_name,river_name&format=json')
 
-        url = ('https://timeseries.sepa.org.uk/KiWIS/KiWIS?service=kisters&type=queryServices'
-               '&datasource=0&request=getTimeseriesValues&ts_path=1/*/SG/15m.Cmd'
-               '&period=P7D&returnfields=Timestamp,Value,Quality%20Code&format=json')
+    def exc(self, ts_id: int, period: str, datestr: str):
+        """
+        P1D, P1M, etc.
 
+        :param ts_id: A time series identification code
+        :param period: The period of time of interest.
+        :param datestr: A yyyy-mm-dd string.
+        :return:
+        """
+
+        url = self.__url.format(ts_id=ts_id, period=period, datestr=datestr)
         blob = self.__objects.api(url=url)
-
         logging.info(blob)
