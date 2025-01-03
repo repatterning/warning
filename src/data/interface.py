@@ -2,10 +2,11 @@
 
 import pandas as pd
 
-import config
-import src.functions.streams
-import src.data.stations
+import src.data.codes
 import src.data.points
+import src.data.rating
+import src.data.stations
+import src.functions.streams
 
 
 class Interface:
@@ -17,9 +18,6 @@ class Interface:
         """
         Constructor
         """
-
-        # Configurations
-        self.__configurations = config.Config()
 
     @staticmethod
     def __persist(blob: pd.DataFrame, path: str) -> str:
@@ -41,5 +39,14 @@ class Interface:
         :return:
         """
 
+        # This class will retrieve the codes of the sequences in focus
+        src.data.codes.Codes().exc()
+
+        # Exploring stations
         src.data.stations.Stations().exc()
-        src.data.points.Points().exc()
+
+        # Rating
+        src.data.rating.Rating().exc()
+
+        # Upcoming; 56178010
+        src.data.points.Points().exc(ts_id=56178010, period='P1M', datestr='2025-01-01')
