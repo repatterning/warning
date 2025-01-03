@@ -34,7 +34,7 @@ if __name__ == '__main__':
     os.environ['CUDA_VISIBLE_DEVICES']='0'
 
     # Modules
-    import src.algorithms.interface
+    import src.data.interface
     import src.functions.cache
 
     main()
