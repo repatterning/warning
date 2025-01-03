@@ -20,9 +20,18 @@ class Stations:
         self.__streams = src.functions.streams.Streams()
 
     def exc(self):
+        """
+        logging.info(data[['catchment_id', 'catchment_no', 'catchment_name']].drop_duplicates())
+
+        :return:
+        """
 
         text = txa.TextAttributes(uri=self.__uri, header=0, sep=';')
-
         data = self.__streams.api(text=text)
+        data.info()
 
-        logging.info(data)
+        frequency = data[['catchment_id', 'catchment_no', 'catchment_name']].groupby(
+            by=['catchment_id', 'catchment_no', 'catchment_name']).value_counts()
+        logging.info(frequency)
+
+        logging.info(data.loc[data['catchment_no'] == 83, :])
