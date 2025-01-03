@@ -14,6 +14,8 @@ def main():
     logger: logging.Logger = logging.getLogger(__name__)
     logger.info('SANDBOX')
 
+    src.data.interface.Interface().exc()
+
     # Delete Cache Points
     src.functions.cache.Cache().exc()
 
