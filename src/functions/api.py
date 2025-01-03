@@ -1,4 +1,4 @@
-"""Module api.py"""
+"""Module points.py"""
 import sys
 
 import yaml
