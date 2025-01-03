@@ -5,6 +5,7 @@ import pandas as pd
 import config
 import src.functions.streams
 import src.data.stations
+import src.data.points
 
 
 class Interface:
@@ -41,3 +42,4 @@ class Interface:
         """
 
         src.data.stations.Stations().exc()
+        src.data.points.Points().exc()
