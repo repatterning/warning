@@ -60,6 +60,6 @@ class Dictionary:
         frame = local.assign(key=prefix + '/' + local["vertex"])
 
         # The metadata dict strings
-        frame['metadata'] = np.repeat(self.__metadata, frame.shape[0])
+        frame['metadata'] = np.repeat(f'{self.__metadata}', repeats=frame.shape[0])
 
         return frame[['file', 'key', 'metadata']]
