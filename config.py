@@ -1,5 +1,6 @@
 """config.py"""
 import os
+import numpy as np
 
 
 class Config:
@@ -17,10 +18,6 @@ class Config:
         """
 
         self.warehouse = os.path.join(os.getcwd(), 'warehouse')
-        self.storage = os.path.join(self.warehouse, 'sandbox')
-        self.s3_parameters_key = 's3_parameters.yaml'
-        self.architectures = ['bert', 'distil', 'roberta', 'electra']
 
-        self.prefix = 'sandbox/'
-
-
+        self.starting = np.datetime64('2022-01-01', '%Y-%m-%d')
+        self.at_least = np.datetime64('2025-01-05', '%Y-%m-%d')
