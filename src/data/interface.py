@@ -51,6 +51,8 @@ class Interface:
         left = ['station_id', 'catchment_id', 'stationparameter_no', 'parametertype_id', 'ts_id', 'ts_name', 'from', 'to']
         right = ['station_id', 'station_latitude', 'station_longitude', 'river_id',
                  'CATCHMENT_SIZE', 'GAUGE_DATUM', 'GROUND_DATUM']
+        listings = codes[left].merge(stations[right], on='station_id', how='left')
+        listings.info()
 
         # Rating
         src.data.rating.Rating().exc()
