@@ -91,12 +91,21 @@ class Assets:
 
     @staticmethod
     def __filter(instances: pd.DataFrame) -> pd.DataFrame:
+        """
+
+        :param instances:
+        :return:
+        """
 
         conditionals = instances['ts_id'].notna() & instances['GAUGE_DATUM'].notna() & instances['CATCHMENT_SIZE'].notna()
 
         return instances.loc[conditionals, :]
 
-    def exc(self):
+    def exc(self) -> pd.DataFrame:
+        """
+        
+        :return:
+        """
 
         instances = self.__get_instances()
         instances = self.__coordinates(instances=instances.copy())
@@ -104,6 +113,4 @@ class Assets:
         instances = self.__time(instances=instances.copy())
         instances = self.__on_river(instances=instances.copy())
 
-
-
-
+        return self.__filter(instances=instances.copy())
