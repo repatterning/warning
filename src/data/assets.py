@@ -19,9 +19,13 @@ class Assets:
         return data
 
     def __coordinates(self, instances: pd.DataFrame) -> pd.DataFrame:
-        pass
+
+        instances['station_latitude'] = pd.to_numeric(instances['station_latitude'], errors='coerce')
+        instances['station_longitude'] = pd.to_numeric(
+            instances['station_longitude'].str.replace("'", ""), errors='coerce')
+
+        return instances
 
     def exc(self):
 
         instances = self.__get_instances()
-        
