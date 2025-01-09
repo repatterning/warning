@@ -49,3 +49,7 @@ class Assets:
     def exc(self):
 
         instances = self.__get_instances()
+        instances = self.__coordinates(instances=instances.copy())
+        instances = self.__datum(instances=instances.copy())
+        instances = self.__time(instances=instances.copy())
+        instances = self.__on_river(instances=instances.copy())
