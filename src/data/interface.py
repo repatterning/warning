@@ -46,13 +46,13 @@ class Interface:
         # Stations
         stations = src.data.stations.Stations().exc()
 
-        # <level> asset instances that (a) have a catchment size value, (b) have a gauge datum value,
-        # (c) have a measuring station <on_river> indicator, (d) have <from> & <to>
-        # date values of type datetime (%Y-%m-%d), (e) have longitude & latitude values
-        # of type float, (f) have a water level time series identification code value, (g) and
-        # more.  The <from> & <to> values encode the time span of a series.
+        # Assets
         assets = src.data.assets.Assets(codes=codes, stations=stations).exc()
         logging.info(assets.head())
+
+        catchments: pd.DataFrame = assets[['catchment_id', 'catchment_name']].groupby(
+            by=['catchment_id', 'catchment_name']).value_counts()
+        logging.info('CATCHMENTS:\n%s', catchments)
 
         # Rating
         src.data.rating.Rating().exc()
