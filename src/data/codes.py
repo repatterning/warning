@@ -19,6 +19,7 @@ class Codes:
 
         self.__streams = src.functions.streams.Streams()
 
+        # The station parameter name is level.
         self.__uri = ('https://timeseries.sepa.org.uk/KiWIS/KiWIS?service=kisters&type=queryServices&datasource=0'
                       '&request=getTimeseriesList&catchment_no=*&stationparameter_name=Level&ts_name=15minute'
                       '&returnfields=catchment_id,catchment_no,station_id,station_no,station_name,'
