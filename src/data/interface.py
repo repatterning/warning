@@ -37,6 +37,11 @@ class Interface:
         return streams.write(blob=blob, path=path)
 
     def __span(self, assets: pd.DataFrame) -> pd.DataFrame:
+        """
+        
+        :param assets:
+        :return:
+        """
 
         conditionals = (assets['from'] >= self.__configurations.starting & assets['to'] >= self.__configurations.at_least)
 
