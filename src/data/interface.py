@@ -6,6 +6,7 @@ import src.data.codes
 import src.data.points
 import src.data.rating
 import src.data.stations
+import src.data.assets
 import src.functions.streams
 
 
@@ -32,17 +33,8 @@ class Interface:
 
         return streams.write(blob=blob, path=path)
 
-    def __assets(self, codes: pd.DataFrame, stations: pd.DataFrame) -> pd.DataFrame:
-
-        left = ['station_id', 'catchment_id', 'stationparameter_no', 'parametertype_id', 'ts_id', 'ts_name', 'from', 'to']
-        right = ['station_id', 'station_latitude', 'station_longitude', 'river_id',
-                 'CATCHMENT_SIZE', 'GAUGE_DATUM', 'GROUND_DATUM']
-
-        frame = codes[left].merge(stations[right], on='station_id', how='left')
-
-        return frame
-
-    def exc(self):
+    @staticmethod
+    def exc():
         """
 
         :return:
@@ -54,9 +46,14 @@ class Interface:
         # Stations
         stations = src.data.stations.Stations().exc()
 
-        # <level> assets
-        assets = self.__assets(codes=codes, stations=stations)
-        assets.info()
+        # <level> assets that (a) have a catchment size value, (b) have a gauge datum value,
+        # (c) identifies whether the measuring station is on a river, (d) have <from> & <to>
+        # date values of type datetime (%Y-%m-%d), (e) have longitude & latitude values
+        # of type float, (f) have a water level time series identification code value, (g) and
+        # more.  The <from> & <to> values encode the time span of a series.
+        assets = src.data.assets.Assets(codes=codes, stations=stations)
+        logging.info(assets)
+
 
         # Rating
         src.data.rating.Rating().exc()
