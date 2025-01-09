@@ -41,6 +41,6 @@ class Stations:
         logging.info('STATIONS: %s',
                      excerpt[['station_id','station_no','station_name', 'stationparameter_name', 'river_id', 'river_name']])
 
-        frequency = data[['catchment_id', 'catchment_no', 'catchment_name']].groupby(
+        placements = data[['catchment_id', 'catchment_no', 'catchment_name']].groupby(
             by=['catchment_id', 'catchment_no', 'catchment_name']).value_counts()
-        logging.info('FREQUENCY:\n%s', frequency)
+        logging.info('PLACEMENTS:\n%s', placements)
