@@ -1,5 +1,6 @@
-
+"""Module assets.py"""
 import pandas as pd
+
 
 class Assets:
 
@@ -9,6 +10,10 @@ class Assets:
         self.__stations = stations
 
     def __get_instances(self) -> pd.DataFrame:
+        """
+
+        :return:
+        """
 
         left = ['station_id', 'catchment_id', 'stationparameter_no', 'parametertype_id', 'ts_id', 'ts_name', 'from', 'to']
         right = ['station_id', 'station_latitude', 'station_longitude', 'river_id',
@@ -18,7 +23,13 @@ class Assets:
 
         return data
 
-    def __coordinates(self, instances: pd.DataFrame) -> pd.DataFrame:
+    @staticmethod
+    def __coordinates(instances: pd.DataFrame) -> pd.DataFrame:
+        """
+
+        :param instances:
+        :return:
+        """
 
         instances['station_latitude'] = pd.to_numeric(instances['station_latitude'], errors='coerce')
         instances['station_longitude'] = pd.to_numeric(
@@ -26,21 +37,39 @@ class Assets:
 
         return instances
 
-    def __datum(self, instances: pd.DataFrame) -> pd.DataFrame:
+    @staticmethod
+    def __datum(instances: pd.DataFrame) -> pd.DataFrame:
+        """
+
+        :param instances:
+        :return:
+        """
 
         instances['GAUGE_DATUM'] = pd.to_numeric(instances['GAUGE_DATUM'], errors='coerce')
         instances['GROUND_DATUM'] = pd.to_numeric(instances['GROUND_DATUM'], errors='coerce')
 
         return instances
 
-    def __time(self, instances: pd.DataFrame):
+    @staticmethod
+    def __time(instances: pd.DataFrame):
+        """
+
+        :param instances:
+        :return:
+        """
 
         instances['from'] = pd.to_datetime(instances['from'], format='%Y-%m-%d')
         instances['to'] = pd.to_datetime(instances['to'], format='%Y-%m-%d')
 
         return instances
 
-    def __on_river(self, instances: pd.DataFrame):
+    @staticmethod
+    def __on_river(instances: pd.DataFrame):
+        """
+
+        :param instances:
+        :return:
+        """
 
         instances['on_river'] = instances['river_id'].notna()
 
