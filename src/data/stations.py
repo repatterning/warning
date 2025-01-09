@@ -1,6 +1,8 @@
 
 import logging
 
+import pandas as pd
+
 import src.elements.text_attributes as txa
 import src.functions.objects
 import src.functions.streams
@@ -37,10 +39,7 @@ class Stations:
         logging.info('STATIONS:\n%s', data.head())
         data.info()
 
-        excerpt = data.loc[data['station_id'] == 36870, :]
-        logging.info('STATIONS: %s',
-                     excerpt[['station_id','station_no','station_name', 'stationparameter_name', 'river_id', 'river_name']])
-
-        placements = data[['catchment_id', 'catchment_no', 'catchment_name']].groupby(
+        placements: pd.DataFrame = data[['catchment_id', 'catchment_no', 'catchment_name']].groupby(
             by=['catchment_id', 'catchment_no', 'catchment_name']).value_counts()
         logging.info('PLACEMENTS:\n%s', placements)
+        placements.info()
