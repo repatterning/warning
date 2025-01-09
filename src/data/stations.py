@@ -38,8 +38,3 @@ class Stations:
         data = self.__streams.api(text=text)
         logging.info('STATIONS:\n%s', data.head())
         data.info()
-
-        placements: pd.DataFrame = data[['catchment_id', 'catchment_no', 'catchment_name']].groupby(
-            by=['catchment_id', 'catchment_no', 'catchment_name']).value_counts()
-        logging.info('PLACEMENTS:\n%s', placements)
-        placements.info()
