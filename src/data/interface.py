@@ -2,6 +2,7 @@
 import logging
 import pandas as pd
 
+import config
 import src.data.codes
 import src.data.points
 import src.data.rating
@@ -20,6 +21,8 @@ class Interface:
         Constructor
         """
 
+        self.__configurations = config.Config()
+
     @staticmethod
     def __persist(blob: pd.DataFrame, path: str) -> str:
         """
@@ -33,8 +36,13 @@ class Interface:
 
         return streams.write(blob=blob, path=path)
 
-    @staticmethod
-    def exc():
+    def __span(self, assets: pd.DataFrame) -> pd.DataFrame:
+
+        conditionals = (assets['from'] >= self.__configurations.starting & assets['to'] >= self.__configurations.at_least)
+
+        return assets.loc[conditionals, :]
+
+    def exc(self):
         """
 
         :return:
@@ -48,8 +56,13 @@ class Interface:
 
         # Assets
         assets = src.data.assets.Assets(codes=codes, stations=stations).exc()
+
+        # Limit by time span
+        assets = self.__span(assets=assets.copy())
+        assets.info()
         logging.info(assets.head())
 
+        # Temporary
         catchments: pd.DataFrame = assets[['catchment_id', 'catchment_name']].groupby(
             by=['catchment_id', 'catchment_name']).value_counts()
         logging.info('CATCHMENTS:\n%s', catchments)
