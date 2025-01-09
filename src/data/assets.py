@@ -30,7 +30,8 @@ class Assets:
         :return:
         """
 
-        left = ['station_id', 'catchment_id', 'stationparameter_no', 'parametertype_id', 'ts_id', 'ts_name', 'from', 'to']
+        left = ['station_id', 'catchment_id', 'catchment_name', 'stationparameter_no', 'parametertype_id',
+                'ts_id', 'ts_name', 'from', 'to']
         right = ['station_id', 'station_latitude', 'station_longitude', 'river_id',
                  'CATCHMENT_SIZE', 'GAUGE_DATUM', 'GROUND_DATUM']
 
