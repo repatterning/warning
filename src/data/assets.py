@@ -1,5 +1,4 @@
 """Module assets.py"""
-import logging
 import pandas as pd
 
 
@@ -33,7 +32,7 @@ class Assets:
         left = ['station_id', 'catchment_id', 'catchment_name', 'stationparameter_no', 'parametertype_id',
                 'ts_id', 'ts_name', 'from', 'to']
         right = ['station_id', 'station_latitude', 'station_longitude', 'river_id',
-                 'CATCHMENT_SIZE', 'GAUGE_DATUM', 'GROUND_DATUM']
+                 'CATCHMENT_SIZE', 'GAUGE_DATUM']
 
         data = self.__codes[left].merge(self.__stations[right], on='station_id', how='left')
 
