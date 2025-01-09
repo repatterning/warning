@@ -1,4 +1,5 @@
 """Module assets.py"""
+import logging
 import pandas as pd
 
 
@@ -103,7 +104,7 @@ class Assets:
 
     def exc(self) -> pd.DataFrame:
         """
-        
+
         :return:
         """
 
@@ -112,5 +113,7 @@ class Assets:
         instances = self.__datum(instances=instances.copy())
         instances = self.__time(instances=instances.copy())
         instances = self.__on_river(instances=instances.copy())
+        instances = self.__filter(instances=instances.copy())
+        instances.info()
 
-        return self.__filter(instances=instances.copy())
+        return instances
