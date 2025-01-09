@@ -18,8 +18,8 @@ class Stations:
 
         self.__uri = (
             'https://timeseries.sepa.org.uk/KiWIS/KiWIS?service=kisters&type=queryServices&datasource=0'
-            '&request=getstationlist&returnfields=station_id,station_no,station_name,stationparameter_name,'
-            'stationparameter_no,catchment_id,catchment_no,catchment_name,station_latitude,station_longitude,'
+            '&request=getstationlist&returnfields=station_id,station_no,station_name,stationparameter_no,'
+            'stationparameter_name,catchment_id,catchment_no,catchment_name,station_latitude,station_longitude,'
             'station_carteasting,station_cartnorthing,river_id,river_name,ca_sta&'
             'ca_sta_returnfields=CATCHMENT_SIZE,GAUGE_DATUM,GROUND_DATUM,GWREF_DATUM&object_type=General&format=csv')
 
