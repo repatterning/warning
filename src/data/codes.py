@@ -1,4 +1,5 @@
 import logging
+import pandas as pd
 
 import src.elements.text_attributes as txa
 import src.functions.streams
@@ -22,11 +23,11 @@ class Codes:
         # The station parameter name is level.
         self.__uri = ('https://timeseries.sepa.org.uk/KiWIS/KiWIS?service=kisters&type=queryServices&datasource=0'
                       '&request=getTimeseriesList&catchment_no=*&stationparameter_name=Level&ts_name=15minute'
-                      '&returnfields=catchment_id,catchment_no,station_id,station_no,station_name,'
+                      '&returnfields=catchment_id,catchment_no,catchment_name,station_id,station_no,station_name,'
                       'stationparameter_no,stationparameter_name,parametertype_id,parametertype_name,ts_name,ts_id,ts_path,coverage'
                       '&format=csv')
 
-    def exc(self):
+    def exc(self) -> pd.DataFrame:
         """
 
         :return:
@@ -34,5 +35,10 @@ class Codes:
 
         text = txa.TextAttributes(uri=self.__uri, header=0, sep=';')
         frame = self.__streams.api(text=text)
-        logging.info('CODES:\n%s', frame.head())
         frame.info()
+
+        catchments: pd.DataFrame = frame[['catchment_id', 'catchment_no', 'catchment_name']].groupby(
+            by=['catchment_id', 'catchment_no', 'catchment_name']).value_counts()
+        logging.info('CATCHMENTS:\n%s', catchments)
+
+        return frame
