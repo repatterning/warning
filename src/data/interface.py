@@ -32,8 +32,17 @@ class Interface:
 
         return streams.write(blob=blob, path=path)
 
-    @staticmethod
-    def exc():
+    def __assets(self, codes: pd.DataFrame, stations: pd.DataFrame) -> pd.DataFrame:
+
+        left = ['station_id', 'catchment_id', 'stationparameter_no', 'parametertype_id', 'ts_id', 'ts_name', 'from', 'to']
+        right = ['station_id', 'station_latitude', 'station_longitude', 'river_id',
+                 'CATCHMENT_SIZE', 'GAUGE_DATUM', 'GROUND_DATUM']
+
+        frame = codes[left].merge(stations[right], on='station_id', how='left')
+
+        return frame
+
+    def exc(self):
         """
 
         :return:
@@ -41,18 +50,13 @@ class Interface:
 
         # Retrieving the codes of <level> sequences.
         codes = src.data.codes.Codes().exc()
-        logging.info('codes: %s', codes.shape)
 
         # Stations
         stations = src.data.stations.Stations().exc()
-        logging.info('stations: %s', stations.shape)
 
-
-        left = ['station_id', 'catchment_id', 'stationparameter_no', 'parametertype_id', 'ts_id', 'ts_name', 'from', 'to']
-        right = ['station_id', 'station_latitude', 'station_longitude', 'river_id',
-                 'CATCHMENT_SIZE', 'GAUGE_DATUM', 'GROUND_DATUM']
-        listings = codes[left].merge(stations[right], on='station_id', how='left')
-        listings.info()
+        # <level> assets
+        assets = self.__assets(codes=codes, stations=stations)
+        assets.info()
 
         # Rating
         src.data.rating.Rating().exc()
