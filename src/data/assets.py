@@ -55,13 +55,13 @@ class Assets:
     @staticmethod
     def __datum(instances: pd.DataFrame) -> pd.DataFrame:
         """
+        instances['GROUND_DATUM'] = pd.to_numeric(instances['GROUND_DATUM'], errors='coerce')
 
         :param instances:
         :return:
         """
 
         instances['GAUGE_DATUM'] = pd.to_numeric(instances['GAUGE_DATUM'], errors='coerce')
-        instances['GROUND_DATUM'] = pd.to_numeric(instances['GROUND_DATUM'], errors='coerce')
 
         return instances
 
