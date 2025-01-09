@@ -51,9 +51,8 @@ class Interface:
         # date values of type datetime (%Y-%m-%d), (e) have longitude & latitude values
         # of type float, (f) have a water level time series identification code value, (g) and
         # more.  The <from> & <to> values encode the time span of a series.
-        assets = src.data.assets.Assets(codes=codes, stations=stations)
-        logging.info(assets)
-
+        assets = src.data.assets.Assets(codes=codes, stations=stations).exc()
+        logging.info(assets.head())
 
         # Rating
         src.data.rating.Rating().exc()
