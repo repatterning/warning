@@ -37,8 +37,4 @@ class Codes:
         frame = self.__streams.api(text=text)
         frame.info()
 
-        catchments: pd.DataFrame = frame[['catchment_id', 'catchment_no', 'catchment_name']].groupby(
-            by=['catchment_id', 'catchment_no', 'catchment_name']).value_counts()
-        logging.info('CATCHMENTS:\n%s', catchments)
-
         return frame
