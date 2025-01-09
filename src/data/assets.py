@@ -26,6 +26,20 @@ class Assets:
 
         return instances
 
+    def __datum(self, instances: pd.DataFrame) -> pd.DataFrame:
+
+        instances['GAUGE_DATUM'] = pd.to_numeric(instances['GAUGE_DATUM'], errors='coerce')
+        instances['GROUND_DATUM'] = pd.to_numeric(instances['GROUND_DATUM'], errors='coerce')
+
+        return instances
+
+    def __time(self, instances: pd.DataFrame):
+
+        instances['from'] = pd.to_datetime(instances['from'], format='%Y-%m-%d')
+        instances['to'] = pd.to_datetime(instances['to'], format='%Y-%m-%d')
+
+        return instances
+
     def exc(self):
 
         instances = self.__get_instances()
