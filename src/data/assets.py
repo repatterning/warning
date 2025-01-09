@@ -40,6 +40,12 @@ class Assets:
 
         return instances
 
+    def __on_river(self, instances: pd.DataFrame):
+
+        instances['on_river'] = instances['river_id'].notna()
+
+        return instances
+
     def exc(self):
 
         instances = self.__get_instances()
