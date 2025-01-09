@@ -47,6 +47,11 @@ class Interface:
         stations = src.data.stations.Stations().exc()
         logging.info('stations: %s', stations.shape)
 
+
+        left = ['station_id', 'catchment_id', 'stationparameter_no', 'parametertype_id', 'ts_id', 'ts_name', 'from', 'to']
+        right = ['station_id', 'station_latitude', 'station_longitude', 'river_id',
+                 'CATCHMENT_SIZE', 'GAUGE_DATUM', 'GROUND_DATUM']
+
         # Rating
         src.data.rating.Rating().exc()
 
