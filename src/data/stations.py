@@ -1,6 +1,3 @@
-
-import logging
-
 import pandas as pd
 
 import src.elements.text_attributes as txa
@@ -27,7 +24,7 @@ class Stations:
 
         self.__streams = src.functions.streams.Streams()
 
-    def exc(self):
+    def exc(self) -> pd.DataFrame:
         """
         logging.info(data[['catchment_id', 'catchment_no', 'catchment_name']].drop_duplicates())
 
@@ -36,5 +33,6 @@ class Stations:
 
         text = txa.TextAttributes(uri=self.__uri, header=0, sep=';')
         data = self.__streams.api(text=text)
-        logging.info('STATIONS:\n%s', data.head())
         data.info()
+
+        return data
