@@ -46,8 +46,8 @@ class Interface:
         # Stations
         stations = src.data.stations.Stations().exc()
 
-        # <level> assets that (a) have a catchment size value, (b) have a gauge datum value,
-        # (c) identifies whether the measuring station is on a river, (d) have <from> & <to>
+        # <level> asset instances that (a) have a catchment size value, (b) have a gauge datum value,
+        # (c) have a measuring station <on_river> identifier, (d) have <from> & <to>
         # date values of type datetime (%Y-%m-%d), (e) have longitude & latitude values
         # of type float, (f) have a water level time series identification code value, (g) and
         # more.  The <from> & <to> values encode the time span of a series.
