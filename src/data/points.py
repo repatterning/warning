@@ -35,4 +35,4 @@ class Points:
 
         url = self.__url.format(ts_id=ts_id, period=period, datestr=datestr)
         blob = self.__objects.api(url=url)
-        logging.info(blob)
+        logging.info(blob[0])
