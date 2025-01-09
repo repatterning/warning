@@ -15,7 +15,7 @@ class Assets:
 
     def __init__(self, codes: pd.DataFrame, stations: pd.DataFrame):
         """
-        
+
         :param codes:
         :param stations:
         """
