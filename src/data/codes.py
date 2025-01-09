@@ -35,6 +35,3 @@ class Codes:
         frame = self.__streams.api(text=text)
         logging.info('CODES:\n%s', frame.head())
         frame.info()
-
-        excerpt = frame.loc[frame['station_id'] == 36870, :]
-        logging.info('CODES:\n%s', excerpt[['station_id','station_no','station_name', 'ts_id']])
