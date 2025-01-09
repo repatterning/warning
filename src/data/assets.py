@@ -3,8 +3,22 @@ import pandas as pd
 
 
 class Assets:
+    """
+    <b>Notes</b><br>
+    -----------<br>
+
+    Selects, ascertains, <level> asset instances that (a) have a catchment size value, (b) have a gauge datum value,
+    (c) have a measuring station <on_river> identifier, (d) have <from> & <to> date values of type
+    datetime (%Y-%m-%d), (e) have longitude & latitude values of type float, (f) have a water level time
+    series identification code value, (g) and more.  The <from> & <to> values encode the time span of a series.
+    """
 
     def __init__(self, codes: pd.DataFrame, stations: pd.DataFrame):
+        """
+        
+        :param codes:
+        :param stations:
+        """
 
         self.__codes = codes
         self.__stations = stations
