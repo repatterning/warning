@@ -1,5 +1,5 @@
 """Module interface.py"""
-
+import logging
 import pandas as pd
 
 import src.data.codes
@@ -39,11 +39,13 @@ class Interface:
         :return:
         """
 
-        # Retrieving the codes of the sequences in focus
-        src.data.codes.Codes().exc()
+        # Retrieving the codes of <level> sequences.
+        codes = src.data.codes.Codes().exc()
+        logging.info('codes: %s', codes.shape)
 
-        # Exploring stations
-        src.data.stations.Stations().exc()
+        # Stations
+        stations = src.data.stations.Stations().exc()
+        logging.info('stations: %s', stations.shape)
 
         # Rating
         src.data.rating.Rating().exc()
