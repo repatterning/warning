@@ -1,3 +1,4 @@
+"""Module partitions.py"""
 import typing
 
 import numpy as np
