@@ -1,6 +1,8 @@
 """Module points.py"""
 import logging
 
+import pandas as pd
+
 import src.functions.objects
 
 
@@ -10,10 +12,13 @@ class Points:
     ------<br>
     """
 
-    def __init__(self):
+    def __init__(self, pilot: pd.DataFrame):
         """
-        Constructor
+
+        :param pilot:
         """
+
+        self.__pilot = pilot
 
         self.__objects = src.functions.objects.Objects()
 
