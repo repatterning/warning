@@ -19,5 +19,14 @@ class Config:
 
         self.warehouse = os.path.join(os.getcwd(), 'warehouse')
 
+        '''
+        For configurations repository
+        '''
+
+        # Span
         self.starting = datetime.datetime.strptime('2022-01-01', '%Y-%m-%d')
         self.at_least = datetime.datetime.strptime('2025-01-05', '%Y-%m-%d')
+
+        # Limits
+        self.minimum = 5
+        self.maximum = 7
