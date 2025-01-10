@@ -42,7 +42,9 @@ class Partitions:
 
         data = self.__data.copy()
         data = data.assign(period = str(period))
-        self.__logger.info(data[self.__fields].to_dict(orient='index'))
+        dictionary = data[self.__fields].to_dict(orient='index')
+
+        logging.info(prt.Partitions(**dictionary))
 
     def exc(self):
         """
