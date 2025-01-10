@@ -10,16 +10,19 @@ import src.elements.partitions as prt
 
 class Partitions:
 
-    def __init__(self, pilot: pd.DataFrame):
+    def __init__(self, data: pd.DataFrame):
         """
         'station_id', 'catchment_id', 'catchment_name', 'ts_id', 'ts_name', 'from', 'to',
         'stationparameter_no', 'parametertype_id', 'station_latitude', 'station_longitude', 'river_id',
         'CATCHMENT_SIZE', 'GAUGE_DATUM'
 
-        :param pilot:
+        :param data:
         """
 
-        self.__pilot = pilot
+        self.__data = data
+
+        # Fields
+        self.__fields = ['ts_id', 'period', 'catchment_size', 'gauge_datum', 'on_river']
 
         # Configurations
         self.__configurations = config.Config()
@@ -30,23 +33,27 @@ class Partitions:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
 
-    def __matrix(self, datestr: np.datetime64):
+    def __matrix(self, period: str):
+        """
 
-        data = self.__pilot.copy()
-        data = data.assign(period = datestr)
+        :param period:
+        :return:
+        """
 
-        self.__logger.info(data.to_dict(orient='index'))
-
+        data = self.__data.copy()
+        data = data.assign(period = str(period))
+        self.__logger.info(data[self.__fields].to_dict(orient='index'))
 
     def exc(self):
+        """
 
-        dates = pd.date_range(
-            start=self.__configurations.starting, end=self.__configurations.at_least, freq='MS').to_frame(
-            index=False, name='date')
-        values: pd.Series = dates['date'].apply(lambda x: x.strftime('%Y-%m-%d'))
-        self.__logger.info(type(values))
+        :return:
+        """
 
-        for datestr in values.values:
+        frame = pd.date_range(start=self.__configurations.starting, end=self.__configurations.at_least, freq='MS'
+                              ).to_frame(index=False, name='date')
+        periods: pd.Series = frame['date'].apply(lambda x: x.strftime('%Y-%m-%d'))
 
-            self.__logger.info(type(datestr))
-            self.__logger.info(str(datestr))
+        for period in periods.values:
+
+            self.__matrix(period=period)
