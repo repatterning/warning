@@ -114,6 +114,7 @@ class Assets:
         instances = self.__time(instances=instances.copy())
         instances = self.__on_river(instances=instances.copy())
         instances = self.__filter(instances=instances.copy())
+        instances.rename(str.lower, axis=1, inplace=True)
         instances.info()
 
         return instances
