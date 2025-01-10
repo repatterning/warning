@@ -69,7 +69,6 @@ class Interface:
 
         # Pilot
         pilot = src.data.pilot.Pilot(assets=assets.copy()).exc()
-        logging.info(pilot)
 
         # Rating
         src.data.rating.Rating().exc()
