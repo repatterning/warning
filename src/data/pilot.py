@@ -18,10 +18,11 @@ class Pilot:
         :return:
         """
 
-        # Temporary
-        catchments: pd.DataFrame = self.__assets[['catchment_id', 'catchment_name']].groupby(
+        catchments: pd.Series = self.__assets[['catchment_id', 'catchment_name']].groupby(
             by=['catchment_id', 'catchment_name']).value_counts()
 
-        catchments.reset_index(drop=False, inplace=True)
+        latest = catchments.to_frame().reset_index()
 
-        logging.info('CATCHMENTS:\n%s', catchments)
+        latest = latest.copy().sort_values(by='count', ascending=True)
+
+        logging.info(latest)
