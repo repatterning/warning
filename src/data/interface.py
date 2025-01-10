@@ -38,12 +38,12 @@ class Interface:
 
     def __span(self, assets: pd.DataFrame) -> pd.DataFrame:
         """
-        
+
         :param assets:
         :return:
         """
 
-        conditionals = (assets['from'] >= self.__configurations.starting & assets['to'] >= self.__configurations.at_least)
+        conditionals = (assets['from'] <= self.__configurations.starting) & (assets['to'] >= self.__configurations.at_least)
 
         return assets.loc[conditionals, :]
 
@@ -62,7 +62,7 @@ class Interface:
         # Assets
         assets = src.data.assets.Assets(codes=codes, stations=stations).exc()
 
-        # Limit by time span
+        # Limit by available time span
         assets = self.__span(assets=assets.copy())
         assets.info()
         logging.info(assets.head())
