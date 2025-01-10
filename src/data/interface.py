@@ -44,8 +44,10 @@ class Interface:
         """
 
         conditionals = (assets['from'] <= self.__configurations.starting) & (assets['to'] >= self.__configurations.at_least)
+        assets = assets.loc[conditionals, :]
+        assets.info()
 
-        return assets.loc[conditionals, :]
+        return assets
 
     def exc(self):
         """
@@ -59,18 +61,12 @@ class Interface:
         # Stations
         stations = src.data.stations.Stations().exc()
 
-        # Assets
+        # Assets; limit by requisite, i.e., available time span.
         assets = src.data.assets.Assets(codes=codes, stations=stations).exc()
-
-        # Limit by available time span
         assets = self.__span(assets=assets.copy())
-        assets.info()
-        logging.info(assets.head())
 
-        # Temporary
-        catchments: pd.DataFrame = assets[['catchment_id', 'catchment_name']].groupby(
-            by=['catchment_id', 'catchment_name']).value_counts()
-        logging.info('CATCHMENTS:\n%s', catchments)
+        # Hence
+        logging.info(assets)
 
         # Rating
         src.data.rating.Rating().exc()
