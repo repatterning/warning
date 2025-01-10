@@ -6,20 +6,20 @@ import numpy as np
 
 class Partitions(typing.NamedTuple):
     """
-    The data type class ⇾ Partitions
+    The data type class ⇾ Partitions<br><br>
 
-    Attributes
-    ----------
-    ts_id: int
+    Attributes<br>
+    ----------<br>
+    ts_id: int<br>
 
-    period: str
+    period: str<br>
 
-    catchment_size: float
+    catchment_size: float<br>
 
-    gauge_datum: float
-        The elevation above ...
-    on_river: bool
-        
+    gauge_datum: float<br>
+        The elevation above ...<br>
+    on_river: bool<br>
+
     """
 
     ts_id: int
