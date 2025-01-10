@@ -67,10 +67,8 @@ class Interface:
         assets = self.__span(assets=assets.copy())
 
         # Pilot
-        src.data.pilot.Pilot(assets=assets.copy()).exc()
+        pilot = src.data.pilot.Pilot(assets=assets.copy()).exc()
+        logging.info(pilot)
 
         # Rating
         src.data.rating.Rating().exc()
-
-        # Upcoming; 56178010, P1M => period 1 month, datestr will be the latest data
-        src.data.points.Points().exc(ts_id=56178010, period='P1M', datestr='2025-01-01')
