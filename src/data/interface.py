@@ -9,6 +9,7 @@ import src.data.rating
 import src.data.stations
 import src.data.assets
 import src.functions.streams
+import src.data.pilot
 
 
 class Interface:
@@ -65,8 +66,8 @@ class Interface:
         assets = src.data.assets.Assets(codes=codes, stations=stations).exc()
         assets = self.__span(assets=assets.copy())
 
-        # Hence
-        logging.info(assets)
+        # Pilot
+        src.data.pilot.Pilot(assets=assets.copy()).exc()
 
         # Rating
         src.data.rating.Rating().exc()
