@@ -10,9 +10,10 @@ class Partitions(typing.NamedTuple):
 
     Attributes<br>
     ----------<br>
-    ts_id: int<br>
-
+    <b>ts_id</b>: int<br>
+        The identification code of a time series.<br>
     period: str<br>
+        A date string, format %Y-%m-%d.<br>
 
     catchment_size: float<br>
 
