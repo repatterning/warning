@@ -10,6 +10,7 @@ import src.data.stations
 import src.data.assets
 import src.functions.streams
 import src.data.pilot
+import src.data.partitions
 
 
 class Interface:
@@ -73,5 +74,8 @@ class Interface:
         # Rating
         src.data.rating.Rating().exc()
 
+        # Partitions
+        src.data.partitions.Partitions().exc()
+
         # Upcoming; 56178010, P1M => period 1 month, datestr will be the latest data
-        src.data.points.Points(pilot=pilot).exc(ts_id=56178010, period='P1M', datestr='2025-01-01')
+        # src.data.points.Points(pilot=pilot).exc(ts_id=56178010, period='P1M', datestr='2025-01-01')
