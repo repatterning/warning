@@ -25,8 +25,8 @@ class Points:
         self.__url = ('https://timeseries.sepa.org.uk/KiWIS/KiWIS?service=kisters&type=queryServices&datasource=0'
                       '&request=getTimeseriesValues&ts_id={ts_id}&period={period}&from={datestr}'
                       '&returnfields=Timestamp,Value,Quality Code&metadata=true'
-                      '&md_returnfields=ts_id,ts_name,ts_unitname,ts_unitsymbol,station_no,station_id,'
-                      'catchment_no,catchment_id,parametertype_id,parametertype_name,river_name&format=json')
+                      '&md_returnfields=ts_id,ts_name,ts_unitname,ts_unitsymbol,station_id,'
+                      'catchment_id,parametertype_id,parametertype_name,river_name&dateformat=UNIX&format=json')
 
     def exc(self, ts_id: int, period: str, datestr: str):
         """
