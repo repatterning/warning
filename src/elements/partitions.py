@@ -4,6 +4,9 @@ import numpy as np
 
 
 class Partitions(typing.NamedTuple):
+    """
+    The data type class ⇾ Partitions
+    """
 
     ts_id: int
     period: np.datetime64
