@@ -75,7 +75,7 @@ class Interface:
         src.data.rating.Rating().exc()
 
         # Partitions
-        src.data.partitions.Partitions().exc()
+        src.data.partitions.Partitions(pilot=pilot).exc()
 
         # Upcoming; 56178010, P1M => period 1 month, datestr will be the latest data
         # src.data.points.Points(pilot=pilot).exc(ts_id=56178010, period='P1M', datestr='2025-01-01')
