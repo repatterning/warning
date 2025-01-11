@@ -3,7 +3,9 @@ import logging
 
 import pandas as pd
 
+import config
 import src.functions.objects
+import src.elements.partitions as prt
 
 
 class Points:
@@ -12,32 +14,31 @@ class Points:
     ------<br>
     """
 
-    def __init__(self, pilot: pd.DataFrame):
+    def __init__(self):
+        """
+        Constructor
         """
 
-        :param pilot:
-        """
-
-        self.__pilot = pilot
+        self.__configurations = config.Config()
 
         self.__objects = src.functions.objects.Objects()
 
         self.__url = ('https://timeseries.sepa.org.uk/KiWIS/KiWIS?service=kisters&type=queryServices&datasource=0'
-                      '&request=getTimeseriesValues&ts_id={ts_id}&period={period}&from={datestr}'
-                      '&returnfields=Timestamp,Value,Quality Code&metadata=true'
+                      '&request=getTimeseriesValues&ts_id={ts_id}'
+                      f'&period={self.__configurations.period}'
+                      '&from={datestr}&returnfields=Timestamp,Value,Quality Code&metadata=true'
                       '&md_returnfields=ts_id,ts_name,ts_unitname,ts_unitsymbol,station_id,'
                       'catchment_id,parametertype_id,parametertype_name,river_name&dateformat=UNIX&format=json')
 
-    def exc(self, ts_id: int, period: str, datestr: str):
+    def exc(self, partitions: list[prt.Partitions]):
         """
-        P1D, P1M, etc.
 
-        :param ts_id: A time series identification code
-        :param period: The period of time of interest.
-        :param datestr: A yyyy-mm-dd string.
+        :param partitions: ts_id, datestr, catchment_size, gauge_datum, on_river
         :return:
         """
 
-        url = self.__url.format(ts_id=ts_id, period=period, datestr=datestr)
-        blob = self.__objects.api(url=url)
-        logging.info(blob[0])
+        for partition in partitions:
+
+            url = self.__url.format(ts_id=partition.ts_id, datestr=partition.datestr)
+            blob = self.__objects.api(url=url)
+            logging.info(blob[0])
