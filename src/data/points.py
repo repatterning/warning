@@ -1,17 +1,17 @@
 """Module points.py"""
 import logging
 
-import pandas as pd
-
 import config
-import src.functions.objects
 import src.elements.partitions as prt
+import src.functions.objects
 
 
 class Points:
     """
     <b>Notes</b><br>
     ------<br>
+
+    Retrieves time series points.
     """
 
     def __init__(self):
@@ -40,5 +40,6 @@ class Points:
         for partition in partitions:
 
             url = self.__url.format(ts_id=partition.ts_id, datestr=partition.datestr)
-            blob = self.__objects.api(url=url)
-            logging.info(blob[0])
+            logging.info(url)
+            # blob = self.__objects.api(url=url)
+            # logging.info(blob[0])
