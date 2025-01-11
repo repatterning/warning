@@ -60,20 +60,21 @@ class Interface:
         # Retrieving the codes of <level> sequences.
         codes = src.data.codes.Codes().exc()
 
-        # Stations
+        # Stations that record <level> sequences.
         stations = src.data.stations.Stations().exc()
 
-        # Assets; limit by requisite, i.e., available time span.
+        # Hence, assets; joining codes & stations, subsequently limiting by stations
+        # that were recording measures from a starting point of interest.
         assets = src.data.assets.Assets(codes=codes, stations=stations).exc()
         assets = self.__span(assets=assets.copy())
 
-        # Pilot
+        # Pilot; initially, model development will focus on a subset of stations.
         pilot = src.data.pilot.Pilot(assets=assets.copy()).exc()
 
         # Rating
         src.data.rating.Rating().exc()
 
-        # Partitions
+        # Partitions for parallel data retrieval; for parallel computing.
         src.data.partitions.Partitions(data=pilot).exc()
 
         # Upcoming; 56178010, P1M => period 1 month, datestr will be the latest data
