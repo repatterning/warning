@@ -34,5 +34,5 @@ class Config:
         self.minimum = 3
         self.maximum = 5
 
-        # Period: P1D, P1M, etc.
-        self.period = 'P1M'
+        # Period: P1D, P1M, P1Y, etc.
+        self.period = 'P1Y'
