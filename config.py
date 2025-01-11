@@ -19,6 +19,9 @@ class Config:
 
         self.warehouse = os.path.join(os.getcwd(), 'warehouse')
 
+        # Template
+        self.s3_parameters_key = ''
+
         '''
         For configurations repository
         '''
