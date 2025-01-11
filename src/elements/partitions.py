@@ -10,8 +10,8 @@ class Partitions(typing.NamedTuple):
     ----------<br>
     <b>ts_id</b>: int<br>
         The identification code of a time series.<br>
-    <b>period</b>: str<br>
-        A date string, format %Y-%m-%d,  i.e., YYYY-mm-dd.<br>
+    <b>datestr</b>: str<br>
+        The <b>date string of the start date of a period</b>, format %Y-%m-%d,  i.e., YYYY-mm-dd.<br>
     <b>catchment_size</b>: float<br>
         The size of the catchment the time-series-measuring-station belongs to.<br>
     <b>gauge_datum</b>: float<br>
@@ -21,7 +21,7 @@ class Partitions(typing.NamedTuple):
     """
 
     ts_id: int
-    period: str
+    datestr: str
     catchment_size: float
     gauge_datum: float
     on_river: bool
