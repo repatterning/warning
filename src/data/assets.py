@@ -102,6 +102,7 @@ class Assets:
 
         return instances.loc[conditionals, :]
 
+    # noinspection PyTypeChecker
     def exc(self) -> pd.DataFrame:
         """
 
