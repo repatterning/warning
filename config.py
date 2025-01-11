@@ -18,6 +18,7 @@ class Config:
         """
 
         self.warehouse = os.path.join(os.getcwd(), 'warehouse')
+        self.series_ = os.path.join(self.warehouse, 'series')
 
         # Template
         self.s3_parameters_key = ''
