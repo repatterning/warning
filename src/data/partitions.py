@@ -25,7 +25,7 @@ class Partitions:
         self.__configurations = config.Config()
 
     @dask.delayed
-    def __matrix(self, period: str) -> list:
+    def __matrix(self, start: str) -> list:
         """
 
         :param period:
@@ -34,7 +34,7 @@ class Partitions:
 
         data = self.__data.copy()
 
-        data = data.assign(period = str(period))
+        data = data.assign(datestr = str(start))
         records: pd.DataFrame = data[self.__fields]
         objects: pd.Series = records.apply(lambda x: prt.Partitions(**dict(x)), axis=1)
 
@@ -48,11 +48,11 @@ class Partitions:
 
         frame = pd.date_range(start=self.__configurations.starting, end=self.__configurations.at_least, freq='MS'
                               ).to_frame(index=False, name='date')
-        periods: pd.Series = frame['date'].apply(lambda x: x.strftime('%Y-%m-%d'))
+        starts: pd.Series = frame['date'].apply(lambda x: x.strftime('%Y-%m-%d'))
 
         computations = []
-        for period in periods.values:
-            matrix = self.__matrix(period=period)
+        for start in starts.values:
+            matrix = self.__matrix(start=start)
             computations.append(matrix)
         calculations = dask.compute(computations, scheduler='threads')[0]
 
