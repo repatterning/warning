@@ -32,8 +32,7 @@ class Setup:
         self.__configurations = config.Config()
 
         # The prefix in focus within the Amazon S3 bucket in focus.
-        self.__architecture = architecture
-        self.__prefix = self.__configurations.prefix + self.__architecture + '/'
+        self.__prefix = '' + '/'
 
     def __clear_prefix(self) -> bool:
         """
@@ -67,7 +66,7 @@ class Setup:
 
         # If the bucket exist, the prefix path is cleared.  Otherwise, the bucket is created.
         if bucket.exists():
-            self.__clear_prefix()
+            return True
 
         return bucket.create()
 
@@ -80,7 +79,7 @@ class Setup:
         directories = src.functions.directories.Directories()
         directories.cleanup(path=self.__configurations.warehouse)
 
-        return directories.create(path=os.path.join(self.__configurations.storage, self.__architecture))
+        return directories.create(path=self.__configurations.series_)
 
     def exc(self) -> bool:
         """
