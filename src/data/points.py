@@ -1,4 +1,5 @@
 """Module points.py"""
+import logging
 import pandas as pd
 import dask
 
@@ -68,6 +69,13 @@ class Points:
 
         return data
 
+    @dask.delayed
+    def __persist(self, data: pd.DataFrame, partition: prt.Partitions) -> str:
+
+        logging.info(data.head())
+
+        return f'{partition.ts_id}: {partition.datestr}'
+
     def exc(self, partitions: list[prt.Partitions]):
         """
 
@@ -75,8 +83,12 @@ class Points:
         :return:
         """
 
+        computations = []
         for partition in partitions:
 
             url = self.__url.format(ts_id=partition.ts_id, datestr=partition.datestr)
             data = self.__get_data(url=url)
             data = self.__extra_features(data=data.copy(), partition=partition)
+            message = self.__persist(data=data, partition=partition)
+
+            computations.append(message)
