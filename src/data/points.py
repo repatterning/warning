@@ -92,3 +92,6 @@ class Points:
             message = self.__persist(data=data, partition=partition)
 
             computations.append(message)
+        calculations = dask.compute(computations, scheduler='threads')[0]
+
+        logging.info(calculations)
