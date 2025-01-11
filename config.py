@@ -33,3 +33,6 @@ class Config:
         # Limits
         self.minimum = 6
         self.maximum = 7
+
+        # Period: P1D, P1M, etc.
+        self.period = 'P1M'
