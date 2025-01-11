@@ -6,6 +6,7 @@ import dask
 import config
 import src.elements.partitions as prt
 import src.functions.objects
+import src.functions.streams
 
 
 class Points:
@@ -23,8 +24,9 @@ class Points:
 
         self.__configurations = config.Config()
 
-        # An instance for reading & writing JSON (JavaScript Object Notation) objects
+        # An instance for reading & writing JSON (JavaScript Object Notation) objects, CSV, ...
         self.__objects = src.functions.objects.Objects()
+        self.__streams = src.functions.streams.Streams()
 
         # The uniform resource locator, data columns, etc.
         self.__url = ('https://timeseries.sepa.org.uk/KiWIS/KiWIS?service=kisters&type=queryServices&datasource=0'
@@ -80,7 +82,7 @@ class Points:
         :return:
         """
 
-        logging.info(data.head())
+        self.__streams.write(blob=data, path='')
 
         return f'{partition.ts_id}: {partition.datestr}'
 
