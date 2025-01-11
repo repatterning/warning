@@ -75,7 +75,7 @@ class Interface:
         src.data.rating.Rating().exc()
 
         # Partitions for parallel data retrieval; for parallel computing.
-        src.data.partitions.Partitions(data=pilot).exc()
+        partitions = src.data.partitions.Partitions(data=pilot).exc()
 
-        # Upcoming; 56178010, P1M => period 1 month, datestr will be the latest data
-        # src.data.points.Points(pilot=pilot).exc(ts_id=56178010, period='P1M', datestr='2025-01-01')
+        # Retrieving time series points
+        src.data.points.Points().exc(partitions=partitions)
