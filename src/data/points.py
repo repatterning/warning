@@ -22,6 +22,8 @@ class Points:
         """
 
         self.__configurations = config.Config()
+
+        # An instance for reading & writing JSON (JavaScript Object Notation) objects
         self.__objects = src.functions.objects.Objects()
 
         # The uniform resource locator, data columns, etc.
@@ -71,6 +73,12 @@ class Points:
 
     @dask.delayed
     def __persist(self, data: pd.DataFrame, partition: prt.Partitions) -> str:
+        """
+
+        :param data:
+        :param partition:
+        :return:
+        """
 
         logging.info(data.head())
 
