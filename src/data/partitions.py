@@ -1,3 +1,4 @@
+"""Module partitions.py"""
 import dask
 import pandas as pd
 
@@ -6,6 +7,9 @@ import src.elements.partitions as prt
 
 
 class Partitions:
+    """
+    Partitions for parallel computation.
+    """
 
     def __init__(self, data: pd.DataFrame):
         """
@@ -19,7 +23,7 @@ class Partitions:
         self.__data = data
 
         # Fields
-        self.__fields = ['ts_id', 'period', 'catchment_size', 'gauge_datum', 'on_river']
+        self.__fields = ['ts_id', 'datestr', 'catchment_size', 'gauge_datum', 'on_river']
 
         # Configurations
         self.__configurations = config.Config()
@@ -28,7 +32,7 @@ class Partitions:
     def __matrix(self, start: str) -> list:
         """
 
-        :param period:
+        :param start: The date string of the start date of a period; format YYYY-mm-dd.
         :return:
         """
 
@@ -40,7 +44,7 @@ class Partitions:
 
         return objects.tolist()
 
-    def exc(self) -> list:
+    def exc(self) -> list[prt.Partitions]:
         """
 
         :return:
