@@ -1,6 +1,6 @@
 """Module points.py"""
-
 import pandas as pd
+import dask
 
 import config
 import src.elements.partitions as prt
@@ -12,7 +12,7 @@ class Points:
     <b>Notes</b><br>
     ------<br>
 
-    Retrieves time series points.
+    The time series data.
     """
 
     def __init__(self):
@@ -33,6 +33,7 @@ class Points:
 
         self.__rename = {'Timestamp': 'timestamp', 'Value': 'value', 'Quality Code': 'quality_code'}
 
+    @dask.delayed
     def __get_data(self, url: str):
         """
 
@@ -53,6 +54,7 @@ class Points:
 
         return frame
 
+    @dask.delayed
     def __extra_features(self, data: pd.DataFrame, partition: prt.Partitions):
         """
 
