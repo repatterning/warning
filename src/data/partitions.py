@@ -1,10 +1,7 @@
-import logging
+import dask
 import pandas as pd
-import numpy as np
-import datetime
 
 import config
-
 import src.elements.partitions as prt
 
 
@@ -14,7 +11,7 @@ class Partitions:
         """
         'station_id', 'catchment_id', 'catchment_name', 'ts_id', 'ts_name', 'from', 'to',
         'stationparameter_no', 'parametertype_id', 'station_latitude', 'station_longitude', 'river_id',
-        'CATCHMENT_SIZE', 'GAUGE_DATUM'
+        'catchment_size', 'gauge_datum'
 
         :param data:
         """
@@ -27,13 +24,8 @@ class Partitions:
         # Configurations
         self.__configurations = config.Config()
 
-        # Logging
-        logging.basicConfig(level=logging.INFO,
-                            format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
-                            datefmt='%Y-%m-%d %H:%M:%S')
-        self.__logger = logging.getLogger(__name__)
-
-    def __matrix(self, period: str):
+    @dask.delayed
+    def __matrix(self, period: str) -> list:
         """
 
         :param period:
@@ -41,12 +33,14 @@ class Partitions:
         """
 
         data = self.__data.copy()
+
         data = data.assign(period = str(period))
-        dictionary = data[self.__fields].to_dict(orient='index')
+        records: pd.DataFrame = data[self.__fields]
+        objects: pd.Series = records.apply(lambda x: prt.Partitions(**dict(x)), axis=1)
 
-        logging.info(prt.Partitions(**dictionary))
+        return objects.tolist()
 
-    def exc(self):
+    def exc(self) -> list:
         """
 
         :return:
@@ -56,6 +50,10 @@ class Partitions:
                               ).to_frame(index=False, name='date')
         periods: pd.Series = frame['date'].apply(lambda x: x.strftime('%Y-%m-%d'))
 
+        computations = []
         for period in periods.values:
+            matrix = self.__matrix(period=period)
+            computations.append(matrix)
+        calculations = dask.compute(computations, scheduler='threads')[0]
 
-            self.__matrix(period=period)
+        return sum(calculations, [])
