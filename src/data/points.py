@@ -1,14 +1,15 @@
 """Module points.py"""
 import logging
-import pandas as pd
-import dask
 import os
+
+import dask
+import pandas as pd
 
 import config
 import src.elements.partitions as prt
+import src.functions.directories
 import src.functions.objects
 import src.functions.streams
-import src.functions.directories
 
 
 class Points:
