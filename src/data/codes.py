@@ -1,4 +1,4 @@
-import logging
+"""Module codes.py"""
 import pandas as pd
 
 import src.elements.text_attributes as txa
@@ -24,7 +24,8 @@ class Codes:
         self.__uri = ('https://timeseries.sepa.org.uk/KiWIS/KiWIS?service=kisters&type=queryServices&datasource=0'
                       '&request=getTimeseriesList&catchment_no=*&stationparameter_name=Level&ts_name=15minute'
                       '&returnfields=catchment_id,catchment_no,catchment_name,station_id,station_no,station_name,'
-                      'stationparameter_no,stationparameter_name,parametertype_id,parametertype_name,ts_name,ts_id,ts_path,coverage'
+                      'stationparameter_no,stationparameter_name,parametertype_id,parametertype_name,'
+                      'ts_name,ts_id,ts_path,coverage'
                       '&dateformat=yyyy-MM-dd&format=csv')
 
     def exc(self) -> pd.DataFrame:
