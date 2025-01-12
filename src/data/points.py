@@ -2,11 +2,13 @@
 import logging
 import pandas as pd
 import dask
+import os
 
 import config
 import src.elements.partitions as prt
 import src.functions.objects
 import src.functions.streams
+import src.functions.directories
 
 
 class Points:
@@ -27,6 +29,7 @@ class Points:
         # An instance for reading & writing JSON (JavaScript Object Notation) objects, CSV, ...
         self.__objects = src.functions.objects.Objects()
         self.__streams = src.functions.streams.Streams()
+        self.__directories = src.functions.directories.Directories()
 
         # The uniform resource locator, data columns, etc.
         self.__url = ('https://timeseries.sepa.org.uk/KiWIS/KiWIS?service=kisters&type=queryServices&datasource=0'
@@ -82,9 +85,12 @@ class Points:
         :return:
         """
 
-        self.__streams.write(blob=data, path='')
+        directory = os.path.join(self.__configurations.series_, str(partition.ts_id))
+        self.__directories.create(path=directory)
 
-        return f'{partition.ts_id}: {partition.datestr}'
+        message = self.__streams.write(blob=data, path=os.path.join(directory, f'{partition.datestr}.csv'))
+
+        return message
 
     def exc(self, partitions: list[prt.Partitions]):
         """
