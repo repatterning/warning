@@ -15,7 +15,8 @@ def main():
     logger.info('SANDBOX')
 
     # Data
-    src.data.interface.Interface().exc()
+    if reacquire:
+        src.data.interface.Interface().exc()
 
     # Delete Cache Points
     src.functions.cache.Cache().exc()
@@ -39,5 +40,10 @@ if __name__ == '__main__':
     # Modules
     import src.data.interface
     import src.functions.cache
+
+
+    # Reacquire
+    reacquire: bool = True
+
 
     main()
