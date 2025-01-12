@@ -1,5 +1,4 @@
 """Module setup.py"""
-import os
 
 import config
 import src.elements.s3_parameters as s3p
@@ -18,13 +17,12 @@ class Setup:
     Sets up local & cloud environments
     """
 
-    def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters, architecture: str):
+    def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters):
         """
 
         :param service: A suite of services for interacting with Amazon Web Services.
         :param s3_parameters: The overarching S3 (Simple Storage Service) parameters
                               settings of this project, e.g., region code name, buckets, etc.
-        :param architecture: The name of a machine learning architecture.
         """
 
         self.__service: sr.Service = service
