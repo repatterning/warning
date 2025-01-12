@@ -88,7 +88,8 @@ class Points:
         directory = os.path.join(self.__configurations.series_, str(partition.ts_id))
         self.__directories.create(path=directory)
 
-        message = self.__streams.write(blob=data, path=os.path.join(directory, f'{partition.datestr}.csv'))
+        message = self.__streams.write(
+            blob=data, path=os.path.join(directory, f'{partition.datestr}.csv'))
 
         return message
 
