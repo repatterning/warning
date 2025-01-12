@@ -1,5 +1,4 @@
 """Module pilot.py"""
-import logging
 import pandas as pd
 
 import config
@@ -7,7 +6,7 @@ import config
 
 class Pilot:
     """
-
+    Extracts the initial set of stations/time-series codes.
     """
 
     def __init__(self, assets: pd.DataFrame):
