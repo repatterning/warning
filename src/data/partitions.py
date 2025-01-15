@@ -23,7 +23,7 @@ class Partitions:
         self.__data = data
 
         # Fields
-        self.__fields = ['ts_id', 'datestr', 'catchment_size', 'gauge_datum', 'on_river']
+        self.__fields = ['ts_id', 'catchment_id', 'datestr', 'catchment_size', 'gauge_datum', 'on_river']
 
         # Configurations
         self.__configurations = config.Config()
