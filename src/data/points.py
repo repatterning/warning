@@ -86,7 +86,7 @@ class Points:
         :return:
         """
 
-        directory = os.path.join(self.__configurations.series_, str(partition.ts_id))
+        directory = os.path.join(self.__configurations.series_, str(partition.catchment_id), str(partition.ts_id))
         self.__directories.create(path=directory)
 
         message = self.__streams.write(
