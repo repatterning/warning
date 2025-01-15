@@ -1,5 +1,5 @@
 """Module interface.py"""
-
+import logging
 import pandas as pd
 
 import config
@@ -76,6 +76,7 @@ class Interface:
 
         # Partitions for parallel data retrieval; for parallel computing.
         partitions = src.data.partitions.Partitions(data=pilot).exc()
+        logging.info(partitions)
 
         # Retrieving time series points
         src.data.points.Points().exc(partitions=partitions)
