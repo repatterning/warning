@@ -50,7 +50,7 @@ class Partitions:
         :return:
         """
 
-        frame = pd.date_range(start=self.__configurations.starting, end=self.__configurations.at_least, freq='MS'
+        frame = pd.date_range(start=self.__configurations.starting, end=self.__configurations.at_least, freq='YS'
                               ).to_frame(index=False, name='date')
         starts: pd.Series = frame['date'].apply(lambda x: x.strftime('%Y-%m-%d'))
 
