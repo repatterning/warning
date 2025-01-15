@@ -44,7 +44,7 @@ if __name__ == '__main__':
     import src.functions.directories
 
     # Reacquire
-    reacquire: bool = False
+    reacquire: bool = True
 
     # Set up
     if reacquire:
