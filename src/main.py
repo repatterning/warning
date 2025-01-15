@@ -38,12 +38,20 @@ if __name__ == '__main__':
     os.environ['CUDA_VISIBLE_DEVICES']='0'
 
     # Modules
+    import config
     import src.data.interface
     import src.functions.cache
-
+    import src.functions.directories
 
     # Reacquire
     reacquire: bool = True
 
+    # Set up
+    if reacquire:
+        configurations = config.Config()
+
+        directories = src.functions.directories.Directories()
+        directories.cleanup(path=configurations.warehouse)
+        directories.create(path=configurations.series_)
 
     main()
