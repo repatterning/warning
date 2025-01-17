@@ -18,6 +18,9 @@ def main():
     if reacquire:
         src.data.interface.Interface().exc()
 
+    # Algorithms
+    src.algorithms.points.Points().exc()
+
     # Delete Cache Points
     src.functions.cache.Cache().exc()
 
@@ -39,6 +42,7 @@ if __name__ == '__main__':
 
     # Modules
     import config
+    import src.algorithms.points
     import src.data.interface
     import src.functions.cache
     import src.functions.directories
