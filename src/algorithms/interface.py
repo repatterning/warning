@@ -1,4 +1,6 @@
 
+import logging
+
 import src.algorithms.points
 
 
@@ -9,4 +11,6 @@ class Interface:
 
     def exc(self):
 
-        src.algorithms.points.Points().exc()
+        points = src.algorithms.points.Points().exc()
+        logging.info(points.head())
+        points.info()
