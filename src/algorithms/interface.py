@@ -1,10 +1,13 @@
-
+"""Module interface.py"""
 import logging
 
 import src.algorithms.points
 
 
 class Interface:
+    """
+    The model building steps vis-à-vis a Bayesian Vector Autoregressive Algorithm
+    """
 
     def __init__(self):
 
