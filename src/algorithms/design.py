@@ -3,7 +3,7 @@ import pymc
 
 class Design:
     """
-    Builds design matrices vis-a-vis lag.
+    Builds design matrices vis-à-vis a number of lags value.
     """
 
     def __init__(self):
