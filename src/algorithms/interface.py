@@ -22,11 +22,10 @@ class Interface:
 
     def exc(self):
         """
-        
+
         :return:
         """
 
         points = src.algorithms.points.Points().exc()
         points.info()
         self.__logger.info(points.head())
-
