@@ -19,7 +19,7 @@ def main():
         src.data.interface.Interface().exc()
 
     # Algorithms
-    src.algorithms.points.Points().exc()
+    src.algorithms.interface.Interface().exc()
 
     # Delete Cache Points
     src.functions.cache.Cache().exc()
@@ -34,7 +34,7 @@ if __name__ == '__main__':
 
     # Logging
     logging.basicConfig(level=logging.INFO,
-                        format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
+                        format='\n\n%(message)s\n%(asctime)s.%(msecs)03d\n',
                         datefmt='%Y-%m-%d %H:%M:%S')
 
     # Activate graphics processing units
@@ -42,7 +42,7 @@ if __name__ == '__main__':
 
     # Modules
     import config
-    import src.algorithms.points
+    import src.algorithms.interface
     import src.data.interface
     import src.functions.cache
     import src.functions.directories
