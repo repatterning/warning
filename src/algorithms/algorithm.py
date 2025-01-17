@@ -1,3 +1,4 @@
+"""Module algorithm.py"""
 import numpy as np
 import pandas as pd
 import pymc
@@ -5,6 +6,9 @@ import pymc.distributions
 
 
 class Algorithm:
+    """
+    The prospective model's algorithm
+    """
 
     def __init__(self):
         pass
@@ -12,6 +16,15 @@ class Algorithm:
     # noinspection PyTypeChecker
     @staticmethod
     def exc(n_lags: int, n_equations: int, frame: pd.DataFrame, groupings: list, _priors: bool = True):
+        """
+
+        :param n_lags:
+        :param n_equations:
+        :param frame:
+        :param groupings:
+        :param _priors:
+        :return:
+        """
         
         cols = [col for col in frame.columns if col not in groupings]
         coords = {"lags": np.arange(n_lags) + 1, "equations": cols, "cross_vars": cols}
