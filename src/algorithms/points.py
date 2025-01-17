@@ -1,3 +1,4 @@
+"""Module points.py"""
 import glob
 import logging
 import os
@@ -9,12 +10,13 @@ import config
 
 
 class Points:
+    """
+    This class reads-in time series points
+    """
 
     def __init__(self):
         """
-        extract = [listings[i] for i in np.arange(len(listings))
-                   if listings[i].__contains__('277183') or listings[i].__contains__('277185')]
-        logging.info(extract)
+        Constructor
         """
 
         self.__configurations = config.Config()
@@ -42,7 +44,7 @@ class Points:
 
     def exc(self):
         """
-        
+
         :return:
         """
 
