@@ -1,8 +1,7 @@
+import numpy as np
+import pandas as pd
 import pymc
 import pymc.distributions
-import numpy as np
-
-import pandas as pd
 
 
 class Algorithm:
