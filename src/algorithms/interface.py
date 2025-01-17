@@ -10,6 +10,9 @@ class Interface:
     """
 
     def __init__(self):
+        """
+        Constructor
+        """
 
         logging.basicConfig(level=logging.INFO,
                             format='\n\n%(message)s\n%(asctime)s.%(msecs)03d\n',
@@ -18,6 +21,10 @@ class Interface:
         self.__logger = logging.getLogger(__name__)
 
     def exc(self):
+        """
+        
+        :return:
+        """
 
         points = src.algorithms.points.Points().exc()
         points.info()
