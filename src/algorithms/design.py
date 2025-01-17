@@ -13,10 +13,10 @@ class Design:
     def exc(lag_coefficients, n_equations, n_lags, frame):
         """
 
-        :param lag_coefficients:
-        :param n_equations:
-        :param n_lags:
-        :param frame:
+        :param lag_coefficients: The coefficient's of the lag terms
+        :param n_equations: This is the number of variables/series
+        :param n_lags: The # of lags
+        :param frame: The frame of series
         :return:
         """
 
