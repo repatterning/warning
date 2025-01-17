@@ -1,6 +1,5 @@
 """Module points.py"""
 import glob
-import logging
 import os
 
 import dask.dataframe
@@ -34,15 +33,17 @@ class Points:
 
     def __get_sections_codes(self) -> list:
         """
+        Devices, therefore time series, of the same catchment area share a parent directory;
+        series - {catchment code} - {time series code} - data files per year.<br><br>
 
-        :return:
+        :return: <b>List of distinct catchment codes.</b>
         """
 
         sections = glob.glob(pathname=os.path.join(self.__configurations.series_, '**'))
 
         return [os.path.basename(section) for section in sections]
 
-    def exc(self):
+    def exc(self) -> pd.DataFrame:
         """
 
         :return:
@@ -55,4 +56,5 @@ class Points:
             data = dask.dataframe.read_csv(os.path.join(self.__configurations.series_, code, '**', '*.csv'))
             computations.append(data.compute())
         frame = pd.concat(computations, axis=0)
-        logging.info(frame)
+
+        return frame
