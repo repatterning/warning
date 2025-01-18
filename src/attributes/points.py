@@ -24,7 +24,13 @@ class Points:
 
         return listings
 
-    def exc(self):
+    def exc(self) -> list:
+        """
+
+        :return: A list of data file names.
+        """
 
         listings = self.__get_listings()
         logging.info(listings)
+
+        return listings
