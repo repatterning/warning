@@ -27,6 +27,9 @@ class Config:
         For configurations repository
         '''
 
+        # Seed
+        self.seed = 5
+
         # Span
         self.starting = datetime.datetime.strptime('2022-01-01', '%Y-%m-%d')
         self.at_least = datetime.datetime.strptime('2025-01-05', '%Y-%m-%d')
