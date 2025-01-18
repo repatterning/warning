@@ -77,11 +77,11 @@ class Algorithm:
                 likelihood = pymc.MvNormal(f"likelihood_{group}", mu=mean, chol=omega, observed=segment.values[n_lags:])
 
             if _priors:
-                idata = pymc.sample_prior_predictive()
-                return model, idata
+                i_data = pymc.sample_prior_predictive()
+                return model, i_data
             else:
-                idata = pymc.sample_prior_predictive()
-                idata.extend(pymc.sampling.jax.sample_blackjax_nuts(draws=2000, random_seed=self.__configurations.seed))
-                pymc.sample_posterior_predictive(idata, extend_inferencedata=True)
+                i_data = pymc.sample_prior_predictive()
+                i_data.extend(pymc.sampling.jax.sample_blackjax_nuts(draws=2000, random_seed=self.__configurations.seed))
+                pymc.sample_posterior_predictive(i_data, extend_inferencedata=True)
 
-        return model, idata
+        return model, i_data
