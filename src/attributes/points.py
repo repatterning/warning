@@ -1,4 +1,5 @@
 import glob
+import logging
 import os
 
 import config
@@ -22,3 +23,8 @@ class Points:
         listings = glob.glob(pathname=os.path.join(self.__configurations.series_, '**', '*.csv'), recursive=True)
 
         return listings
+
+    def exc(self):
+
+        listings = self.__get_listings()
+        logging.info(listings)
