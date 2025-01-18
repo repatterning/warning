@@ -5,7 +5,7 @@ import os
 import config
 
 
-class Points:
+class Listings:
 
     def __init__(self):
         """
