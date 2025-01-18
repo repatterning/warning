@@ -1,5 +1,4 @@
 import glob
-import logging
 import os
 
 import config
@@ -31,6 +30,5 @@ class Listings:
         """
 
         listings = self.__get_listings()
-        logging.info(listings)
 
         return listings
