@@ -20,17 +20,6 @@ class Points:
 
         self.__configurations = config.Config()
 
-
-    def __get_listings(self) -> list:
-        """
-
-        :return:
-        """
-
-        listings = glob.glob(pathname=os.path.join(self.__configurations.series_, '**', '*.csv'), recursive=True)
-
-        return listings
-
     def __get_sections_codes(self) -> list:
         """
         Devices, therefore time series, of the same catchment area share a parent directory;
