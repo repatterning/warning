@@ -71,5 +71,15 @@ class Algorithm:
                 noise_cholesky, _, _ = pymc.LKJCholeskyCov(
                     f"noise_cholesky_{group}", eta=10, n=n, sd_dist=pymc.distributions.Exponential.dist(1)
                 )
-                omega = pymc.Deterministic(f"omega_{group}", rho * omega_global + (1 - rho) * noise_cholesky)
+                omega = pymc.Deterministic(f"omega_{group}", (rho * omega_global) + ((1 - rho) * noise_cholesky))
                 obs = pymc.MvNormal(f"obs_{group}", mu=mean, chol=omega, observed=segment.values[n_lags:])
+
+            if _priors:
+                idata = pymc.sample_prior_predictive()
+                return model, idata
+            else:
+                idata = pymc.sample_prior_predictive()
+                idata.extend(pymc.sampling.jax.sample_blackjax_nuts(2000, random_seed=120))
+                pymc.sample_posterior_predictive(idata, extend_inferencedata=True)
+
+        return model, idata
