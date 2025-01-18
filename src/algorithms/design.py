@@ -10,7 +10,7 @@ class Design:
         pass
 
     @staticmethod
-    def exc(lag_coefficients, n_equations, n_lags, frame):
+    def __call__(lag_coefficients, n_equations, n_lags, frame):
         """
 
         :param lag_coefficients: The coefficient's of the lag terms
