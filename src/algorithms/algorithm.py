@@ -4,6 +4,7 @@ import pandas as pd
 import pymc
 import pymc.distributions
 
+import config
 import src.algorithms.design
 
 
@@ -15,6 +16,7 @@ class Algorithm:
     def __init__(self):
 
         self.__design = src.algorithms.design.Design()
+        self.__configurations = config.Config()
 
     def exc(self, n_lags: int, n_equations: int, frame: pd.DataFrame, groupings: str, _priors: bool = True):
         """
@@ -79,7 +81,7 @@ class Algorithm:
                 return model, idata
             else:
                 idata = pymc.sample_prior_predictive()
-                idata.extend(pymc.sampling.jax.sample_blackjax_nuts(2000, random_seed=120))
+                idata.extend(pymc.sampling.jax.sample_blackjax_nuts(2000, random_seed=self.__configurations.seed))
                 pymc.sample_posterior_predictive(idata, extend_inferencedata=True)
 
         return model, idata
