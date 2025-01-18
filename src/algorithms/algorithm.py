@@ -15,7 +15,7 @@ class Algorithm:
 
     # noinspection PyTypeChecker
     @staticmethod
-    def exc(n_lags: int, n_equations: int, frame: pd.DataFrame, groupings: list, _priors: bool = True):
+    def exc(n_lags: int, n_equations: int, frame: pd.DataFrame, groupings: str, _priors: bool = True):
         """
 
         :param n_lags:
@@ -29,7 +29,7 @@ class Algorithm:
         cols = [col for col in frame.columns if col not in groupings]
         coords = {"lags": np.arange(n_lags) + 1, "equations": cols, "cross_vars": cols}
     
-        groups = frame[groupings].drop_duplicates()
+        groups = frame[groupings].unique()
     
         with pymc.Model(coords=coords) as model:
 
