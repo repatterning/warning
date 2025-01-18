@@ -1,3 +1,4 @@
+"""Module listings.py"""
 import glob
 import os
 
@@ -5,6 +6,9 @@ import config
 
 
 class Listings:
+    """
+    Listings
+    """
 
     def __init__(self):
         """
