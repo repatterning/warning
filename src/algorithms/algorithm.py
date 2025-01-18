@@ -81,7 +81,7 @@ class Algorithm:
                 return model, idata
             else:
                 idata = pymc.sample_prior_predictive()
-                idata.extend(pymc.sampling.jax.sample_blackjax_nuts(2000, random_seed=self.__configurations.seed))
+                idata.extend(pymc.sampling.jax.sample_blackjax_nuts(draws=2000, random_seed=self.__configurations.seed))
                 pymc.sample_posterior_predictive(idata, extend_inferencedata=True)
 
         return model, idata
