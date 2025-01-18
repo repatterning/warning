@@ -74,7 +74,7 @@ class Algorithm:
                     f"noise_cholesky_{group}", eta=10, n=n, sd_dist=pymc.distributions.Exponential.dist(1)
                 )
                 omega = pymc.Deterministic(f"omega_{group}", (rho * omega_global) + ((1 - rho) * noise_cholesky))
-                obs = pymc.MvNormal(f"obs_{group}", mu=mean, chol=omega, observed=segment.values[n_lags:])
+                likelihood = pymc.MvNormal(f"likelihood_{group}", mu=mean, chol=omega, observed=segment.values[n_lags:])
 
             if _priors:
                 idata = pymc.sample_prior_predictive()
