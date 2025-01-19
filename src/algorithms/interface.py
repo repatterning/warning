@@ -43,4 +43,5 @@ class Interface:
         frame.sort_values(by=['station_id', 'timestamp'], ascending=True, inplace=True)
         frame.info()
 
-        src.algorithms.algorithm.Algorithm().exc(n_lags=2, frame=frame, columns=self.__columns, groupings='station_id', _priors=False)
+        algorithm = src.algorithms.algorithm.Algorithm()
+        model, i_data = algorithm.exc(n_lags=2, frame=frame, columns=self.__columns, groupings='station_id', _priors=False)
