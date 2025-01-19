@@ -29,8 +29,8 @@ class Algorithm:
         :return:
         """
         
-        cols = [col for col in frame.columns if col not in groupings]
-        coords = {"lags": np.arange(n_lags) + 1, "equations": cols, "cross_vars": cols}
+        columns = [column for column in frame.columns if column not in groupings]
+        coords = {"lags": np.arange(n_lags) + 1, "equations": columns, "cross_vars": columns}
     
         groups = frame[groupings].unique()
     
@@ -48,7 +48,7 @@ class Algorithm:
 
             for group in groups:
                 
-                segment = frame[frame[groupings] == group][cols]
+                segment = frame[frame[groupings] == group][columns]
                 z_scale_beta = pymc.InverseGamma(f"z_scale_beta_{group}", 3, 0.5)
                 z_scale_alpha = pymc.InverseGamma(f"z_scale_alpha_{group}", 3, 0.5)
                 lag_coefficients = pymc.Normal(
