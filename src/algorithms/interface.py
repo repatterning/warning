@@ -27,5 +27,4 @@ class Interface:
         """
 
         points = src.algorithms.points.Points().exc()
-        points.info()
         self.__logger.info(points.head())
