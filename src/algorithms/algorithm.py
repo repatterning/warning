@@ -18,18 +18,20 @@ class Algorithm:
         self.__design = src.algorithms.design.Design()
         self.__configurations = config.Config()
 
-    def exc(self, n_lags: int, n_equations: int, frame: pd.DataFrame, groupings: str, _priors: bool = True):
+    def exc(self, n_lags: int, frame: pd.DataFrame, columns: list, groupings: str, _priors: bool = True):
         """
 
         :param n_lags:
-        :param n_equations:
         :param frame:
+        :param columns:
         :param groupings:
         :param _priors:
         :return:
         """
+
+        n_equations = len(columns)
         
-        columns = [column for column in frame.columns if column not in groupings]
+        # columns = [column for column in frame.columns if column not in groupings]
         coords = {"lags": np.arange(n_lags) + 1, "equations": columns, "cross_vars": columns}
     
         groups = frame[groupings].unique()
