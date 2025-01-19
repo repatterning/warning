@@ -1,4 +1,6 @@
 """Module interface.py"""
+import logging
+
 import src.attributes.correlation
 import src.attributes.listings
 
@@ -19,4 +21,6 @@ class Interface:
         """
 
         listings = src.attributes.listings.Listings().exc()
-        src.attributes.correlation.Correlation().exc(listings=listings)
+        logging.info(listings)
+
+        # src.attributes.correlation.Correlation().exc(listings=listings)
