@@ -1,7 +1,5 @@
 """Module interface.py"""
-import datetime
 import logging
-import time
 
 import pandas as pd
 
