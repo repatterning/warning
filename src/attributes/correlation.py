@@ -19,6 +19,9 @@ class Correlation:
         :return:
         """
 
+        plt.rc('xtick', labelsize=9)
+        plt.rc('ytick', labelsize=9)
+
         for listing in listings[:2]:
 
             try:
@@ -29,9 +32,5 @@ class Correlation:
             data.sort_values(by='timestamp', ascending=True, inplace=True)
 
             fig, ax = plt.subplots(1, 1, figsize=(4.1, 2.3))
-
             sgt.plot_pacf(x=data['value'].values, ax=ax)
-
             plt.show()
-
-
