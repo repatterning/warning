@@ -18,6 +18,10 @@ def main():
     if reacquire:
         src.data.interface.Interface().exc()
 
+    # Attributes
+    if explore:
+        src.attributes.interface.Interface().exc()
+
     # Algorithms
     src.algorithms.interface.Interface().exc()
 
@@ -43,12 +47,14 @@ if __name__ == '__main__':
     # Modules
     import config
     import src.algorithms.interface
+    import src.attributes.interface
     import src.data.interface
     import src.functions.cache
     import src.functions.directories
 
-    # Reacquire
+    # Reacquire, Explore
     reacquire: bool = False
+    explore: bool = False
 
     # Set up
     if reacquire:
