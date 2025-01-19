@@ -1,7 +1,7 @@
 """config.py"""
 import os
 import datetime
-
+import time
 
 class Config:
     """
@@ -40,3 +40,7 @@ class Config:
 
         # Period: P1D, P1M, P1Y, etc.
         self.period = 'P1Y'
+
+        # The training/testing cut-off point
+        datestr = datetime.datetime.strptime('2025-01-01 00:00:00', '%Y-%m-%d %H:%M:%S')
+        self.cutoff = 1000 * time.mktime(datestr.timetuple())
