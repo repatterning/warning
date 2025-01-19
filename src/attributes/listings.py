@@ -17,7 +17,7 @@ class Listings:
 
         self.__configurations = config.Config()
 
-    def __get_listings(self) -> list:
+    def __of_timeseries_directories(self) -> list:
         """
         Gets the time series directories
 
@@ -34,6 +34,6 @@ class Listings:
         :return: A list of data file names.
         """
 
-        listings = self.__get_listings()
+        listings = self.__of_timeseries_directories()
 
         return listings
