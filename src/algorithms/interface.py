@@ -30,6 +30,6 @@ class Interface:
         """
 
         points = src.algorithms.points.Points().exc()
-        self.__logger.info(points.head())
+        points.info()
 
         src.algorithms.algorithm.Algorithm().exc(n_lags=2, frame=points, columns=self.__columns, groupings='station_id', _priors=False)
