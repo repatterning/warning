@@ -42,7 +42,10 @@ class Points:
 
         computations = []
         for code in codes[:2]:
-            data = dask.dataframe.read_csv(os.path.join(self.__configurations.series_, code, '**', '*.csv'))
+            try:
+                data = dask.dataframe.read_csv(os.path.join(self.__configurations.series_, code, '**', '*.csv'))
+            except ImportError as err:
+                raise err from err
             computations.append(data.compute())
         frame = pd.concat(computations, axis=0)
 
