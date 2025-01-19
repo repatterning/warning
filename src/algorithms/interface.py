@@ -1,8 +1,12 @@
 """Module interface.py"""
+import datetime
 import logging
+import time
 
-import src.algorithms.points
+import pandas as pd
+
 import src.algorithms.algorithm
+import src.algorithms.points
 
 
 class Interface:
@@ -29,7 +33,12 @@ class Interface:
         :return:
         """
 
-        points = src.algorithms.points.Points().exc()
+        points: pd.DataFrame = src.algorithms.points.Points().exc()
         points.info()
+
+        cutoff = datetime.datetime.strptime('2025-01-01 00:00:00', '%Y-%m-%d %H:%M:%S')
+        limit = 1000 * time.mktime(cutoff.timetuple())
+        frame: pd.DataFrame = points.copy().loc[points['timestamp'] < limit, :]
+        frame.sort_values(by=['station_id', 'timestamp'], ascending=True, inplace=True)
 
         src.algorithms.algorithm.Algorithm().exc(n_lags=2, frame=points, columns=self.__columns, groupings='station_id', _priors=False)
