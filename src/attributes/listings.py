@@ -19,11 +19,12 @@ class Listings:
 
     def __get_listings(self) -> list:
         """
+        Gets the time series directories
 
         :return:
         """
 
-        listings = glob.glob(pathname=os.path.join(self.__configurations.series_, '**', '*.csv'), recursive=True)
+        listings = glob.glob(pathname=os.path.join(self.__configurations.series_, '**', '**'))
 
         return listings
 
