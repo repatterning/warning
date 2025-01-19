@@ -23,4 +23,4 @@ class Interface:
         listings = src.attributes.listings.Listings().exc()
         logging.info(listings)
 
-        # src.attributes.correlation.Correlation().exc(listings=listings)
+        src.attributes.correlation.Correlation().exc(listings=listings)
