@@ -45,3 +45,6 @@ class Interface:
 
         algorithm = src.algorithms.algorithm.Algorithm()
         model, i_data = algorithm.exc(n_lags=2, frame=frame, columns=self.__columns, groupings='station_id', _priors=False)
+
+        self.__logger.info(model)
+        self.__logger.info(i_data)
