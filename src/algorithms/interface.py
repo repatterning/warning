@@ -21,7 +21,7 @@ class Interface:
         self.__configurations = config.Config()
 
         # The variables
-        self.__columns = ['value', 'catchment_size', 'gauge_datum', 'on_river']
+        self.__columns = ['value', 'catchment_size', 'gauge_datum']
 
         # Logging
         logging.basicConfig(level=logging.INFO,
