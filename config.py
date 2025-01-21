@@ -1,6 +1,7 @@
 """config.py"""
 import os
-
+import datetime
+import time
 
 class Config:
     """
@@ -17,10 +18,29 @@ class Config:
         """
 
         self.warehouse = os.path.join(os.getcwd(), 'warehouse')
-        self.storage = os.path.join(self.warehouse, 'sandbox')
-        self.s3_parameters_key = 's3_parameters.yaml'
-        self.architectures = ['bert', 'distil', 'roberta', 'electra']
+        self.series_ = os.path.join(self.warehouse, 'series')
 
-        self.prefix = 'sandbox/'
+        # Template
+        self.s3_parameters_key = ''
 
+        '''
+        For configurations repository
+        '''
 
+        # Seed
+        self.seed = 5
+
+        # Span
+        self.starting = datetime.datetime.strptime('2022-01-01', '%Y-%m-%d')
+        self.at_least = datetime.datetime.strptime('2025-01-05', '%Y-%m-%d')
+
+        # Limits
+        self.minimum = 2
+        self.maximum = 2
+
+        # Period: P1D, P1M, P1Y, etc.
+        self.period = 'P1Y'
+
+        # The training/testing cut-off point
+        datestr = datetime.datetime.strptime('2025-01-01 00:00:00', '%Y-%m-%d %H:%M:%S')
+        self.cutoff = 1000 * time.mktime(datestr.timetuple())

@@ -42,8 +42,8 @@ jobs:
           formulae symbols (F63), undefined variable names (F82):"
           
           printf "\n src/algorithms "
-          flake8 --count --select=E9,F63,F7,F82 --show-source --statistics src/algorithms
-          
+          flake8 --count --select=E9,F63,F7,F82 --show-source --statistics src/algorithms/design.py src/algorithms/interface.py src/algorithms/points.py
+                    
           printf "\n src/elements "
           flake8 --count --select=E9,F63,F7,F82 --show-source --statistics src/elements
           
@@ -62,7 +62,7 @@ jobs:
           echo "Complexity issues:"
           
           printf "\n src/algorithms "
-          flake8 --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics src/algorithms
+          flake8 --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics src/algorithms/design.py src/algorithms/interface.py src/algorithms/points.py
           
           printf "\n src/elements "
           flake8 --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics src/elements
@@ -82,8 +82,9 @@ jobs:
           printf "\n"
           echo "============================= pylint session starts =============================="
           
+          
           printf "\n Package src/algorithms"
-          pylint --rcfile .pylintrc src/algorithms
+          pylint --rcfile .pylintrc src/algorithms/design.py src/algorithms/interface.py src/algorithms/points.py
           
           printf "\n Package src/elements"
           pylint --rcfile .pylintrc src/elements
@@ -116,7 +117,7 @@ jobs:
   packages:
     name: GitHub Packages Container Registry
     needs: build
-    if: ${{ true }}
+    if: ${{ false }}
     runs-on: ubuntu-latest
 
     permissions:

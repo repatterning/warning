@@ -1,17 +1,16 @@
 """Module interface.py"""
 import logging
-import os
 
-import numpy as np
 import pandas as pd
 
 import config
-import src.functions.streams
+import src.algorithms.algorithm
+import src.algorithms.points
 
 
 class Interface:
     """
-    Interface
+    The model building steps vis-à-vis a Bayesian Vector Autoregressive Algorithm
     """
 
     def __init__(self):
@@ -19,45 +18,33 @@ class Interface:
         Constructor
         """
 
-        # Configurations
         self.__configurations = config.Config()
 
-    @staticmethod
-    def __persist(blob: pd.DataFrame, path: str) -> str:
-        """
+        # The variables
+        self.__columns = ['value', 'catchment_size', 'gauge_datum']
 
-        :param blob:
-        :param path:
-        :return:
-        """
+        # Logging
+        logging.basicConfig(level=logging.INFO,
+                            format='\n\n%(message)s\n%(asctime)s.%(msecs)03d\n',
+                            datefmt='%Y-%m-%d %H:%M:%S')
 
-        streams = src.functions.streams.Streams()
+        self.__logger = logging.getLogger(__name__)
 
-        return streams.write(blob=blob, path=path)
-
-    @staticmethod
-    def __data() -> pd.DataFrame:
+    def exc(self):
         """
 
         :return:
         """
 
-        abscissae = np.linspace(start=0, stop=1, num=101)
-        ordinates = np.power(2, abscissae)
+        points: pd.DataFrame = src.algorithms.points.Points().exc()
+        points.info()
 
-        return pd.DataFrame(
-            data={'abscissa': abscissae, 'ordinate': ordinates})
+        frame: pd.DataFrame = points.copy().loc[points['timestamp'] < self.__configurations.cutoff, :]
+        frame.sort_values(by=['station_id', 'timestamp'], ascending=True, inplace=True)
+        frame.info()
 
-    def exc(self, architecture: str):
-        """
+        algorithm = src.algorithms.algorithm.Algorithm()
+        model, i_data = algorithm.exc(n_lags=2, frame=frame, columns=self.__columns, groupings='station_id', _priors=False)
 
-        :param architecture: The name of a machine learning architecture.
-        :return:
-        """
-
-        data = self.__data()
-        logging.info(data)
-
-        path = os.path.join(self.__configurations.storage, architecture, 'data.csv')
-        message = self.__persist(blob=data, path=path)
-        logging.info(message)
+        self.__logger.info(model)
+        self.__logger.info(i_data)
