@@ -39,7 +39,7 @@ class Interface:
         """
 
         :param assets:
-        :return: 
+        :return:
         """
 
         conditionals = (assets['from'] <= self.__configurations.starting) & (assets['to'] >= self.__configurations.at_least)
