@@ -35,8 +35,8 @@ class Config:
         self.at_least = datetime.datetime.strptime('2025-01-05', '%Y-%m-%d')
 
         # Limits
-        self.minimum = 3
-        self.maximum = 3
+        self.minimum = 2
+        self.maximum = 2
 
         # Period: P1D, P1M, P1Y, etc.
         self.period = 'P1Y'
