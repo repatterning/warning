@@ -14,6 +14,9 @@ class Algorithm:
     """
 
     def __init__(self):
+        """
+        Constructor
+        """
 
         self.__design = src.algorithms.design.Design()
         self.__configurations = config.Config()
@@ -21,11 +24,11 @@ class Algorithm:
     def exc(self, n_lags: int, frame: pd.DataFrame, columns: list, groupings: str, _priors: bool = True):
         """
 
-        :param n_lags:
-        :param frame:
-        :param columns:
-        :param groupings:
-        :param _priors:
+        :param n_lags: # of lags.
+        :param frame: The data.
+        :param columns: The variables in focus.
+        :param groupings: The group field.
+        :param _priors: Prior checks?
         :return:
         """
 
