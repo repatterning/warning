@@ -26,23 +26,20 @@ class Interface:
         self.__configurations = config.Config()
 
     @staticmethod
-    def __persist(blob: pd.DataFrame, path: str) -> str:
+    def __on_river(assets: pd.DataFrame) -> pd.DataFrame:
         """
 
-        :param blob:
-        :param path:
-        :return:
+        :param assets:
+        :return: Only stations located on a river.
         """
 
-        streams = src.functions.streams.Streams()
-
-        return streams.write(blob=blob, path=path)
+        return assets.loc[assets['on_river'], :]
 
     def __span(self, assets: pd.DataFrame) -> pd.DataFrame:
         """
 
         :param assets:
-        :return:
+        :return: 
         """
 
         conditionals = (assets['from'] <= self.__configurations.starting) & (assets['to'] >= self.__configurations.at_least)
@@ -67,8 +64,9 @@ class Interface:
         # that were recording measures from a starting point of interest.
         assets = src.data.assets.Assets(codes=codes, stations=stations).exc()
         assets = self.__span(assets=assets.copy())
+        assets = self.__on_river(assets=assets.copy())
 
-        # Pilot; initially, model development will focus on a subset of stations.
+        # Pilot; initially, model development will focus on a few stations ...
         pilot = src.data.pilot.Pilot(assets=assets.copy()).exc()
 
         # Rating
