@@ -1,5 +1,6 @@
-
+"""Module design.py"""
 import pymc
+
 
 class Design:
     """
