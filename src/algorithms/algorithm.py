@@ -8,6 +8,7 @@ import config
 import src.algorithms.design
 
 
+# noinspection PyTypeChecker,PyUnresolvedReferences
 class Algorithm:
     """
     The prospective model's algorithm
@@ -33,12 +34,12 @@ class Algorithm:
         """
 
         n_equations = len(columns)
-        
+
         # columns = [column for column in frame.columns if column not in groupings]
         coords = {"lags": np.arange(n_lags) + 1, "equations": columns, "cross_vars": columns}
-    
+
         groups = frame[groupings].unique()
-    
+
         with pymc.Model(coords=coords) as model:
 
             # Hierarchical Priors
@@ -52,7 +53,7 @@ class Algorithm:
             )
 
             for group in groups:
-                
+
                 segment = frame[frame[groupings] == group][columns]
                 z_scale_beta = pymc.InverseGamma(f"z_scale_beta_{group}", 3, 0.5)
                 z_scale_alpha = pymc.InverseGamma(f"z_scale_alpha_{group}", 3, 0.5)
@@ -70,23 +71,24 @@ class Algorithm:
                 )
 
                 # Homogeneous terms
-                h_terms = self.__design(lag_coefficients=lag_coefficients, n_equations=n_equations, n_lags=n_lags, segment=segment)
+                h_terms = self.__design(lag_coefficients=lag_coefficients, n_equations=n_equations,
+                                        n_lags=n_lags, segment=segment)
                 h_terms = pymc.Deterministic(f"betaX_{group}", h_terms)
-                mean = (alpha + h_terms)
+                mean = alpha + h_terms
 
                 n = segment.shape[1]
                 noise_cholesky, _, _ = pymc.LKJCholeskyCov(
                     f"noise_cholesky_{group}", eta=10, n=n, sd_dist=pymc.distributions.Exponential.dist(1)
                 )
                 omega = pymc.Deterministic(f"omega_{group}", (rho * omega_global) + ((1 - rho) * noise_cholesky))
-                likelihood = pymc.MvNormal(f"likelihood_{group}", mu=mean, chol=omega, observed=segment.values[n_lags:])
+                pymc.MvNormal(f"likelihood_{group}", mu=mean, chol=omega, observed=segment.values[n_lags:])
 
             if _priors:
                 i_data = pymc.sample_prior_predictive()
                 return model, i_data
-            else:
-                i_data = pymc.sample_prior_predictive()
-                i_data.extend(pymc.sampling.jax.sample_blackjax_nuts(draws=2000, random_seed=self.__configurations.seed))
-                pymc.sample_posterior_predictive(i_data, extend_inferencedata=True)
+
+            i_data = pymc.sample_prior_predictive()
+            i_data.extend(pymc.sampling.jax.sample_blackjax_nuts(draws=2000, random_seed=self.__configurations.seed))
+            pymc.sample_posterior_predictive(i_data, extend_inferencedata=True)
 
         return model, i_data
