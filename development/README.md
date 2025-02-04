@@ -33,6 +33,25 @@ should include
 
 <br>
 
+Subsequently, run a container, i.e., an instance, of the image `uncertainty` via:
+
+<br>
+
+```shell
+docker run --rm -i -t -p 8000:8000 -p 8888:8888 -w /app --mount
+    type=bind,src="$(pwd)",target=/app uncertainty
+```
+
+or
+
+```shell
+docker run --rm -i -t -p 8000:8000 -p 8888:8888 -w /app --mount
+    type=bind,src="$(pwd)",target=/app 
+    -v ~/.aws:/root/.aws uncertainty
+```
+
+
+<br>
 
 <br>
 <br>
