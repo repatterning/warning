@@ -62,6 +62,16 @@ i.e., -w, must be inline with this project's top directory.  Additionally,
 
 <br>
 
+Get the name of a running instance of ``uncertanty`` via:
+
+```shell
+docker ps --all
+```
+
+Never deploy a root container, study the production [Dockerfile](../Dockerfile); cf. remote [.devcontainer/Dockerfile](../.devcontainer/Dockerfile)
+
+<br>
+
 
 <br>
 <br>
