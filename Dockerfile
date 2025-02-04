@@ -1,5 +1,5 @@
 # Pytorch
-FROM pytorch/pytorch:2.4.1-cuda12.4-cudnn9-runtime
+FROM python:3.12.8-bookworm
 
 
 # Temporary
@@ -35,7 +35,7 @@ COPY config.py /app/config.py
 
 
 # Port
-EXPOSE 8050
+EXPOSE 8000 8888
 
 
 # Create mountpoint
