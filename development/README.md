@@ -1,8 +1,44 @@
 
 <br>
 
+## Environments
 
-### References
+### Remote Development
+
+For this Python project/template, the remote development environment requires
+
+* [Dockerfile](../.devcontainer/Dockerfile)
+* [requirements.txt](../.devcontainer/requirements.txt)
+
+An image is built via the command
+
+```shell
+docker build . --file .devcontainer/Dockerfile -t uncertainty
+```
+
+On success, the output of
+
+```shell
+docker images
+```
+
+should include
+
+<br>
+
+| repository   | tag    | image id | created  | size     |
+|:-------------|:-------|:---------|:---------|:---------|
+| uncertainty  | latest | $\ldots$ | $\ldots$ | $\ldots$ |
+
+
+<br>
+
+
+<br>
+<br>
+
+
+## References
 
 Time Series Modelling & Analysis:
 
