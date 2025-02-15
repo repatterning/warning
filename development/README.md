@@ -33,9 +33,8 @@ should include
 
 <br>
 
-Subsequently, run a container, i.e., an instance, of the image `uncertainty` via:
+Subsequently, run an instance of the image `uncertainty` via:
 
-<br>
 
 ```shell
 docker run --rm -i -t -p 8000:8000 -p 8888:8888 -w /app --mount
@@ -52,8 +51,8 @@ docker run --rm -i -t -p 8000:8000 -p 8888:8888 -w /app --mount
 
 <br>
 
-Herein, `-p 8000:8000` maps the host port `8000` to container port `8000`: 8888 ascertains access to [Jupyter Lab](https://docs.docker.com/guides/jupyter/).  Note, the container's working environment,
-i.e., -w, must be inline with this project's top directory.  Additionally,
+Herein, `-p 8000:8000` maps the host port `8000` to container port `8000`; the port `8888` ascertains access to [Jupyter Lab](https://docs.docker.com/guides/jupyter/).  Note, the container's working environment,
+i.e., `-w`, must be inline with this project's top directory.  Additionally,
 
 * --rm: [automatically remove container](https://docs.docker.com/engine/reference/commandline/run/#:~:text=a%20container%20exits-,%2D%2Drm,-Automatically%20remove%20the)
 * -i: [interact](https://docs.docker.com/engine/reference/commandline/run/#:~:text=and%20reaps%20processes-,%2D%2Dinteractive,-%2C%20%2Di)
@@ -77,7 +76,6 @@ Never deploy a root container, study the production [Dockerfile](../Dockerfile);
 An IDE (integrated development environment) is a helpful remote development tool.  The **IntelliJ
 IDEA** set up involves connecting to a machine's Docker [daemon](https://www.jetbrains.com/help/idea/docker.html#connect_to_docker), the steps are
 
-<br>
 
 > * **Settings** $\rightarrow$ **Build, Execution, Deployment** $\rightarrow$ **Docker** $\rightarrow$ **WSL:** {select the linux operating system}
 > * **View** $\rightarrow$ **Tool Window** $\rightarrow$ **Services** <br>Within the **Containers** section connect to the running instance of interest, or ascertain connection to the running instance of interest.
