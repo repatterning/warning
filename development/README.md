@@ -3,6 +3,7 @@
 
 ## Environments
 
+
 ### Remote Development
 
 For this Python project/template, the remote development environment requires
@@ -13,7 +14,7 @@ For this Python project/template, the remote development environment requires
 An image is built via the command
 
 ```shell
-docker build . --file .devcontainer/Dockerfile -t uncertainty
+docker build . --file .devcontainer/Dockerfile -t laboratory
 ```
 
 On success, the output of
@@ -28,17 +29,17 @@ should include
 
 | repository   | tag    | image id | created  | size     |
 |:-------------|:-------|:---------|:---------|:---------|
-| uncertainty  | latest | $\ldots$ | $\ldots$ | $\ldots$ |
+| laboratory  | latest | $\ldots$ | $\ldots$ | $\ldots$ |
 
 
 <br>
 
-Subsequently, run an instance of the image `uncertainty` via:
+Subsequently, run an instance of the image `laboratory` via:
 
 
 ```shell
 docker run --rm -i -t -p 8000:8000 -p 8888:8888 -w /app --mount
-    type=bind,src="$(pwd)",target=/app uncertainty
+    type=bind,src="$(pwd)",target=/app laboratory
 ```
 
 or
@@ -46,7 +47,7 @@ or
 ```shell
 docker run --rm -i -t -p 8000:8000 -p 8888:8888 -w /app --mount
     type=bind,src="$(pwd)",target=/app 
-    -v ~/.aws:/root/.aws uncertainty
+    -v ~/.aws:/root/.aws laboratory
 ```
 
 <br>
