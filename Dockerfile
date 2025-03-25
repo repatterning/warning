@@ -1,5 +1,5 @@
 # Pytorch
-FROM pytorch/pytorch:2.4.1-cuda12.4-cudnn9-runtime
+FROM python:3.12.8-bookworm
 
 
 # Temporary
@@ -25,8 +25,9 @@ RUN groupadd --system automata --gid $GID && \
     curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awscliv2.zip" && \
     unzip /tmp/awscliv2.zip -d /tmp/ && cd /tmp && sudo ./aws/install && cd ~ && \
     pip install --upgrade pip && \
-	pip install --requirement /app/requirements.txt --no-cache-dir && \
-    mkdir /app/warehouse
+    pip install --requirement /app/requirements.txt --no-cache-dir && \
+    mkdir /app/warehouse && \
+    chown -R automaton:automata /app/warehouse
 
 
 # Specific COPY
@@ -35,11 +36,10 @@ COPY config.py /app/config.py
 
 
 # Port
-EXPOSE 8050
+EXPOSE 8000 8888
 
 
 # Create mountpoint
-RUN chown -R automaton:automata /app/warehouse
 VOLUME /app/warehouse
 
 
