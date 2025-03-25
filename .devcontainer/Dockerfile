@@ -22,7 +22,7 @@ RUN apt update && apt -q -y upgrade && apt -y install sudo && sudo apt -y instal
 
 
 # Port
-EXPOSE 8000
+EXPOSE 8000 8888
 
 
 # ENTRYPOINT
