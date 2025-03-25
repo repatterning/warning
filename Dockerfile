@@ -26,7 +26,8 @@ RUN groupadd --system automata --gid $GID && \
     unzip /tmp/awscliv2.zip -d /tmp/ && cd /tmp && sudo ./aws/install && cd ~ && \
     pip install --upgrade pip && \
     pip install --requirement /app/requirements.txt --no-cache-dir && \
-    mkdir /app/warehouse
+    mkdir /app/warehouse && \
+    chown -R automaton:automata /app/warehouse
 
 
 # Specific COPY
@@ -39,7 +40,6 @@ EXPOSE 8000 8888
 
 
 # Create mountpoint
-RUN chown -R automaton:automata /app/warehouse
 VOLUME /app/warehouse
 
 
