@@ -16,7 +16,8 @@ def main():
     logger.info('EVENTS')
 
     # Assets
-    src.assets.Assets(s3_parameters=s3_parameters).exc()
+    # src.assets.Assets(s3_parameters=s3_parameters).exc()
+    src.data.interface.Interface().exc()
 
     # Delete Cache Points
     src.functions.cache.Cache().exc()
@@ -35,6 +36,7 @@ if __name__ == '__main__':
                         datefmt='%Y-%m-%d %H:%M:%S')
 
     # Modules
+    import src.data.interface
     import src.functions.cache
     import src.preface.interface
     import src.elements.service as sr
@@ -45,6 +47,6 @@ if __name__ == '__main__':
     s3_parameters: s3p
     service: sr.Service
     arguments: dict
-    connector, s3_parameters, service, arguments = src.preface.interface.Interface().exc()
+    # connector, s3_parameters, service, arguments = src.preface.interface.Interface().exc()
 
     main()
