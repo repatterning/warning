@@ -1,9 +1,11 @@
 """Module interface.py"""
 import logging
 import os
+
 import src.data.codes
 import src.data.reference
 import src.elements.s3_parameters as s3p
+
 
 class Interface:
     """
@@ -26,6 +28,10 @@ class Interface:
         self.__logger = logging.getLogger(__name__)
 
     def exc(self):
+        """
+
+        :return:
+        """
 
         _codes: list[str] = src.data.codes.Codes().exc()
         codes = [os.path.split(code)[-1] for code in _codes]
