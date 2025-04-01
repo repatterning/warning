@@ -22,7 +22,8 @@ class Codes:
         self.__path_m = os.path.join(self.__configurations.data_, 'models')
         self.__path_d = os.path.join(self.__configurations.data_, 'data')
 
-    def __re_cut(self, string: str) -> str:
+    @staticmethod
+    def __re_cut(string: str) -> str:
         """
 
         :param string: A path string
