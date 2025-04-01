@@ -37,7 +37,7 @@ class Reference:
 
         return self.__stream.read(text=text)
 
-    def exc(self, codes: list[str]) -> pd.DataFrame:
+    def exc(self, codes: list[int]) -> pd.DataFrame:
         """
 
         :param codes:
