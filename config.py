@@ -26,9 +26,10 @@ class Config:
         self.data_ = os.path.join(os.getcwd(), 'data')
         self.warehouse = os.path.join(os.getcwd(), 'warehouse')
 
-        self.points_ = os.path.join(self.warehouse, 'points')
-        self.menu_ = os.path.join(self.warehouse, 'menu')
+        self.events_ = os.path.join(self.warehouse, 'events')
+        self.points_ = os.path.join(self.events_, 'points')
+        self.menu_ = os.path.join(self.events_, 'menu')
 
         # Template
         self.s3_parameters_key = 's3_parameters.yaml'
-        self.metadata_ = 'external/metadata'
+        self.metadata_ = 'external/metadata/events'
