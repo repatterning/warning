@@ -28,7 +28,7 @@ class Interface:
     def exc(self):
 
         _codes: list[str] = src.data.codes.Codes().exc()
-        codes = [int(os.path.split(code)[-1]) for code in _codes]
+        codes = [os.path.split(code)[-1] for code in _codes]
         logging.info(codes)
 
-        # src.data.reference.Reference(s3_parameters=self.__s3_parameters).exc()
+        src.data.reference.Reference(s3_parameters=self.__s3_parameters).exc(codes=codes)
