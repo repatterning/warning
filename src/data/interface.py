@@ -1,5 +1,6 @@
 """Module interface.py"""
-
+import logging
+import src.data.codes
 
 class Interface:
     """
@@ -7,7 +8,13 @@ class Interface:
     """
 
     def __init__(self):
-        pass
+
+        logging.basicConfig(level=logging.INFO,
+                            format='\n\n%(message)s\n%(asctime)s.%(msecs)03d\n',
+                            datefmt='%Y-%m-%d %H:%M:%S')
+        self.__logger = logging.getLogger(__name__)
 
     def exc(self):
-        pass
+
+        codes: list[str] = src.data.codes.Codes().exc()
+        self.__logger.info(codes)
