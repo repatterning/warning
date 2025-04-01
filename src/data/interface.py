@@ -34,7 +34,7 @@ class Interface:
         """
 
         _codes: list[str] = src.data.codes.Codes().exc()
-        codes = [os.path.split(code)[-1] for code in _codes]
+        codes = [int(os.path.split(code)[-1]) for code in _codes]
         logging.info(codes)
 
         reference = src.data.reference.Reference(
