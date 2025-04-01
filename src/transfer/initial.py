@@ -31,7 +31,7 @@ class Initial:
         self.__bucket_name = self.__s3_parameters.external
 
         # Configurations, etc.
-        self.__prefix = 'warehouse'
+        self.__prefix = 'warehouse/events'
 
     def __clear_prefix(self) -> bool:
         """
