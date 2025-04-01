@@ -32,6 +32,7 @@ class Menu:
                                    'name': names})
 
         nodes = frame.to_dict(orient='records')
+        logging.info(nodes)
 
         message = src.functions.objects.Objects().write(
             nodes=nodes, path=os.path.join(self.__configurations.menu_, 'menu.json'))
