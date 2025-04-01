@@ -4,6 +4,7 @@ import os
 
 import src.data.codes
 import src.data.reference
+import src.data.menu
 import src.elements.s3_parameters as s3p
 
 
@@ -35,8 +36,10 @@ class Interface:
 
         _codes: list[str] = src.data.codes.Codes().exc()
         codes = [int(os.path.split(code)[-1]) for code in _codes]
-        logging.info(codes)
+        self.__logger.info(codes)
 
         reference = src.data.reference.Reference(
             s3_parameters=self.__s3_parameters).exc(codes=codes)
-        logging.info(reference)
+        self.__logger.info(reference)
+
+        src.data.menu.Menu().exc(reference=reference)
