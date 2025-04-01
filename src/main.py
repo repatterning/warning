@@ -17,7 +17,8 @@ def main():
 
     # Assets
     # src.assets.Assets(s3_parameters=s3_parameters).exc()
-    src.data.interface.Interface().exc()
+    reference = src.data.interface.Interface(s3_parameters=s3_parameters).exc()
+    reference.info()
 
     # Delete Cache Points
     src.functions.cache.Cache().exc()
@@ -47,6 +48,6 @@ if __name__ == '__main__':
     s3_parameters: s3p
     service: sr.Service
     arguments: dict
-    # connector, s3_parameters, service, arguments = src.preface.interface.Interface().exc()
+    connector, s3_parameters, service, arguments = src.preface.interface.Interface().exc()
 
     main()
