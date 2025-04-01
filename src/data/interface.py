@@ -1,6 +1,7 @@
 """Module interface.py"""
 import logging
 import os
+import pandas as pd
 
 import src.data.codes
 import src.data.reference
@@ -28,7 +29,7 @@ class Interface:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
 
-    def exc(self):
+    def exc(self) -> pd.DataFrame:
         """
 
         :return:
@@ -38,8 +39,10 @@ class Interface:
         codes = [int(os.path.split(code)[-1]) for code in _codes]
         self.__logger.info(codes)
 
-        reference = src.data.reference.Reference(
+        reference: pd.DataFrame = src.data.reference.Reference(
             s3_parameters=self.__s3_parameters).exc(codes=codes)
         self.__logger.info(reference)
 
         src.data.menu.Menu().exc(reference=reference)
+
+        return reference
