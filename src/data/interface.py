@@ -37,4 +37,6 @@ class Interface:
         codes = [os.path.split(code)[-1] for code in _codes]
         logging.info(codes)
 
-        src.data.reference.Reference(s3_parameters=self.__s3_parameters).exc(codes=codes)
+        reference = src.data.reference.Reference(
+            s3_parameters=self.__s3_parameters).exc(codes=codes)
+        logging.info(reference)
