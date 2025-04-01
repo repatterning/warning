@@ -45,7 +45,6 @@ class Interface:
         arguments: dict = self.__get_arguments(connector=connector)
 
         setup = src.preface.setup.Setup().exc()
-
         if setup:
             return connector, s3_parameters, service, arguments
 
