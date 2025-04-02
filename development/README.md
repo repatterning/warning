@@ -14,7 +14,7 @@ For this Python project/template, the remote development environment requires
 An image is built via the command
 
 ```shell
-docker build . --file .devcontainer/Dockerfile -t laboratory
+docker build . --file .devcontainer/Dockerfile -t points
 ```
 
 On success, the output of
@@ -27,42 +27,44 @@ should include
 
 <br>
 
-| repository   | tag    | image id | created  | size     |
-|:-------------|:-------|:---------|:---------|:---------|
-| laboratory  | latest | $\ldots$ | $\ldots$ | $\ldots$ |
+| repository | tag    | image id | created  | size     |
+|:-----------|:-------|:---------|:---------|:---------|
+| points     | latest | $\ldots$ | $\ldots$ | $\ldots$ |
 
 
 <br>
 
-Subsequently, run an instance of the image `laboratory` via:
+Subsequently, run an instance of the image `points` via:
 
 
 ```shell
-docker run --rm -i -t -p 8000:8000 -p 8888:8888 -w /app --mount
-    type=bind,src="$(pwd)",target=/app laboratory
+docker run --rm -i -t -p 8050:8050 -w /app --mount
+    type=bind,src="$(pwd)",target=/app points
 ```
 
 or
 
 ```shell
-docker run --rm -i -t -p 8000:8000 -p 8888:8888 -w /app --mount
+docker run --rm -i -t -p 8050:8050 -w /app --mount
     type=bind,src="$(pwd)",target=/app 
-    -v ~/.aws:/root/.aws laboratory
+    -v ~/.aws:/root/.aws points
 ```
 
 <br>
 
-Herein, `-p 8000:8000` maps the host port `8000` to container port `8000`; the port `8888` ascertains access to [Jupyter Lab](https://docs.docker.com/guides/jupyter/).  Note, the container's working environment,
-i.e., `-w`, must be inline with this project's top directory.  Additionally,
+Herein, `-p 8050:8050` maps the host port `8050` to container port `8050`.  Note, the container's working environment,
+i.e., `-w`, must be inline with this project's top directory.   Additionally, visit the links below for more about the flags/options $\rightarrow$
 
 * --rm: [automatically remove container](https://docs.docker.com/engine/reference/commandline/run/#:~:text=a%20container%20exits-,%2D%2Drm,-Automatically%20remove%20the)
 * -i: [interact](https://docs.docker.com/engine/reference/commandline/run/#:~:text=and%20reaps%20processes-,%2D%2Dinteractive,-%2C%20%2Di)
 * -t: [tag](https://docs.docker.com/get-started/02_our_app/#:~:text=Finally%2C%20the-,%2Dt,-flag%20tags%20your)
 * -p: [publish the container's port/s to the host](https://docs.docker.com/engine/reference/commandline/run/#:~:text=%2D%2Dpublish%20%2C-,%2Dp,-Publish%20a%20container%E2%80%99s)
+* --mount type=bind: [a bind mount](https://docs.docker.com/engine/storage/bind-mounts/#syntax)
+* -v: [volume](https://docs.docker.com/engine/storage/volumes/)
 
 <br>
 
-Get the name of a running instance of ``uncertanty`` via:
+The part `-v ~/.aws:/root/.aws` ascertains Amazon Web Services interactions via containers. Get the name of a running instance of ``points`` via:
 
 ```shell
 docker ps --all
@@ -154,56 +156,6 @@ python -m flake8 --count --exit-zero --max-complexity=10 --max-line-length=127 -
 ```
 
 inspects complexity.
-
-
-<br>
-<br>
-
-
-## References
-
-<abbr title="Scottish Environment Protection Agency">SEPA</abbr>:
-* [Application Programming Interface](https://timeseriesdoc.sepa.org.uk/api-documentation/)
-* [Query Service](https://timeseries.sepa.org.uk/KiWIS/KiWIS?datasource=0&service=kisters&type=queryServices&request=getrequestinfo)
-* [Water Levels](https://www.sepa.org.uk/environment/water/water-levels/)
-  * [Water Levels](https://waterlevels.sepa.org.uk/)
-* [Catchment boundaries for Scotland based on Scottish Environment Protection Agency (SEPA) catchments (WGS84) 2023](https://data.cefas.co.uk/view/21970)
-* [Environmental Data](https://www.sepa.org.uk/environment/environmental-data/)
-* [Geospatial Standards Register](https://www.gov.uk/government/publications/uk-geospatial-data-standards-register/national-geospatial-data-standards-register)
-* [Access Control](https://timeseriesdoc.sepa.org.uk/api-documentation/before-you-start/what-controls-there-are-on-access/)
-* [Quality Codes](https://timeseriesdoc.sepa.org.uk/api-documentation/before-you-start/how-data-validity-may-change/)
-* [Gauge Height](https://waterdata.usgs.gov/blog/gage_height/)
-
-<br>
-
-Time Series Modelling & Analysis:
-* [Forecasting Principles & Practice: Stationarity](https://otexts.com/fpp2/stationarity.html)
-* [Stationarity, Detrending, Tests](https://www.statsmodels.org/dev/examples/notebooks/generated/stationarity_detrending_adf_kpss.html)
-* [Model Identification for Southern Oscillations Data](https://www.itl.nist.gov/div898/handbook/pmc/section4/pmc4461.htm)
-* [Robust detrending, rereferencing, outlier detection, and inpainting for multichannel data](https://pmc.ncbi.nlm.nih.gov/articles/PMC5915520/)
-* [Using ARIMA and ETS models for forecasting water level changes for sustainable environmental management](https://www.nature.com/articles/s41598-024-73405-9)
-* [Partial Auto-correlation Plot](https://www.itl.nist.gov/div898/handbook/pmc/section4/pmc4463.htm)
-* [Autocorrelation Plot](https://www.itl.nist.gov/div898/handbook/eda/section3/autocopl.htm): For investigating questions such as (From <abbr title="National Institute of Standards and Technology">NIST</abbr>)
-  * Is an observation related to an adjacent observation?
-  * Is an observation related to an observation twice-removed? (etc.)
-  * Is the observed time series white noise?
-  * Is the observed time series sinusoidal?
-  * Is the observed time series autoregressive?
-* [Statistical forecasting: notes on regression and time series analysis](https://people.duke.edu/~rnau/411home.htm)
-  * [Identifying the order of differencing in an ARIMA model](https://people.duke.edu/~rnau/411arim2.htm)
-  * [Identifying the numbers of AR or MA terms in an ARIMA model](https://people.duke.edu/~rnau/411arim3.htm)
-
-
-<br>
-
-Extra:
-* [Natural Logarithm Transformations](https://www.bridgetext.com/log-transforming-time-series-data-in-r)
-* [Time Formatting Codes](https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes)
-* [statsmodels.tsa.stattools.pacf](https://www.statsmodels.org/dev/generated/statsmodels.tsa.stattools.pacf.html)
-* [statsmodels.graphics.tsaplots.plot_pacf](https://www.statsmodels.org/dev/generated/statsmodels.graphics.tsaplots.plot_pacf.html)
-* [python: hub.docker.com](https://hub.docker.com/_/python/)
-
-
 
 <br>
 <br>
