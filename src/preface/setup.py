@@ -49,4 +49,4 @@ class Setup:
         :return:
         """
 
-        return self.__local() # & self.__data()
+        return self.__local() & self.__data()
