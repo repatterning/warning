@@ -24,6 +24,10 @@ class Reference:
         # An instance for reading & writing CSV (comma-separated values) data
         self.__stream = src.functions.streams.Streams()
 
+        # Rename
+        self.__rename = {'from': 'starting', 'to': 'until', 'station_latitude': 'latitude',
+                         'station_longitude': 'longitude'}
+
     def __get_reference(self):
         """
 
@@ -45,5 +49,6 @@ class Reference:
         """
 
         reference = self.__get_reference()
+        reference.rename(columns=self.__rename, inplace=True)
 
         return reference.loc[reference['ts_id'].isin(codes), :]
