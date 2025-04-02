@@ -26,8 +26,8 @@ RUN groupadd --system automata --gid $GID && \
     unzip /tmp/awscliv2.zip -d /tmp/ && cd /tmp && sudo ./aws/install && cd ~ && \
     pip install --upgrade pip && \
     pip install --requirement /app/requirements.txt --no-cache-dir && \
-    mkdir /app/warehouse && \
-    chown -R automaton:automata /app/warehouse
+    mkdir /app/warehouse && mkdir /app/data && \
+    chown -R automaton:automata /app/warehouse && chown -R automaton:automata /app/data
 
 
 # Specific COPY
@@ -36,7 +36,7 @@ COPY config.py /app/config.py
 
 
 # Port
-EXPOSE 8000 8888
+EXPOSE 8050
 
 
 # Create mountpoint
