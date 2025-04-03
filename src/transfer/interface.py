@@ -48,7 +48,7 @@ class Interface:
 
         frame = frame.assign(
             metadata = frame['section'].apply(
-                lambda x: self.__metadata_p if x in sections else self.__metadata_m))
+                lambda x: self.__metadata_p if x == 'points' else self.__metadata_m))
 
         return frame
 
@@ -61,11 +61,10 @@ class Interface:
 
         # The strings for transferring data to Amazon S3 (Simple Storage Service)
         strings = self.__dictionary.exc(
-            path=os.path.join(os.getcwd(), 'warehouse'), extension='json', prefix='warehouse/')
+            path=os.path.join(os.getcwd(), 'warehouse', 'events'), extension='json', prefix='warehouse/events/')
 
         # Adding metadata details per instance
         strings = self.__get_metadata(frame=strings.copy())
-        logging.info(strings)
 
         # Prepare the S3 (Simple Storage Service) section
         src.transfer.initial.Initial(
