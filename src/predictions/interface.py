@@ -53,5 +53,5 @@ class Interface:
             message_m = __get_metrics(parts=parts_, specifications=specifications)
             computations.append(message_m)
 
-        messages = dask.compute(computations, scheduler='threads', num_workers=8)[0]
+        messages = dask.compute(computations, scheduler='threads', num_workers=6)[0]
         logging.info(messages)
