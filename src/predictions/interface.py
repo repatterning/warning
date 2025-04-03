@@ -1,4 +1,4 @@
-
+"""Module src.predictions.interface.py"""
 import logging
 import os
 
@@ -14,8 +14,14 @@ import src.predictions.metrics
 
 
 class Interface:
+    """
+    Interface
+    """
 
     def __init__(self):
+        """
+        Constructor
+        """
 
         self.__configurations = config.Config()
 
