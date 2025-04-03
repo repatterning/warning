@@ -40,7 +40,7 @@ EXPOSE 8050
 
 
 # Create mountpoint
-VOLUME /app/warehouse
+VOLUME /app/warehouse /app/data
 
 
 # automaton
