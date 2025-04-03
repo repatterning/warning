@@ -44,8 +44,6 @@ class Interface:
         :return:
         """
 
-        sections = ['drift', 'errors', 'predictions']
-
         frame = frame.assign(
             metadata = frame['section'].apply(
                 lambda x: self.__metadata_p if x == 'points' else self.__metadata_m))
