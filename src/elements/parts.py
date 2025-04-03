@@ -1,4 +1,4 @@
-
+"""Module src.elements.parts.py"""
 import typing
 
 import pandas as pd
