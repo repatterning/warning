@@ -84,11 +84,8 @@ class Estimates:
             'training': self.__get_node(parts.training),
             'testing': self.__get_node(parts.testing),
             'futures': parts.futures.to_dict(orient='split')}
+        nodes.update(specifications._asdict())
 
-        spe = specifications._asdict()
-        # for value in ['station_id', 'catchment_id', 'ts_id']:
-        #     spe[value] = int(spe.get(value))
-        nodes.update(spe)
         self.__persist(nodes=nodes, name=str(specifications.ts_id))
 
         return parts
