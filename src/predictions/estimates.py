@@ -32,13 +32,14 @@ class Estimates:
     @staticmethod
     def __get_errors(data: pd.DataFrame) -> pd.DataFrame:
         """
-        data['measure'].to_numpy()[:,None]
 
         :param data:
         :return:
         """
 
-        data.loc[:, ['error', 'error_l', 'error_u']] = data[['mean', 'mean_ci_lower', 'mean_ci_upper']] - data['measure']
+        estimates = data[['mean', 'mean_ci_lower', 'mean_ci_upper']].to_numpy()
+
+        data.loc[:, ['error', 'error_l', 'error_u']] = estimates - data['measure'].to_numpy()[:,None]
         data['p_error'] = 100*np.true_divide(data['error'].to_numpy(), data['measure'].to_numpy())
 
         return data
