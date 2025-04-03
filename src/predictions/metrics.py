@@ -33,7 +33,7 @@ class Metrics:
             square root (mean ( a set of square errors ) )
         per set of square errors.
 
-        :param data:
+        :param data: A frame of measures, estimates, and errors
         :return:
         """
 
@@ -49,8 +49,9 @@ class Metrics:
     @staticmethod
     def __pe(data: pd.DataFrame) -> pd.DataFrame:
         """
+        Calculates the quantile distribution of percentage errors
 
-        :param data:
+        :param data: A frame of measures, estimates, and errors
         :return:
         """
 
@@ -64,7 +65,7 @@ class Metrics:
     def __get_metrics(self, data: pd.DataFrame) -> dict:
         """
 
-        :param data:
+        :param data: A frame of measures, estimates, and errors
         :return:
         """
 
@@ -77,8 +78,8 @@ class Metrics:
     def exc(self, parts: pr.Parts, specifications: se.Specifications) -> str:
         """
 
-        :param parts:
-        :param specifications:
+        :param parts: An object of data frames vis-à-vis training, testing, and future predictions
+        :param specifications: A gauge's attributes
         :return:
         """
 
