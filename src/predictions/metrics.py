@@ -88,10 +88,11 @@ class Metrics:
             'testing': self.__get_metrics(data=parts.testing)}
 
         spe = specifications._asdict()
-        for value in ['station_id', 'catchment_id', 'ts_id']:
-            spe[value] = int(spe.get(value))
+        # for value in ['station_id', 'catchment_id', 'ts_id']:
+        #     spe[value] = int(spe.get(value))
         nodes.update(spe)
 
-        message = self.__objects.write(nodes=nodes, path=os.path.join(self.__path, f'{specifications.ts_id}.json'))
+        message = self.__objects.write(
+            nodes=nodes, path=os.path.join(self.__path, f'{specifications.ts_id}.json'))
 
         return message
