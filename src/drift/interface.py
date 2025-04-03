@@ -21,14 +21,12 @@ class Interface:
     The interface to drift score programs.<br>
     """
 
-    def __init__(self, reference: pd.DataFrame, arguments: dict):
+    def __init__(self, arguments: dict):
         """
 
-        :param reference: The institutions/hospitals & health board reference.
         :param arguments: A set of model development, and supplementary, arguments.
         """
 
-        self.__reference = reference
         self.__arguments = arguments
 
         # Instances
@@ -51,19 +49,10 @@ class Interface:
 
         return frame
 
-    def __get__specifications(self) -> list[se.Specifications]:
-        """
-        :return:
+    def exc(self, specifications_: list[se.Specifications]):
         """
 
-        dictionaries = [self.__reference.iloc[i, :].squeeze() for i in range(self.__reference.shape[0])]
-        specifications = [se.Specifications(**dictionary) for dictionary in dictionaries]
-
-        return specifications
-
-    def exc(self):
-        """
-
+        :param specifications_: List of ...
         :return:
         """
 
@@ -76,11 +65,11 @@ class Interface:
 
         # Compute
         computations = []
-        for specifications in self.__get__specifications():
+        for specifications in specifications_:
             data = self.__get_data(uri=path.format(catchment_id=specifications.catchment_id, ts_id=specifications.ts_id))
             matrix = hankel(data=data)
             frame = metrics(matrix=matrix, data=data)
             message = persist(frame=frame, specifications=specifications)
             computations.append(message)
-        messages = dask.compute(computations, scheduler='threads')[0]
+        messages = dask.compute(computations, scheduler='threads', num_workers=8)[0]
         logging.info('Drift -> \n%s', messages)
