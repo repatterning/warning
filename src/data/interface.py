@@ -6,7 +6,9 @@ import pandas as pd
 import src.data.codes
 import src.data.reference
 import src.data.menu
+import src.elements.specifications as se
 import src.elements.s3_parameters as s3p
+import src.data.specifications
 
 
 class Interface:
@@ -29,7 +31,7 @@ class Interface:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
 
-    def exc(self) -> pd.DataFrame:
+    def exc(self) -> list[se.Specifications]:
         """
 
         :return:
@@ -45,4 +47,7 @@ class Interface:
 
         src.data.menu.Menu().exc(reference=reference)
 
-        return reference
+        specifications_: list[se.Specifications] = src.data.specifications.Specifications().exc(
+            reference=reference)
+
+        return specifications_

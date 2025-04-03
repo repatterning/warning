@@ -1,10 +1,8 @@
 """Module dictionary.py"""
 import glob
-import logging
 import os
 
 import pandas as pd
-import numpy as np
 
 
 class Dictionary:
@@ -16,9 +14,6 @@ class Dictionary:
         """
         Constructor
         """
-
-        # Metadata
-        self.__metadata = {'desc': 'A synthetic data set for sandbox investigations.'}
 
     @staticmethod
     def __local(path: str, extension: str) -> pd.DataFrame:
@@ -37,29 +32,24 @@ class Dictionary:
 
         details: list[dict] = [
             {'file': file,
-             'vertex': file.rsplit(splitter, maxsplit=1)[1],
-             'section': os.path.basename(os.path.dirname(file))}
+             'vertex': file.rsplit(splitter, maxsplit=1)[1]}
             for file in files]
 
         return pd.DataFrame.from_records(details)
 
-    def exc(self, path: str, extension: str, prefix: str) -> pd.DataFrame:
+    def exc(self, path: str, extension: str, prefix: str):
         """
 
         :param path: The path wherein the files of interest lie
         :param extension: The extension type of the files of interest
-        :param prefix: The Amazon S3 (Simple Storage Service) where the files of path are heading
+        :param prefix: The Amazon S3 (Simple Storage Service) prefix where the files of path are heading
         :return:
         """
-
-        logging.info(path)
 
         local: pd.DataFrame = self.__local(path=path, extension=extension)
 
         # Building the Amazon S3 strings
-        frame = local.assign(key=prefix + '/' + local["vertex"])
+        frame = local.assign(key=prefix + local["vertex"])
+        frame.loc[:, 'section'] = local['vertex'].str.split(pat=os.sep, n=1, expand=True)[0]
 
-        # The metadata dict strings
-        frame['metadata'] = np.repeat(f'{self.__metadata}', repeats=frame.shape[0])
-
-        return frame[['file', 'key', 'metadata']]
+        return frame[['file', 'key', 'section']]
