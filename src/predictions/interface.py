@@ -4,7 +4,7 @@ import dask
 import src.elements.specifications as se
 import src.elements.parts as pr
 import src.predictions.data
-import src.predictions.errors
+import src.predictions.estimates
 
 
 
@@ -17,7 +17,7 @@ class Interface:
     def exc(self, specifications_: list[se.Specifications]):
 
         __get_data = dask.delayed(src.predictions.data.Data().exc)
-        __get_errors = dask.delayed(src.predictions.errors.Errors().exc)
+        __get_errors = dask.delayed(src.predictions.estimates.Estimates().exc)
 
 
         computations = []
