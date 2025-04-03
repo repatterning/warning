@@ -6,7 +6,7 @@ import scipy.stats as sta
 import src.elements.parts as pr
 
 
-class Errors:
+class Estimates:
     """
     <b>Notes</b><br>
     ------<br>
