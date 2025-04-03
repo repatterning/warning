@@ -15,7 +15,7 @@ class Persist:
     <b>Notes</b><br>
     -------<br>
 
-    Structures and saves each institution's drift data.
+    Structures and saves each gauge's drift data.
     """
 
     def __init__(self):
@@ -38,8 +38,8 @@ class Persist:
     def __get_dictionary(self, frame: pd.DataFrame, specifications: se.Specifications) -> dict:
         """
 
-
         :param frame:
+        :param specifications:
         :return:
         """
 
