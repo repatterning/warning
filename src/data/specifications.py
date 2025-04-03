@@ -1,18 +1,22 @@
-
+"""Module specifications.py"""
 import pandas as pd
 
 import src.elements.specifications as se
 
 
 class Specifications:
+    """
+    Creates an attributes collection per gauge
+    """
 
     def __init__(self):
         pass
 
-    def __anomalies(self, specifications: se.Specifications) -> se.Specifications:
+    @staticmethod
+    def __anomalies(specifications: se.Specifications) -> se.Specifications:
         """
 
-        :param specifications:
+        :param specifications: A gauge's collection of attributes
         :return:
         """
 
@@ -23,6 +27,11 @@ class Specifications:
         return specifications
 
     def exc(self, reference: pd.DataFrame) -> list[se.Specifications]:
+        """
+
+        :param reference:
+        :return:
+        """
 
         dictionaries = [reference.iloc[i, :].squeeze() for i in range(reference.shape[0])]
 
