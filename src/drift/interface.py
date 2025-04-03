@@ -71,5 +71,5 @@ class Interface:
             frame = metrics(matrix=matrix, data=data)
             message = persist(frame=frame, specifications=specifications)
             computations.append(message)
-        messages = dask.compute(computations, scheduler='threads', num_workers=8)[0]
+        messages = dask.compute(computations, scheduler='threads', num_workers=6)[0]
         logging.info('Drift -> \n%s', messages)
