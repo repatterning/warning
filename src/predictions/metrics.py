@@ -1,4 +1,5 @@
 """Module metrics.py"""
+import logging
 import json
 import os
 
@@ -38,6 +39,7 @@ class Metrics:
         """
 
         square_error: np.ndarray = np.power(data['error'].to_numpy(), 2)
+        logging.info('Square Error\n %s', square_error)
         mse: np.ndarray = np.expand_dims(
             np.sum(square_error, axis=0)/square_error.shape[0], axis=0)
 
@@ -68,6 +70,7 @@ class Metrics:
         :param data: A frame of measures, estimates, and errors
         :return:
         """
+        logging.info('DATA\n%s', data)
 
         frame = pd.concat((self.__root_mse(data=data), self.__pe(data=data)),
                           axis=0, ignore_index=False)
