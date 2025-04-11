@@ -1,6 +1,6 @@
 <br>
 
-Events/Metrics
+Focuses on data & model evaluation.
 
 <br>
 <br>
