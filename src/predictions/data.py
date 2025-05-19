@@ -48,7 +48,7 @@ class Data:
         """
 
         # Reading-in
-        uri = os.path.join(self.__configurations.data_, 'models', str(specifications.catchment_id),
+        uri = os.path.join(self.__configurations.data_, str(specifications.catchment_id),
                            str(specifications.ts_id), 'estimates.json')
         data = src.functions.objects.Objects().read(uri=uri)
 
