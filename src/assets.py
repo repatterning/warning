@@ -54,10 +54,12 @@ class Assets:
             bucket_name=self.__s3_parameters.internal).excerpt(prefix=self.__configurations.origin_)
         logging.info(elements)
 
-        
+        # Extract the execution dates
         keys = [element.split('/', maxsplit=3)[2] for element in elements]
         strings = list(set(keys))
         values = np.array(strings, dtype='datetime64')
+
+        # The latest date
         stamp = str(values.max())
 
         return self.__configurations.origin_ + stamp
