@@ -101,10 +101,7 @@ jobs:
           
           printf "\n Package src/data"
           pylint --rcfile .pylintrc src/data
-          
-          printf "\n Package src/drift"
-          pylint --rcfile .pylintrc src/drift
-          
+
           printf "\n Package src/elements"
           pylint --rcfile .pylintrc src/elements
           
