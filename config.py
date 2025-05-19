@@ -31,7 +31,7 @@ class Config:
         self.menu_ = os.path.join(self.autoregressive_, 'menu')
 
         # The model assets section
-        self.origin_ = 'assets/autoregressive/{stamp}'
+        self.origin_ = 'assets/autoregressive/'
 
         # Keys, etc
         self.s3_parameters_key = 's3_parameters.yaml'
