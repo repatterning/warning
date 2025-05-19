@@ -48,16 +48,19 @@ class Assets:
         :return:
         """
 
+        # Retrieve the pathways vis-à-vis self.__configurations.origin_
         elements = src.s3.keys.Keys(
-            service=self.__service, bucket_name=self.__s3_parameters.internal).excerpt(prefix='assets/autoregressive/')
+            service=self.__service,
+            bucket_name=self.__s3_parameters.internal).excerpt(prefix=self.__configurations.origin_)
+        logging.info(elements)
+
+        
         keys = [element.split('/', maxsplit=3)[2] for element in elements]
         strings = list(set(keys))
         values = np.array(strings, dtype='datetime64')
         stamp = str(values.max())
 
-        logging.info(values)
-
-        return self.__configurations.origin_.format(stamp=stamp)
+        return self.__configurations.origin_ + stamp
 
     def __get_assets(self, origin: str) -> int:
         """
