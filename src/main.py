@@ -20,15 +20,13 @@ def main():
     # Assets
     src.assets.Assets(service=service, s3_parameters=s3_parameters).exc()
 
-    '''
+    # Evaluate
     specifications_ = src.data.interface.Interface(s3_parameters=s3_parameters).exc()
-
     src.predictions.interface.Interface().exc(specifications_=specifications_)
 
     # Transfer
     src.transfer.interface.Interface(
         connector=connector, service=service, s3_parameters=s3_parameters).exc()
-    '''
 
     # Delete Cache Points
     src.functions.cache.Cache().exc()
