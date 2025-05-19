@@ -1,10 +1,10 @@
 """Module interface.py"""
 import logging
-import os
 
 import boto3
 import pandas as pd
 
+import config
 import src.elements.s3_parameters as s3p
 import src.elements.service as sr
 import src.s3.ingress
@@ -21,6 +21,9 @@ class Interface:
     def __init__(self, connector: boto3.session.Session, service: sr.Service,  s3_parameters: s3p):
         """
 
+        :param connector:
+            <a href='https://boto3.amazonaws.com/v1/documentation/api/latest/guide/session.html#custom-session'>
+            A boto3 custom session.</a><br>
         :param service: A suite of services for interacting with Amazon Web Services.
         :param s3_parameters: The overarching S3 parameters settings of this
                               project, e.g., region code name, buckets, etc.
@@ -29,10 +32,10 @@ class Interface:
         self.__service: sr.Service = service
         self.__s3_parameters: s3p.S3Parameters = s3_parameters
 
+        self.__configurations = config.Config()
+
         # Metadata
-        metadata = src.transfer.metadata.Metadata(connector=connector)
-        self.__metadata_p = metadata.exc(name='points.json')
-        self.__metadata_m = metadata.exc(name='menu.json')
+        self.__metadata = src.transfer.metadata.Metadata(connector=connector)
 
         # Instances
         self.__dictionary = src.transfer.dictionary.Dictionary()
@@ -44,12 +47,13 @@ class Interface:
         :return:
         """
 
+        _metadata_p = self.__metadata.exc(name='points.json')
+        _metadata_m = self.__metadata.exc(name='menu.json')
         frame = frame.assign(
             metadata = frame['section'].apply(
-                lambda x: self.__metadata_p if x == 'points' else self.__metadata_m))
+                lambda x: _metadata_p if x == 'points' else _metadata_m))
 
         return frame
-
 
     def exc(self):
         """
@@ -59,7 +63,8 @@ class Interface:
 
         # The strings for transferring data to Amazon S3 (Simple Storage Service)
         strings = self.__dictionary.exc(
-            path=os.path.join(os.getcwd(), 'warehouse', 'inspect'), extension='json', prefix='warehouse/inspect/')
+            path=self.__configurations.autoregressive_, extension='json',
+            prefix=self.__configurations.prefix + '/')
 
         # Adding metadata details per instance
         strings = self.__get_metadata(frame=strings.copy())
