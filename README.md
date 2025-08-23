@@ -1,6 +1,7 @@
 <br>
 
-Warning
+> [!NOTE]
+> System details upcoming.
 
 <br>
 <br>
