@@ -1,5 +1,4 @@
 """Module interface.py"""
-import sys
 import typing
 
 import boto3
