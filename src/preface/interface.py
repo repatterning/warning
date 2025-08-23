@@ -48,9 +48,6 @@ class Interface:
             connector=connector, region_name=s3_parameters.region_name).exc()
         arguments: dict = self.__get_arguments(connector=connector)
 
-        setup = src.preface.setup.Setup().exc()
-        if setup:
-            return connector, s3_parameters, service, arguments
+        src.preface.setup.Setup().exc()
 
-        src.functions.cache.Cache().exc()
-        sys.exit('Unable to set up local environments.')
+        return connector, s3_parameters, service, arguments
