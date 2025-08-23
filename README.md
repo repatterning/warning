@@ -1,6 +1,7 @@
 <br>
 
-Extra
+> [!NOTE]
+> System details upcoming.
 
 <br>
 <br>

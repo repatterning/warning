@@ -1,5 +1,8 @@
 """Module setup.py"""
+import sys
+
 import config
+import src.functions.cache
 import src.functions.directories
 
 
@@ -49,4 +52,9 @@ class Setup:
         :return:
         """
 
-        return self.__local() & self.__data()
+        if self.__local() & self.__data():
+            return True
+
+        src.functions.cache.Cache().exc()
+
+        sys.exit('Error: Set up failure')
