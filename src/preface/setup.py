@@ -58,5 +58,3 @@ class Setup:
         src.functions.cache.Cache().exc()
 
         sys.exit('Error: Set up failure')
-
-
