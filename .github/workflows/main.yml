@@ -1,4 +1,4 @@
-name: 'Hydrography: Evaluating github.com/repatterning/autoregressive'
+name: 'Hydrography: Early Warning'
 
 on: [push]
 
@@ -45,17 +45,11 @@ jobs:
           echo "Issues in relation to logic (F7), syntax (Python E9, Flake F7), mathematical
           formulae symbols (F63), undefined variable names (F82):"
           
-          printf "\n src/data "
-          flake8 --count --select=E9,F63,F7,F82 --show-source --statistics src/data
-          
           printf "\n src/elements "
           flake8 --count --select=E9,F63,F7,F82 --show-source --statistics src/elements
           
           printf "\n src/functions "
           flake8 --count --select=E9,F63,F7,F82 --show-source --statistics src/functions
-          
-          printf "\n src/predictions "
-          flake8 --count --select=E9,F63,F7,F82 --show-source --statistics src/predictions
           
           printf "\n src/preface "
           flake8 --count --select=E9,F63,F7,F82 --show-source --statistics src/preface
@@ -71,17 +65,11 @@ jobs:
           printf "\n\n"
           echo "Complexity issues:"
           
-          printf "\n src/data "
-          flake8 --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics src/data
-
           printf "\n src/elements "
           flake8 --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics src/elements
           
           printf "\n src/functions "
           flake8 --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics src/functions
-          
-          printf "\n src/predictions "
-          flake8 --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics src/predictions
           
           printf "\n src/preface "
           flake8 --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics src/preface
@@ -99,17 +87,11 @@ jobs:
           echo "============================= pylint session starts =============================="
           
           
-          printf "\n Package src/data"
-          pylint --rcfile .pylintrc src/data
-
           printf "\n Package src/elements"
           pylint --rcfile .pylintrc src/elements
           
           printf "\n Package src/functions"
           pylint --rcfile .pylintrc src/functions
-          
-          printf "\n Package src/predictions"
-          pylint --rcfile .pylintrc src/predictions
           
           printf "\n Package src/preface"
           pylint --rcfile .pylintrc src/preface
@@ -140,7 +122,7 @@ jobs:
   packages:
     name: GitHub Packages Container Registry
     needs: build
-    if: github.ref == 'refs/heads/master'
+    if: ${{ false }}
     runs-on: ubuntu-latest
 
     permissions:
@@ -188,7 +170,7 @@ jobs:
   ecr:
     name: Amazon Elastic Container Registry
     needs: build
-    if: github.ref == 'refs/heads/master'
+    if: ${{ false }}
     runs-on: ubuntu-latest
 
     permissions:
