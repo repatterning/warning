@@ -2,8 +2,8 @@
 import sys
 
 import config
-import src.functions.directories
 import src.functions.cache
+import src.functions.directories
 
 
 class Setup:
