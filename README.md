@@ -1,7 +1,7 @@
 <br>
 
 > [!NOTE]
-> System details upcoming.
+> Details upcoming.
 
 <br>
 <br>
