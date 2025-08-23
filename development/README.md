@@ -36,14 +36,6 @@ should include
 
 Subsequently, run an instance of the image `points` via:
 
-
-```shell
-docker run --rm -i -t -p 8050:8050 -w /app --mount
-    type=bind,src="$(pwd)",target=/app points
-```
-
-or
-
 ```shell
 docker run --rm -i -t -p 8050:8050 -w /app --mount
     type=bind,src="$(pwd)",target=/app 
