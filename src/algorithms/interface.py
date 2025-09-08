@@ -1,7 +1,7 @@
 import logging
+import xml.etree.ElementTree as et
 
 import boto3
-import xml.etree.ElementTree as et
 import requests
 
 import src.functions.secret
@@ -36,15 +36,16 @@ class Interface:
 
         response = requests.get(url=self.__url, headers=headers)
 
-        logging.info(response.status_code)
         logging.info(response.headers)
         logging.info(response.content)
 
-        page = et.fromstring(response.content)
-        logging.info(page)
-
-        for part in page:
-            logging.info(part)
+        page: et.Element = et.fromstring(response.content)
+        logging.info(page.__dir__())
 
 
+        for paragraph in page.findall('{http://www.w3.org/2005/Atom}link'):
 
+            elements = paragraph.attrib
+            if elements.get('type') == 'application/vnd.geo+json':
+                bits = requests.get(url=elements.get('href'), headers=headers)
+                logging.info(bits.content)
