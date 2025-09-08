@@ -1,3 +1,4 @@
+"""Module algorithms/interface.py"""
 import logging
 import xml.etree.ElementTree as et
 
