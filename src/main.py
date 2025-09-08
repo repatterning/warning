@@ -17,6 +17,9 @@ def main():
     logger: logging.Logger = logging.getLogger(__name__)
     logger.info('Starting: %s', datetime.datetime.now().isoformat(timespec='microseconds'))
 
+    # Investigate Warnings
+    src.cartography.interface.Interface(connector=connector, arguments=arguments).exc()
+
     # Delete Cache Points
     src.functions.cache.Cache().exc()
 
@@ -38,6 +41,7 @@ if __name__ == '__main__':
     import src.elements.s3_parameters as s3p
     import src.functions.cache
     import src.preface.interface
+    import src.cartography.interface
 
     connector: boto3.session.Session
     s3_parameters: s3p

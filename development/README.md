@@ -3,6 +3,12 @@
 
 ## Environments
 
+* [Weather Service Data](https://www.metoffice.gov.uk/binaries/content/assets/metofficegovuk/pdf/data/pwms_nswws.pdf)
+* [Introduction | Met Office <abbr title="National Severe Weather Warnings Service">NSWWS</abbr> Public API](https://metoffice.github.io/nswws-public-api/)
+* [Steps | Met Office <abbr title="National Severe Weather Warnings Service">NSWWS</abbr> Public API](https://metoffice.github.io/nswws-public-api/instructions.html)
+* [Atom Feed](https://metoffice.github.io/nswws-public-api/atom-feed.html)
+* [x-api-key](https://apidog.com/blog/pass-x-api-key-header)
+
 
 ### Remote Development
 
@@ -14,7 +20,7 @@ For this Python project/template, the remote development environment requires
 An image is built via the command
 
 ```shell
-docker build . --file .devcontainer/Dockerfile -t points
+docker build . --file .devcontainer/Dockerfile -t spatial
 ```
 
 On success, the output of
@@ -29,17 +35,17 @@ should include
 
 | repository | tag    | image id | created  | size     |
 |:-----------|:-------|:---------|:---------|:---------|
-| points     | latest | $\ldots$ | $\ldots$ | $\ldots$ |
+| spatial    | latest | $\ldots$ | $\ldots$ | $\ldots$ |
 
 
 <br>
 
-Subsequently, run an instance of the image `points` via:
+Subsequently, run an instance of the image `spatial` via:
 
 ```shell
 docker run --rm -i -t -p 8050:8050 -w /app --mount
     type=bind,src="$(pwd)",target=/app 
-    -v ~/.aws:/root/.aws points
+    -v ~/.aws:/root/.aws spatial
 ```
 
 <br>
@@ -56,7 +62,7 @@ i.e., `-w`, must be inline with this project's top directory.   Additionally, vi
 
 <br>
 
-The part `-v ~/.aws:/root/.aws` ascertains Amazon Web Services interactions via containers. Get the name of a running instance of ``points`` via:
+The part `-v ~/.aws:/root/.aws` ascertains Amazon Web Services interactions via containers. Get the name of a running instance of ``spatial`` via:
 
 ```shell
 docker ps --all

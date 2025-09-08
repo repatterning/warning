@@ -26,17 +26,8 @@ class Config:
         self.data_ = os.path.join(os.getcwd(), 'data')
         self.warehouse = os.path.join(os.getcwd(), 'warehouse')
 
-        self.autoregressive_ = os.path.join(self.warehouse, 'autoregressive')
-        self.points_ = os.path.join(self.autoregressive_, 'points')
-        self.menu_ = os.path.join(self.autoregressive_, 'menu')
-
-        # The model assets section
-        self.origin_ = 'assets/autoregressive/'
-
         # Keys, etc
         self.s3_parameters_key = 's3_parameters.yaml'
-        self.argument_key = 'artefacts' + '/' + 'architecture' + '/' + 'autoregressive' + '/' + 'arguments.json'
-        self.metadata_ = 'extra/external'
+        self.argument_key = 'warning/arguments.json'
 
-        # Prefix
-        self.prefix = 'warehouse' + '/' + 'autoregressive'
+        self.prefix = 'warning'
