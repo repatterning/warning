@@ -37,6 +37,7 @@ class Interface:
         :return:
         """
 
+        # Retrieve the service key, and set up the header
         key = self.__secret.exc(secret_id=self.__arguments.get('project_key_name'), node='nswws')
         headers = {
             'x-API-key': key
