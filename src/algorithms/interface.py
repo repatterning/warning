@@ -28,9 +28,6 @@ class Interface:
 
         self.__secret = src.functions.secret.Secret(connector=self.__connector)
 
-        #
-        self.__url = 'https://prd.nswws.api.metoffice.gov.uk/v1.0/objects/feed'
-
     def __data(self, page: et.Element, headers: dict) -> geopandas.GeoDataFrame:
 
         frame = geopandas.GeoDataFrame()
@@ -51,11 +48,12 @@ class Interface:
 
         # Retrieve the service key, and set up the header
         key = self.__secret.exc(secret_id=self.__arguments.get('project_key_name'), node='nswws')
+        url = self.__secret.exc(secret_id=self.__arguments.get('project_key_name'), node='nswws-base')
         headers = {
             'x-API-key': key
         }
 
-        response = requests.get(url=self.__url, headers=headers)
+        response = requests.get(url=url, headers=headers)
         page: et.Element = et.fromstring(response.content)
         data = self.__data(page=page, headers=headers)
         logging.info(data.empty)
