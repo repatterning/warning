@@ -18,8 +18,7 @@ def main():
     logger.info('Starting: %s', datetime.datetime.now().isoformat(timespec='microseconds'))
 
     # Investigate Warnings
-    cart = src.cartography.interface.Interface(connector=connector, arguments=arguments).exc()
-    logger.info(cart)
+    src.cartography.interface.Interface(connector=connector, arguments=arguments).exc()
 
     # Delete Cache Points
     src.functions.cache.Cache().exc()
