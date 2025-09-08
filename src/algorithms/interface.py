@@ -4,6 +4,8 @@ import xml.etree.ElementTree as et
 
 import boto3
 import requests
+import io
+import geopandas
 
 import src.functions.secret
 
@@ -54,3 +56,5 @@ class Interface:
             if elements.get('type') == 'application/vnd.geo+json':
                 bits = requests.get(url=elements.get('href'), headers=headers)
                 logging.info(bits.content)
+                sample = geopandas.read_file(io.BytesIO(bits.content))
+                logging.info(sample)
