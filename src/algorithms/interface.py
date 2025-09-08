@@ -17,7 +17,7 @@ class Interface:
 
         :param connector: A boto3 session instance, it retrieves the developer's <default> Amazon
                           Web Services (AWS) profile details, which allows for programmatic interaction with AWS.
-        :param arguments:
+        :param arguments: A set of arguments vis-à-vis computation & data operations objectives.
         """
 
         self.__connector = connector
