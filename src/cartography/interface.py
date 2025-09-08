@@ -32,6 +32,7 @@ class Interface:
 
     def __data(self, page: et.Element, headers: dict) -> geopandas.GeoDataFrame:
         """
+        requests.get(..., timeout -> seconds)
 
         :param page: An Atom Feed.  It outlines the latest set of weather warnings, and updates of the warnings, including
                      cancellations and expirations; <a href="https://metoffice.github.io/nswws-public-api/atom-feed.html">
@@ -42,15 +43,14 @@ class Interface:
 
         frame = geopandas.GeoDataFrame()
         for paragraph in page.findall('{http://www.w3.org/2005/Atom}link'):
-
             elements = paragraph.attrib
             if elements.get('type') == 'application/vnd.geo+json':
-                bits = requests.get(url=elements.get('href'), headers=headers)
+                bits = requests.get(url=elements.get('href'), headers=headers, timeout=30)
                 frame = geopandas.read_file(io.BytesIO(bits.content))
 
         return frame
 
-    def exc(self) -> geopandas.GeoDataFrame:
+    def exc(self):
         """
 
         :return:
@@ -63,8 +63,8 @@ class Interface:
             'x-API-key': key
         }
 
-        # Retrieve the XML Feed
-        response = requests.get(url=url, headers=headers)
+        # Retrieve the XML Feed; time out -> seconds
+        response = requests.get(url=url, headers=headers, timeout=30)
         page: et.Element = et.fromstring(response.content)
 
         # get geojson data
@@ -75,4 +75,4 @@ class Interface:
             src.functions.cache.Cache().exc()
             sys.exit()
 
-        return data
+        logging.info(data)
