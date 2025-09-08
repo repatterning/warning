@@ -31,6 +31,18 @@ class Interface:
         # self.__endpoint = 'https://{key}/v1.0/objects/feed'
         self.__url = 'https://prd.nswws.api.metoffice.gov.uk/v1.0/objects/feed'
 
+    def __data(self, page: et.Element, headers: dict) -> geopandas.GeoDataFrame:
+
+        frame = geopandas.GeoDataFrame()
+        for paragraph in page.findall('{http://www.w3.org/2005/Atom}link'):
+
+            elements = paragraph.attrib
+            if elements.get('type') == 'application/vnd.geo+json':
+                bits = requests.get(url=elements.get('href'), headers=headers)
+                frame = geopandas.read_file(io.BytesIO(bits.content))
+
+        return frame
+
     def exc(self):
         """
 
@@ -44,18 +56,7 @@ class Interface:
         }
 
         response = requests.get(url=self.__url, headers=headers)
-        logging.info(response.headers)
-        logging.info(response.content)
-
         page: et.Element = et.fromstring(response.content)
-        logging.info(page.__dir__())
-
-
-        for paragraph in page.findall('{http://www.w3.org/2005/Atom}link'):
-
-            elements = paragraph.attrib
-            if elements.get('type') == 'application/vnd.geo+json':
-                bits = requests.get(url=elements.get('href'), headers=headers)
-                logging.info(bits.content)
-                sample = geopandas.read_file(io.BytesIO(bits.content))
-                logging.info(sample)
+        data = self.__data(page=page, headers=headers)
+        logging.info(data.empty)
+        logging.info(data)
