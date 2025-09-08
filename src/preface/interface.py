@@ -42,10 +42,15 @@ class Interface:
         """
 
         connector = boto3.session.Session()
-        s3_parameters: s3p.S3Parameters = src.s3.s3_parameters.S3Parameters(connector=connector).exc()
+
+        # Arguments
+        arguments: dict = self.__get_arguments(connector=connector)
+
+        # Interaction Instances: Amazon
+        s3_parameters: s3p.S3Parameters = src.s3.s3_parameters.S3Parameters(
+            connector=connector, project_key_name=arguments.get('project_key_name')).exc()
         service: sr.Service = src.functions.service.Service(
             connector=connector, region_name=s3_parameters.region_name).exc()
-        arguments: dict = self.__get_arguments(connector=connector)
 
         src.preface.setup.Setup().exc()
 
