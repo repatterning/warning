@@ -28,7 +28,7 @@ class Interface:
 
         self.__secret = src.functions.secret.Secret(connector=self.__connector)
 
-        # self.__endpoint = 'https://{key}/v1.0/objects/feed'
+        #
         self.__url = 'https://prd.nswws.api.metoffice.gov.uk/v1.0/objects/feed'
 
     def __data(self, page: et.Element, headers: dict) -> geopandas.GeoDataFrame:
