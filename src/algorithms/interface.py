@@ -15,7 +15,8 @@ class Interface:
     def __init__(self, connector: boto3.session.Session, arguments: dict):
         """
 
-        :param connector:
+        :param connector: A boto3 session instance, it retrieves the developer's <default> Amazon
+                          Web Services (AWS) profile details, which allows for programmatic interaction with AWS.
         :param arguments:
         """
 
