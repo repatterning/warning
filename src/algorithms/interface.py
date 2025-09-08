@@ -8,6 +8,9 @@ import src.functions.secret
 
 
 class Interface:
+    """
+    The interface to the programs of the algorithms package.
+    """
 
     def __init__(self, connector: boto3.session.Session, arguments: dict):
         """
@@ -36,7 +39,6 @@ class Interface:
         }
 
         response = requests.get(url=self.__url, headers=headers)
-
         logging.info(response.headers)
         logging.info(response.content)
 
