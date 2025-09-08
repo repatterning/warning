@@ -25,11 +25,12 @@ class Interface:
         self.__url = 'https://prd.nswws.api.metoffice.gov.uk/v1.0/objects/feed'
 
     def exc(self):
+        """
 
-
+        :return:
+        """
 
         key = self.__secret.exc(secret_id=self.__arguments.get('project_key_name'), node='nswws')
-
         headers = {
             'x-API-key': key
         }
