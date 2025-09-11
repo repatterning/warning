@@ -33,7 +33,8 @@ class Data:
         self.__configurations = config.Config()
         self.__secret = src.functions.secret.Secret(connector=self.__connector)
 
-    def __data(self, page: et.Element, headers: dict) -> geopandas.GeoDataFrame:
+    @staticmethod
+    def __data(page: et.Element, headers: dict) -> geopandas.GeoDataFrame:
         """
         requests.get(..., timeout -> seconds)
 
