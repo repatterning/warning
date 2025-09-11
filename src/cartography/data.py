@@ -2,7 +2,7 @@
 import io
 import logging
 import os.path
-import xml.etree.ElementTree as et
+import xml.etree.ElementTree as ElTree
 
 import boto3
 import geopandas
@@ -34,7 +34,7 @@ class Data:
         self.__secret = src.functions.secret.Secret(connector=self.__connector)
 
     @staticmethod
-    def __data(page: et.Element, headers: dict) -> geopandas.GeoDataFrame:
+    def __data(page: ElTree.Element, headers: dict) -> geopandas.GeoDataFrame:
         """
         requests.get(..., timeout -> seconds)
 
@@ -86,7 +86,7 @@ class Data:
         # Retrieve the XML Feed; time out -> seconds
         response = requests.get(url=url, headers=headers, timeout=30)
         logging.info(response.content)
-        page: et.Element = et.fromstring(response.content)
+        page: ElTree.Element = ElTree.fromstring(response.content)
 
         # get geojson data
         data = self.__data(page=page, headers=headers)
