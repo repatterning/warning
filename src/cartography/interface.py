@@ -1,6 +1,7 @@
 """Module algorithms/interface.py"""
 import io
 import logging
+import os.path
 import sys
 import xml.etree.ElementTree as  et
 
@@ -9,6 +10,7 @@ import geopandas
 import pandas as pd
 import requests
 
+import config
 import src.functions.cache
 import src.functions.secret
 
@@ -29,6 +31,7 @@ class Interface:
         self.__connector = connector
         self.__arguments = arguments
 
+        self.__configurations = config.Config()
         self.__secret = src.functions.secret.Secret(connector=self.__connector)
 
     def __data(self, page: et.Element, headers: dict) -> geopandas.GeoDataFrame:
@@ -54,6 +57,14 @@ class Interface:
         frame = frame if len(computations) == 0 else pd.concat(computations, axis=0, ignore_index=True)
 
         return frame
+
+    def __temporary(self) -> geopandas.GeoDataFrame:
+
+        try:
+            return geopandas.read_file(
+                filename=os.path.join(self.__configurations.data_, 'latest.geojson'))
+        except FileNotFoundError as err:
+            raise err from err
 
     def exc(self) -> geopandas.GeoDataFrame:
         """
