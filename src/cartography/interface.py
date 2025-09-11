@@ -59,6 +59,10 @@ class Interface:
         return frame
 
     def __temporary(self) -> geopandas.GeoDataFrame:
+        """
+
+        :return:
+        """
 
         try:
             return geopandas.read_file(
@@ -87,9 +91,8 @@ class Interface:
         # get geojson data
         data = self.__data(page=page, headers=headers)
 
+        # Initially; later -> logging.info('no warnings'), src.functions.cache.Cache().exc(), sys.exit()
         if data.empty:
-            logging.info('no warnings')
-            src.functions.cache.Cache().exc()
-            sys.exit()
+            return self.__temporary()
 
         return data
