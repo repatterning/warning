@@ -22,16 +22,6 @@ class Setup:
         self.__configurations = config.Config()
         self.__directories = src.functions.directories.Directories()
 
-    def __data(self) -> bool:
-        """
-
-        :return:
-        """
-
-        self.__directories.cleanup(path=self.__configurations.data_)
-
-        return self.__directories.create(path=self.__configurations.data_)
-
     def __local(self) -> bool:
         """
 
@@ -48,9 +38,9 @@ class Setup:
         :return:
         """
 
-        if self.__local() & self.__data():
+        if self.__local():
             return True
 
         src.functions.cache.Cache().exc()
 
-        sys.exit('Error: Set up failure')
+        sys.exit('Error: Unable to clear and re-create the local warehouse')
