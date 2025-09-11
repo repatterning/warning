@@ -14,7 +14,7 @@ import src.functions.cache
 import src.functions.secret
 
 
-class Interface:
+class Data:
     """
     The interface to the programs of the algorithms package.
     """
