@@ -43,6 +43,22 @@ class Reference:
 
         return self.__stream.read(text=text)
 
+    @staticmethod
+    def __restructure(reference: pd.DataFrame) -> geopandas.GeoDataFrame:
+        """
+
+        :param reference: Each instance represents a distinct gauge station, alongside its details.
+        :return:
+        """
+
+        structure = geopandas.GeoDataFrame(
+            reference,
+            geometry=geopandas.points_from_xy(reference['longitude'], reference['latitude'])
+        )
+        structure.crs = 'epsg:4326'
+
+        return structure
+
     def exc(self) -> pd.DataFrame:
         """
 
