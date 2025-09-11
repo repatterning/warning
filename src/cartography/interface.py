@@ -6,6 +6,7 @@ import xml.etree.ElementTree as  et
 
 import boto3
 import geopandas
+import pandas as pd
 import requests
 
 import src.functions.cache
@@ -41,12 +42,16 @@ class Interface:
         :return:
         """
 
+        computations = []
         frame = geopandas.GeoDataFrame()
         for paragraph in page.findall('{http://www.w3.org/2005/Atom}link'):
             elements = paragraph.attrib
             if elements.get('type') == 'application/vnd.geo+json':
                 bits = requests.get(url=elements.get('href'), headers=headers, timeout=30)
-                frame = geopandas.read_file(io.BytesIO(bits.content))
+                part = geopandas.read_file(io.BytesIO(bits.content))
+                computations.append(part)
+
+        frame = frame if len(computations) == 0 else pd.concat(computations, axis=0, ignore_index=True)
 
         return frame
 
