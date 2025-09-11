@@ -59,7 +59,7 @@ class Reference:
 
         return structure
 
-    def exc(self) -> pd.DataFrame:
+    def exc(self) -> geopandas.GeoDataFrame:
         """
 
         :return:
@@ -68,4 +68,6 @@ class Reference:
         reference = self.__get_reference()
         reference.rename(columns=self.__rename, inplace=True)
 
-        return reference
+        structure = self.__restructure(reference=reference)
+
+        return structure
