@@ -65,9 +65,11 @@ class Reference:
         :return:
         """
 
+        # Reading the inventory-file of river level gauge stations
         reference = self.__get_reference()
         reference.rename(columns=self.__rename, inplace=True)
 
+        # The GeoDataFrame form of the reference data
         structure = self.__restructure(reference=reference)
 
         return structure
