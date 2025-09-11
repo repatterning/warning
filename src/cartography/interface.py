@@ -1,5 +1,6 @@
 """Module algorithms/interface.py"""
 import io
+import os
 import logging
 import sys
 import xml.etree.ElementTree as et
@@ -65,6 +66,7 @@ class Interface:
 
         # Retrieve the XML Feed; time out -> seconds
         response = requests.get(url=url, headers=headers, timeout=30)
+        logging.info(response.content)
         page: et.Element = et.fromstring(response.content)
 
         # get geojson data
@@ -75,4 +77,6 @@ class Interface:
             src.functions.cache.Cache().exc()
             sys.exit()
 
+        # Temporary
+        data.to_file('warehouse/latest.geojson', driver='GeoJSON')
         logging.info(data)
