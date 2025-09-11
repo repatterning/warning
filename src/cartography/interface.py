@@ -1,6 +1,5 @@
 """Module algorithms/interface.py"""
 import io
-import os
 import logging
 import sys
 import xml.etree.ElementTree as et
@@ -51,7 +50,7 @@ class Interface:
 
         return frame
 
-    def exc(self):
+    def exc(self) -> geopandas.GeoDataFrame:
         """
 
         :return:
@@ -77,6 +76,4 @@ class Interface:
             src.functions.cache.Cache().exc()
             sys.exit()
 
-        # Temporary
-        data.to_file('warehouse/latest.geojson', driver='GeoJSON')
-        logging.info(data)
+        return data
