@@ -18,8 +18,9 @@ class Cuttings:
 
     def __is_member(self, _polygon: shapely.geometry.polygon.Polygon):
         """
+        Determines whether a reference gauge location lies within a polygon; per reference gauge
 
-        :param _polygon:
+        :param _polygon: The polygon of a weather warning area
         :return:
         """
 
@@ -28,7 +29,7 @@ class Cuttings:
     def members(self, _polygon: shapely.geometry.polygon.Polygon) -> geopandas.GeoDataFrame:
         """
 
-        :param _polygon:
+        :param _polygon: The polygon of a weather warning area
         :return:
         """
 
@@ -39,7 +40,7 @@ class Cuttings:
     def inside(self, _polygon: shapely.geometry.polygon.Polygon) -> int:
         """
 
-        :param _polygon:
+        :param _polygon: The polygon of a weather warning area
         :return:
         """
 
