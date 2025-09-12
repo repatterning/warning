@@ -37,15 +37,9 @@ class Interface:
 
         data: geopandas.GeoDataFrame = src.cartography.data.Data(
             connector=self.__connector, arguments=self.__arguments).exc()
-        data.info()
 
         reference: geopandas.GeoDataFrame = src.cartography.reference.Reference(
             s3_parameters=self.__s3_parameters).exc()
-        reference.info()
-
-        elements = data.geometry.to_list()
-        logging.info(type(elements))
-        logging.info(elements)
 
         initial = [src.cartography.cuttings.Cuttings(reference=reference).members(_polygon=_polygon)
                    for _polygon in data.geometry]
