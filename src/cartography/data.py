@@ -49,7 +49,7 @@ class Data:
         frame = geopandas.GeoDataFrame()
         for paragraph in page.findall('{http://www.w3.org/2005/Atom}link'):
             elements = paragraph.attrib
-            if elements.get('type') == 'application/vnd.geo+json':
+            if elements.get('type') == 'application/vnd.geo+json' and elements.get('href').__contains__('issued'):
                 bits = requests.get(url=elements.get('href'), headers=headers, timeout=30)
                 part = geopandas.read_file(io.BytesIO(bits.content))
                 computations.append(part)
