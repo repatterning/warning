@@ -43,6 +43,11 @@ class Interface:
             s3_parameters=self.__s3_parameters).exc()
         reference.info()
 
-        identifiers: geopandas.GeoSeries = data.geometry.map(
-            src.cartography.cuttings.Cuttings(reference=reference).inside)
+        elements = data.geometry.to_list()
+        logging.info(type(elements))
+        logging.info(elements)
 
+        initial = [src.cartography.cuttings.Cuttings(reference=reference).members(_polygon=_polygon)
+                   for _polygon in data.geometry]
+        logging.info(type(initial))
+        logging.info(initial)
