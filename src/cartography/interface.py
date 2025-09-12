@@ -1,14 +1,16 @@
 """Module algorithms/interface.py"""
 import logging
+import sys
 
 import boto3
 import geopandas
+import pandas as pd
 
 import src.cartography.cuttings
 import src.cartography.data
 import src.cartography.reference
 import src.elements.s3_parameters as s3p
-
+import src.functions.cache
 
 class Interface:
     """
@@ -35,12 +37,19 @@ class Interface:
         :return:
         """
 
-        data: geopandas.GeoDataFrame = src.cartography.data.Data(
-            connector=self.__connector, arguments=self.__arguments).exc()
-
         reference: geopandas.GeoDataFrame = src.cartography.reference.Reference(
             s3_parameters=self.__s3_parameters).exc()
 
-        initial = [src.cartography.cuttings.Cuttings(reference=reference).members(_polygon=_polygon)
+        data: geopandas.GeoDataFrame = src.cartography.data.Data(
+            connector=self.__connector, arguments=self.__arguments).exc()
+        data: geopandas.GeoDataFrame = data.to_crs(epsg=int(reference.crs.srs.split(':')[1]))
+
+        initial: list[geopandas.GeoDataFrame] = [src.cartography.cuttings.Cuttings(reference=reference).members(_polygon=_polygon)
                    for _polygon in data.geometry]
-        logging.info(initial)
+
+        if len(initial) == 0:
+            logging.info('No warnings')
+            src.functions.cache.Cache().exc()
+            sys.exit(0)
+
+        pd.concat(initial, axis=0, ignore_index=True)
