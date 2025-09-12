@@ -1,7 +1,6 @@
 """Module reference.py"""
-import pandas as pd
-
 import geopandas
+import pandas as pd
 
 import src.elements.s3_parameters as s3p
 import src.elements.text_attributes as txa
