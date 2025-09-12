@@ -11,7 +11,7 @@ class Cuttings:
     def __init__(self, reference: geopandas.GeoDataFrame):
         """
 
-        instances: the geometry field of `instances` encodes the points from a single/distinct parent catchment
+        :param reference: The reference sheet of gauges.  Each instance encodes the attributes of a gauge.
         """
 
         self.__reference = reference
