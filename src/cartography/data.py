@@ -36,7 +36,6 @@ class Data:
 
         # Temporary
         temporary = self.__temporary()
-        logging.info(temporary)
         temporary.info()
 
     @staticmethod
