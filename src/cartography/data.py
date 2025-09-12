@@ -89,7 +89,8 @@ class Data:
         page: ElTree.Element = ElTree.fromstring(response.content)
 
         # get geojson data
-        data = self.__data(page=page, headers=headers)
+        self.__data(page=page, headers=headers)
+        data = geopandas.GeoDataFrame()
 
         # Initially; later -> logging.info('no warnings'), src.functions.cache.Cache().exc(), sys.exit()
         if data.empty:
