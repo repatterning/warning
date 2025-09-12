@@ -37,6 +37,9 @@ class Interface:
 
         data: geopandas.GeoDataFrame = src.cartography.data.Data(
             connector=self.__connector, arguments=self.__arguments).exc()
+        logging.info(data[['issuedDate', 'warningUpdateDescription']])
+        logging.info(data[['warningId', 'warningHeadline', 'warningLevel', 'warningStatus']])
+        logging.info(data[['warningLikelihood', 'warningLevel', 'validFromDate', 'validToDate', 'geometry']])
 
         reference: geopandas.GeoDataFrame = src.cartography.reference.Reference(
             s3_parameters=self.__s3_parameters).exc()
