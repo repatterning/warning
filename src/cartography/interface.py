@@ -11,6 +11,8 @@ import src.cartography.data
 import src.cartography.reference
 import src.elements.s3_parameters as s3p
 import src.functions.cache
+import src.functions.streams
+
 
 class Interface:
     """
@@ -31,6 +33,19 @@ class Interface:
         self.__s3_parameters = s3_parameters
         self.__arguments = arguments
 
+    def __persist(self, initial: list[geopandas.GeoDataFrame]):
+        """
+
+        :param initial:
+        :return:
+        """
+
+        frame: geopandas.GeoDataFrame = pd.concat(initial, axis=0, ignore_index=True)
+        path = self.__s3_parameters.internal + '/' + self.__s3_parameters.path_internal_data + 'warning/latest.geojson'
+
+        src.functions.streams.Streams().write(blob=frame, path=path)
+
+
     def exc(self):
         """
 
@@ -44,12 +59,13 @@ class Interface:
             connector=self.__connector, arguments=self.__arguments).exc()
         data: geopandas.GeoDataFrame = data.to_crs(epsg=int(reference.crs.srs.split(':')[1]))
 
-        initial: list[geopandas.GeoDataFrame] = [src.cartography.cuttings.Cuttings(reference=reference).members(_polygon=_polygon)
-                   for _polygon in data.geometry]
+        initial: list[geopandas.GeoDataFrame] = [
+            src.cartography.cuttings.Cuttings(reference=reference).members(_polygon=_polygon)
+            for _polygon in data.geometry]
 
         if len(initial) == 0:
             logging.info('No warnings')
             src.functions.cache.Cache().exc()
             sys.exit(0)
 
-        pd.concat(initial, axis=0, ignore_index=True)
+        self.__persist(initial=initial)
