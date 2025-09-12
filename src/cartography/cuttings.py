@@ -17,10 +17,20 @@ class Cuttings:
         self.__instances = instances
 
     def __is_member(self, _polygon: shapely.geometry.polygon.Polygon):
+        """
+        
+        :param _polygon:
+        :return:
+        """
 
         return self.__instances.geometry.apply(lambda y: y.within(_polygon))
 
     def members(self, _polygon: shapely.geometry.polygon.Polygon) -> geopandas.GeoDataFrame:
+        """
+
+        :param _polygon:
+        :return:
+        """
 
         outputs = self.__is_member(_polygon=_polygon)
 
