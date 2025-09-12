@@ -44,5 +44,5 @@ class Interface:
         reference.info()
 
         identifiers: geopandas.GeoSeries = data.geometry.map(
-            src.cartography.cuttings.Cuttings(instances=reference).inside)
+            src.cartography.cuttings.Cuttings(reference=reference).inside)
 
