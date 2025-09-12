@@ -4,8 +4,8 @@ import logging
 import boto3
 import geopandas
 
-import src.cartography.data
 import src.cartography.cuttings
+import src.cartography.data
 import src.cartography.reference
 import src.elements.s3_parameters as s3p
 
