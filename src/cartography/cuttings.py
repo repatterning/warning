@@ -8,22 +8,22 @@ class Cuttings:
     Intersections of polygons
     """
 
-    def __init__(self, instances: geopandas.GeoDataFrame):
+    def __init__(self, reference: geopandas.GeoDataFrame):
         """
 
         instances: the geometry field of `instances` encodes the points from a single/distinct parent catchment
         """
 
-        self.__instances = instances
+        self.__reference = reference
 
     def __is_member(self, _polygon: shapely.geometry.polygon.Polygon):
         """
-        
+
         :param _polygon:
         :return:
         """
 
-        return self.__instances.geometry.apply(lambda y: y.within(_polygon))
+        return self.__reference.geometry.apply(lambda y: y.within(_polygon))
 
     def members(self, _polygon: shapely.geometry.polygon.Polygon) -> geopandas.GeoDataFrame:
         """
@@ -34,7 +34,7 @@ class Cuttings:
 
         outputs = self.__is_member(_polygon=_polygon)
 
-        return self.__instances.loc[outputs, :]
+        return self.__reference.loc[outputs, :]
 
     def inside(self, _polygon: shapely.geometry.polygon.Polygon) -> int:
         """
