@@ -3,10 +3,10 @@ import io
 import logging
 import os.path
 import xml.etree.ElementTree as ElTree
-import numpy as np
 
 import boto3
 import geopandas
+import numpy as np
 import pandas as pd
 import requests
 
