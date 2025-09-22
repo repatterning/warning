@@ -1,10 +1,15 @@
+"""Module settings.py"""
+import datetime
+
 import boto3
 
 import src.functions.secret
 
 
-
 class Settings:
+    """
+    Builds the ...
+    """
 
     def __init__(self, connector: boto3.session.Session, project_key_name: str):
         """
@@ -18,3 +23,12 @@ class Settings:
         # Secrets
         self.__secret = src.functions.secret.Secret(connector=connector)
 
+    def exc(self, starting: datetime.datetime, ending: datetime.datetime):
+
+        elements = {
+            'name': 'HydrographyWarningSystem',
+            'starting': starting,
+            'ending': ending
+        }
+
+        return elements
