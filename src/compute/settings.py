@@ -8,7 +8,7 @@ import src.functions.secret
 
 class Settings:
     """
-    Builds the ...
+    Creates a schedule's dictionary of arguments.
     """
 
     def __init__(self, connector: boto3.session.Session, project_key_name: str):
@@ -23,7 +23,7 @@ class Settings:
         # Secrets
         self.__secret = src.functions.secret.Secret(connector=connector)
 
-    def exc(self, starting: datetime.datetime, ending: datetime.datetime):
+    def exc(self, starting: datetime.datetime, ending: datetime.datetime) -> dict:
         """
         https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/scheduler/client/create_schedule.html
 
