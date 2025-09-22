@@ -45,7 +45,6 @@ class Interface:
 
         src.functions.streams.Streams().write(blob=frame, path=path)
 
-
     def exc(self):
         """
 
