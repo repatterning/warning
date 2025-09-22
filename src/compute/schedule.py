@@ -6,6 +6,9 @@ import botocore.exceptions
 
 
 class Schedule:
+    """
+    Schedule
+    """
 
     def __init__(self):
         """
