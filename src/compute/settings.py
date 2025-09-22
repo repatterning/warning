@@ -42,7 +42,7 @@ class Settings:
         :param use_flexible_time_window: Whether to use a flexible time window.
         :param maximum_window_in_minutes: The span of the afore flexible time window.
         '''
-        elements = {
+        arguments = {
             'name': 'HydrographyWarningSystem',
             'schedule_expression': 'rate(2 hours)',
             'starting': starting,
@@ -55,4 +55,4 @@ class Settings:
             'maximum_window_in_minutes': 5
         }
 
-        return elements
+        return arguments
