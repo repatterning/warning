@@ -18,7 +18,7 @@ class Schedule:
         self.__logger = logging.getLogger(__name__)
 
     def create_schedule(self, name: str, schedule_expression: str, schedule_group_name: str, target_arn: str, role_arn: str,
-                        target_input: str, delete_after_completion: bool = False, use_flexible_time_window: bool = False,
+                        delete_after_completion: bool = False, use_flexible_time_window: bool = False,
     ) -> str:
         """
         Creates a new schedule with the specified parameters.
@@ -28,7 +28,6 @@ class Schedule:
         :param schedule_group_name: The name of the schedule group.
         :param target_arn: The Amazon Resource Name (ARN) of the target.
         :param role_arn: The Amazon Resource Name (ARN) of the execution IAM role.
-        :param target_input: The target_input for the target.
         :param delete_after_completion: Whether to delete the schedule after it completes.
         :param use_flexible_time_window: Whether to use a flexible time window.
 
@@ -41,7 +40,7 @@ class Schedule:
                 'Name': name,
                 'ScheduleExpression': schedule_expression,
                 'GroupName': schedule_group_name,
-                'Target': {'Arn': target_arn, 'RoleArn': role_arn, 'Input': target_input},
+                'Target': {'Arn': target_arn, 'RoleArn': role_arn},
                 'StartDate': datetime.datetime.now(datetime.timezone.utc),
                 'EndDate': datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=hours_to_run)}
 
