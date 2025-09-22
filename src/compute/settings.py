@@ -34,7 +34,7 @@ class Settings:
 
         '''
         :param name: The schedule's name.
-        :param schedule_expression: ...
+        :param schedule_expression: The timing schedule.
         :param group_name: The name of the schedule group.
         :param arn: The Amazon Resource Name (ARN) of the target.
         :param role_arn: The Amazon Resource Name (ARN) of the execution IAM role.
@@ -44,6 +44,7 @@ class Settings:
         '''
         elements = {
             'name': 'HydrographyWarningSystem',
+            'schedule_expression': 'rate(2 hours)',
             'starting': starting,
             'ending': ending,
             'group_name': 'default',
