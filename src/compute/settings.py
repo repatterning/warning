@@ -32,7 +32,9 @@ class Settings:
             'schedule_group_name': 'default',
             'arn': self.__secret.exc(secret_id=self.__project_key_name, node='schedule-target-arn-warning-system'),
             'role_arn': self.__secret.exc(secret_id=self.__project_key_name, node='schedule-target-execution-role-arn'),
-            'delete_after_completion': True
+            'delete_after_completion': True,
+            'use_flexible_window_time': True,
+            'maximum_window_in_minutes': 5
         }
 
         return elements
