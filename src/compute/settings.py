@@ -24,7 +24,24 @@ class Settings:
         self.__secret = src.functions.secret.Secret(connector=connector)
 
     def exc(self, starting: datetime.datetime, ending: datetime.datetime):
+        """
 
+        :param starting:
+        :param ending:
+        :return:
+        """
+
+
+        '''
+        :param name: The schedule's name.
+        :param schedule_expression: ...
+        :param group_name: The name of the schedule group.
+        :param arn: The Amazon Resource Name (ARN) of the target.
+        :param role_arn: The Amazon Resource Name (ARN) of the execution IAM role.
+        :param delete_after_completion: Whether to delete the schedule after it completes.
+        :param use_flexible_time_window: Whether to use a flexible time window.
+        :param maximum_window_in_minutes: The span of the afore flexible time window.
+        '''
         elements = {
             'name': 'HydrographyWarningSystem',
             'starting': starting,
