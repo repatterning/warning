@@ -33,30 +33,14 @@ class Interface:
         self.__s3_parameters = s3_parameters
         self.__arguments = arguments
 
-    def __persist(self, initial: list[geopandas.GeoDataFrame]):
+    @staticmethod
+    def __members(data: geopandas.GeoDataFrame, reference: geopandas.GeoDataFrame) -> geopandas.GeoDataFrame:
         """
+        Which gauges, if any, lie within a warning area?
 
-        :param initial:
-        :return:
-        """
-
-        frame: geopandas.GeoDataFrame = pd.concat(initial, axis=0, ignore_index=True)
-        path = self.__s3_parameters.internal + '/' + self.__s3_parameters.path_internal_data + 'warning/latest.geojson'
-
-        src.functions.streams.Streams().write(blob=frame, path=path)
-
-    def exc(self):
-        """
 
         :return:
         """
-
-        reference: geopandas.GeoDataFrame = src.cartography.reference.Reference(
-            s3_parameters=self.__s3_parameters).exc()
-
-        data: geopandas.GeoDataFrame = src.cartography.data.Data(
-            connector=self.__connector, arguments=self.__arguments).exc()
-        data: geopandas.GeoDataFrame = data.to_crs(epsg=int(reference.crs.srs.split(':')[1]))
 
         initial: list[geopandas.GeoDataFrame] = [
             src.cartography.cuttings.Cuttings(reference=reference).members(_polygon=_polygon)
@@ -67,4 +51,23 @@ class Interface:
             src.functions.cache.Cache().exc()
             sys.exit(0)
 
-        self.__persist(initial=initial)
+        return pd.concat(initial, axis=0, ignore_index=True)
+
+    def exc(self):
+        """
+
+        :return:
+        """
+
+        # The country's gauge assets
+        reference: geopandas.GeoDataFrame = src.cartography.reference.Reference(
+            s3_parameters=self.__s3_parameters).exc()
+
+        # The latest geo-spatial weather warning data
+        data: geopandas.GeoDataFrame = src.cartography.data.Data(
+            connector=self.__connector, arguments=self.__arguments).exc()
+        data: geopandas.GeoDataFrame = data.to_crs(epsg=int(reference.crs.srs.split(':')[1]))
+
+        # Hence
+        frame: geopandas.GeoDataFrame = self.__members(data=data, reference=reference)
+        logging.info(frame)
