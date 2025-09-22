@@ -1,7 +1,6 @@
-
+"""Module schedule.py"""
 import logging
 
-import datetime
 import boto3
 import botocore.exceptions
 
@@ -9,6 +8,9 @@ import botocore.exceptions
 class Schedule:
 
     def __init__(self):
+        """
+        Constructor
+        """
 
         self.__scheduler_client = boto3.client('scheduler')
 
@@ -17,48 +19,39 @@ class Schedule:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
 
-    def create_schedule(self, name: str, schedule_expression: str, schedule_group_name: str, target_arn: str, target_role_arn: str,
-                        delete_after_completion: bool = False, use_flexible_time_window: bool = False,
-    ) -> str:
+    def create_schedule(self, arguments: dict) -> str:
         """
         Creates a new schedule with the specified parameters.
 
-        :param name: The name of the schedule.
-        :param schedule_expression: The expression that defines when the schedule runs.
-        :param schedule_group_name: The name of the schedule group.
-        :param target_arn: The Amazon Resource Name (ARN) of the target.
-        :param target_role_arn: The Amazon Resource Name (ARN) of the execution IAM role.
-        :param delete_after_completion: Whether to delete the schedule after it completes.
-        :param use_flexible_time_window: Whether to use a flexible time window.
-
-        :return The ARN of the created schedule.
+        :param arguments:
+        :return:
+            The ARN of the created schedule.
         """
         try:
-            hours_to_run = 60
-            flexible_time_window_minutes = int(5)
             parameters = {
-                'Name': name,
-                'ScheduleExpression': schedule_expression,
-                'GroupName': schedule_group_name,
-                'Target': {'Arn': target_arn, 'RoleArn': target_role_arn},
-                'StartDate': datetime.datetime.now(datetime.timezone.utc),
-                'EndDate': datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=hours_to_run)}
+                'Name': arguments.get('name'),
+                'ScheduleExpression': arguments.get('schedule_expression'),
+                'GroupName': arguments.get('group_name'),
+                'Target': {'Arn': arguments.get('arn'), 'RoleArn': arguments.get('role_arn')},
+                'StartDate': arguments.get('starting'),
+                'EndDate': arguments.get('ending')}
 
-            if delete_after_completion:
+            if arguments.get('delete_after_completion'):
                 parameters['ActionAfterCompletion'] = 'DELETE'
 
-            if use_flexible_time_window:
+            if arguments.get('use_flexible_window_time'):
                 parameters['FlexibleTimeWindow']['Mode'] = 'FLEXIBLE'
-                parameters['FlexibleTimeWindow']['MaximumWindowInMinutes'] = flexible_time_window_minutes
+                parameters['FlexibleTimeWindow']['MaximumWindowInMinutes'] = arguments.get('maximum_window_in_minutes')
             else:
                 parameters['FlexibleTimeWindow']['Mode'] = 'OFF'
 
             response = self.__scheduler_client.create_schedule(**parameters)
 
             return response['ScheduleArn']
+
         except botocore.exceptions.ClientError as err:
             if err.response['Error']['Code'] == 'ConflictException':
-                self.__logger.error('Failed to create schedule %s: %s', name, err.response['Error']['Message'])
+                self.__logger.error('Failed to create schedule %s: %s', arguments.get('name'), err.response['Error']['Message'])
             else:
                 self.__logger.error('Error creating schedule: %s', err.response['Error']['Message'])
             raise
