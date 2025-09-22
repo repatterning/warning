@@ -28,7 +28,11 @@ class Settings:
         elements = {
             'name': 'HydrographyWarningSystem',
             'starting': starting,
-            'ending': ending
+            'ending': ending,
+            'schedule_group_name': 'default',
+            'arn': self.__secret.exc(secret_id=self.__project_key_name, node='schedule-target-arn-warning-system'),
+            'role_arn': self.__secret.exc(secret_id=self.__project_key_name, node='schedule-target-execution-role-arn'),
+            'delete_after_completion': True
         }
 
         return elements
