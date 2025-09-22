@@ -25,12 +25,12 @@ class Settings:
 
     def exc(self, starting: datetime.datetime, ending: datetime.datetime):
         """
+        https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/scheduler/client/create_schedule.html
 
-        :param starting:
-        :param ending:
+        :param starting: The start time
+        :param ending: The end time
         :return:
         """
-
 
         '''
         :param name: The schedule's name.
