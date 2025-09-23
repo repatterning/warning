@@ -49,7 +49,7 @@ class Settings:
             'schedule_expression': 'rate(2 hours)',
             'starting': starting,
             'ending': ending,
-            'group_name': 'default',
+            'group_name': self.__secret.exc(secret_id=self.__project_key_name, node='schedule-group'),
             'arn': self.__secret.exc(secret_id=self.__project_key_name, node='schedule-target-arn-warning-system'),
             'role_arn': self.__secret.exc(secret_id=self.__project_key_name, node='schedule-target-execution-role-arn'),
             'delete_after_completion': True,
