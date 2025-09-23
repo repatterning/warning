@@ -1,11 +1,15 @@
-
+"""Module metadata.py"""
 
 class Metadata:
     """
     https://weather.metoffice.gov.uk/guides/warnings
     """
 
+    # pylint: disable=R0903
     def __init__(self):
+        """
+        Constructor
+        """
 
         self.metadata = {
             'ts_id': 'The unique identification of the time series of a gauge.',
