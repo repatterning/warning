@@ -1,5 +1,6 @@
 """Module algorithms/interface.py"""
 import io
+import uuid
 import logging
 import os.path
 import xml.etree.ElementTree as ElTree
@@ -71,8 +72,7 @@ class Data:
         try:
             frame = geopandas.read_file(
                 filename=os.path.join(self.__configurations.data_, 'latest.geojson'))
-            # frame['validFromDate'] = valid_from_date
-            # frame['validToDate'] = valid_to_date
+            frame['warningId'] = str(uuid.uuid4())
             return frame
         except FileNotFoundError as err:
             raise err from err
