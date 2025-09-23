@@ -1,6 +1,10 @@
 """Module compute/interface.py"""
 import logging
 import boto3
+import datetime
+
+import geopandas
+import pandas as pd
 
 import src.compute.schedule
 import src.compute.settings
@@ -22,16 +26,27 @@ class Interface:
         self.__connector = connector
         self.__arguments = arguments
 
-    def exc(self, starting, ending):
+    @staticmethod
+    def __timestamp(value: pd.Timestamp) -> datetime.datetime:
         """
 
-        :param starting:
-        :param ending:
+        :param value:
         :return:
         """
 
-        logging.info(type(starting))
-        logging.info(type(ending))
+        _st = value.to_pydatetime()
+
+        return datetime.datetime.fromtimestamp(_st.timestamp())
+
+    def exc(self, frame: geopandas.GeoDataFrame):
+        """
+
+        :param frame:
+        :return:
+        """
+
+        starting = self.__timestamp(value = frame['starting'].min())
+        ending = self.__timestamp(value = frame['ending'].max())
 
         settings = src.compute.settings.Settings(
             connector=self.__connector, project_key_name=self.__arguments.get('project_key_name')).exc(
