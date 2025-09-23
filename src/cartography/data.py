@@ -31,6 +31,7 @@ class Data:
         self.__connector = connector
         self.__arguments = arguments
 
+        # Instances
         self.__configurations = config.Config()
         self.__secret = src.functions.secret.Secret(connector=self.__connector)
 
