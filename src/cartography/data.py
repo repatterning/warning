@@ -34,10 +34,6 @@ class Data:
         self.__configurations = config.Config()
         self.__secret = src.functions.secret.Secret(connector=self.__connector)
 
-        # Temporary
-        temporary = self.__temporary()
-        temporary.info()
-
     @staticmethod
     def __data(page: ElTree.Element, headers: dict) -> geopandas.GeoDataFrame:
         """
@@ -69,14 +65,14 @@ class Data:
         :return:
         """
 
-        valid_from_date = np.datetime64('now', 'ms')
-        valid_to_date = valid_from_date + np.timedelta64(5, 'h')
+        # valid_from_date = np.datetime64('now', 'ms')
+        # valid_to_date = valid_from_date + np.timedelta64(5, 'h')
 
         try:
             frame = geopandas.read_file(
                 filename=os.path.join(self.__configurations.data_, 'latest.geojson'))
-            frame['validFromDate'] = valid_from_date
-            frame['validToDate'] = valid_to_date
+            # frame['validFromDate'] = valid_from_date
+            # frame['validToDate'] = valid_to_date
             return frame
         except FileNotFoundError as err:
             raise err from err
