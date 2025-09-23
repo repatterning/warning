@@ -1,13 +1,12 @@
 """Module algorithms/interface.py"""
 import io
-import uuid
 import logging
 import os.path
+import uuid
 import xml.etree.ElementTree as ElTree
 
 import boto3
 import geopandas
-import numpy as np
 import pandas as pd
 import requests
 
