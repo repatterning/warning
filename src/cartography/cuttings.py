@@ -1,6 +1,8 @@
 """Module cuttings.py"""
+import logging
 import geopandas
 import shapely
+import datetime
 
 
 class Cuttings:
@@ -26,25 +28,17 @@ class Cuttings:
 
         return self.__reference.geometry.apply(lambda y: y.within(_polygon))
 
-    def members(self, _polygon: shapely.geometry.polygon.Polygon) -> geopandas.GeoDataFrame:
+    def members(self, _elements: tuple) -> geopandas.GeoDataFrame:
         """
+        .geometry: shapely.geometry.polygon.Polygon -> The polygon of a weather warning area
 
-        :param _polygon: The polygon of a weather warning area
+        :param _elements:
         :return:
         """
 
-        outputs = self.__is_member(_polygon=_polygon)
+        logging.info(_elements)
+        logging.info(type(_elements))
+
+        outputs = self.__is_member(_polygon=_elements.geometry)
 
         return self.__reference.loc[outputs, :]
-
-    def states(self, _polygon: shapely.geometry.polygon.Polygon) -> int:
-        """
-
-        :param _polygon: The polygon of a weather warning area
-        :return:
-        """
-
-        # Is y a member of polygon `_polygon`? `y` is a geometry point of self.__instances
-        outputs = self.__is_member(_polygon=_polygon)
-
-        return sum(outputs)
