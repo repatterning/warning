@@ -1,6 +1,7 @@
 """Module algorithms/interface.py"""
 import logging
 import sys
+import datetime
 
 import boto3
 import geopandas
@@ -38,14 +39,18 @@ class Interface:
         """
         Which gauges, if any, lie within a warning area?
 
+        initial: list[geopandas.GeoDataFrame] = [
+            src.cartography.cuttings.Cuttings(reference=reference).members(_polygon=_polygon)
+            for _polygon in data.geometry]
+
         :param data:
         :param reference:
         :return:
         """
 
         initial: list[geopandas.GeoDataFrame] = [
-            src.cartography.cuttings.Cuttings(reference=reference).members(_polygon=_polygon)
-            for _polygon in data.geometry]
+            src.cartography.cuttings.Cuttings(reference=reference).members(_elements=_elements)
+            for _elements in data.itertuples()]
 
         if len(initial) == 0:
             logging.info('No warnings')
@@ -69,7 +74,8 @@ class Interface:
             connector=self.__connector, arguments=self.__arguments).exc()
         data: geopandas.GeoDataFrame = data.to_crs(epsg=int(reference.crs.srs.split(':')[1]))
         data.info()
-        logging.info(data[['issuedDate', 'warningLevel', 'warningId', 'validFromDate', 'validToDate']])
+        minimum: datetime.datetime = data['validFromDate'].min()
+        logging.info('%s, %s', minimum, type(minimum))
 
         # Hence
         frame: geopandas.GeoDataFrame = self.__members(data=data, reference=reference)
