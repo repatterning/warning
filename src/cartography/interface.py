@@ -11,6 +11,7 @@ import src.cartography.cuttings
 import src.cartography.data
 import src.cartography.reference
 import src.elements.s3_parameters as s3p
+import src.elements.system as stm
 import src.functions.cache
 import src.functions.streams
 
@@ -49,7 +50,7 @@ class Interface:
         """
 
         initial: list[geopandas.GeoDataFrame] = [
-            src.cartography.cuttings.Cuttings(reference=reference).members(_elements=_elements)
+            src.cartography.cuttings.Cuttings(reference=reference).members(_elements=stm.System._make(_elements))
             for _elements in data.itertuples()]
 
         if len(initial) == 0:
@@ -74,9 +75,8 @@ class Interface:
             connector=self.__connector, arguments=self.__arguments).exc()
         data: geopandas.GeoDataFrame = data.to_crs(epsg=int(reference.crs.srs.split(':')[1]))
         data.info()
-        minimum: datetime.datetime = data['validFromDate'].min()
-        logging.info('%s, %s', minimum, type(minimum))
 
         # Hence
         frame: geopandas.GeoDataFrame = self.__members(data=data, reference=reference)
+        frame.info()
         logging.info(frame)
