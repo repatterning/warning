@@ -1,8 +1,10 @@
+"""Module system.py"""
+import datetime
 import typing
+
 import numpy as np
 import shapely
 
-import datetime
 
 class System(typing.NamedTuple):
     """
