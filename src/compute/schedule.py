@@ -44,10 +44,11 @@ class Schedule:
                 parameters['ActionAfterCompletion'] = 'DELETE'
 
             if settings.get('use_flexible_window_time'):
-                parameters['FlexibleTimeWindow']['Mode'] = 'FLEXIBLE'
-                parameters['FlexibleTimeWindow']['MaximumWindowInMinutes'] = settings.get('maximum_window_in_minutes')
+                parameters['FlexibleTimeWindow'] = {
+                    'Mode': 'FLEXIBLE', 'MaximumWindowInMinutes': int(settings.get('maximum_window_in_minutes'))}
             else:
-                parameters['FlexibleTimeWindow']['Mode'] = 'OFF'
+                parameters['FlexibleTimeWindow'] = {
+                    'Mode': 'OFF', 'MaximumWindowInMinutes': 0}
 
             response = self.__scheduler_client.create_schedule(**parameters)
 
