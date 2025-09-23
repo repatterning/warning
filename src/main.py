@@ -18,7 +18,9 @@ def main():
     logger.info('Starting: %s', datetime.datetime.now().isoformat(timespec='microseconds'))
 
     # Investigate Warnings
-    src.cartography.interface.Interface(connector=connector, arguments=arguments, s3_parameters=s3_parameters).exc()
+    times:dict = src.cartography.interface.Interface(
+        service=service, connector=connector, arguments=arguments, s3_parameters=s3_parameters).exc()
+    logger.info(times)
 
     # Delete Cache Points
     src.functions.cache.Cache().exc()
