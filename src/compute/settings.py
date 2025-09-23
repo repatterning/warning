@@ -25,23 +25,25 @@ class Settings:
 
     def exc(self, starting: datetime.datetime, ending: datetime.datetime) -> dict:
         """
-        https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/scheduler/client/create_schedule.html
+        For more about a schedule's parameters & arguments visit
+        <a
+        href="https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/scheduler/client/create_schedule.html"
+        target="_blank">EventBridgeScheduler.Client.create_schedule()</a><br><br>
+
+        name: The schedule's name.<br>
+        schedule_expression: The timing schedule.<br>
+        group_name: The name of the schedule group.<br>
+        arn: The Amazon Resource Name (ARN) of the target.<br>
+        role_arn: The Amazon Resource Name (ARN) of the execution IAM role.<br>
+        delete_after_completion: Whether to delete the schedule after it completes.<br>
+        use_flexible_time_window: Whether to use a flexible time window.<br>
+        maximum_window_in_minutes: The span of the afore flexible time window.<br><br>
 
         :param starting: The start time
-        :param ending: The end time
+        :param ending: The end time<br>
         :return:
         """
 
-        '''
-        :param name: The schedule's name.
-        :param schedule_expression: The timing schedule.
-        :param group_name: The name of the schedule group.
-        :param arn: The Amazon Resource Name (ARN) of the target.
-        :param role_arn: The Amazon Resource Name (ARN) of the execution IAM role.
-        :param delete_after_completion: Whether to delete the schedule after it completes.
-        :param use_flexible_time_window: Whether to use a flexible time window.
-        :param maximum_window_in_minutes: The span of the afore flexible time window.
-        '''
         arguments = {
             'name': 'HydrographyWarningSystem',
             'schedule_expression': 'rate(2 hours)',
