@@ -5,6 +5,7 @@ import os
 import sys
 
 import boto3
+import geopandas
 
 
 def main():
@@ -18,9 +19,18 @@ def main():
     logger.info('Starting: %s', datetime.datetime.now().isoformat(timespec='microseconds'))
 
     # Investigate Warnings
-    times:dict = src.cartography.interface.Interface(
+    frame: geopandas.GeoDataFrame = src.cartography.interface.Interface(
         service=service, connector=connector, arguments=arguments, s3_parameters=s3_parameters).exc()
-    logger.info(times)
+
+
+    # Update the warnings data library
+    state: bool = src.updating.Updating(
+        service=service, s3_parameters=s3_parameters).exc(frame=frame)
+
+    if state:
+        src.compute.interface.Interface(
+            connector=connector, arguments=arguments).exc(
+            starting=frame['starting'].min(), ending=frame['ending'].max())
 
     # Delete Cache Points
     src.functions.cache.Cache().exc()
@@ -41,9 +51,11 @@ if __name__ == '__main__':
     # Modules
     import src.elements.service as sr
     import src.elements.s3_parameters as s3p
+    import src.compute.interface
     import src.functions.cache
     import src.preface.interface
     import src.cartography.interface
+    import src.updating
 
     connector: boto3.session.Session
     s3_parameters: s3p
