@@ -1,7 +1,6 @@
 """Module algorithms/interface.py"""
 import logging
 import sys
-import datetime
 
 import boto3
 import geopandas
@@ -10,7 +9,7 @@ import pandas as pd
 import src.cartography.cuttings
 import src.cartography.data
 import src.cartography.reference
-import src.cartography.updating
+import src.updating
 import src.elements.s3_parameters as s3p
 import src.elements.system as stm
 import src.elements.service as sr
@@ -60,7 +59,7 @@ class Interface:
 
         return pd.concat(initial, axis=0, ignore_index=True)
 
-    def exc(self) -> dict:
+    def exc(self) -> geopandas.GeoDataFrame:
         """
 
         :return:
@@ -78,10 +77,4 @@ class Interface:
         # Hence
         frame: geopandas.GeoDataFrame = self.__members(data=data, reference=reference)
 
-        # Update the warnings data library
-        message = src.cartography.updating.Updating(
-            service=self.__service, s3_parameters=self.__s3_parameters).exc(frame=frame)
-        logging.info(message)
-
-        return {'starting': frame['starting'].min(),
-                'ending': frame['ending'].max()}
+        return frame
