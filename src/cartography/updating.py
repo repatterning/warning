@@ -55,7 +55,7 @@ class Updating:
             service=self.__service, s3_parameters=self.__s3_parameters).bytes(
             data=instances, metadata=self.__metadata.metadata, key_name=affix)
 
-    def exc(self, frame: pd.DataFrame) -> str:
+    def exc(self, frame: pd.DataFrame) -> bool:
         """
 
         :param frame: The data of a gauge.
@@ -65,9 +65,4 @@ class Updating:
         affix = 'warning/data.csv'
         uri = f's3://{self.__s3_parameters.internal}/{affix}'
 
-        success = self.__update(uri=uri, frame=frame, affix=affix)
-        if success:
-            return 'The warnings data library has been updated.'
-
-        src.functions.cache.Cache().exc()
-        raise 'Unable to update the warnings data library.'
+        return self.__update(uri=uri, frame=frame, affix=affix)
