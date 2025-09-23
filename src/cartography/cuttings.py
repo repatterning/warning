@@ -1,6 +1,4 @@
 """Module cuttings.py"""
-import logging
-
 import geopandas
 import shapely
 
@@ -38,8 +36,6 @@ class Cuttings:
         :param _elements:
         :return:
         """
-
-        logging.info(_elements)
 
         states = self.__is_member(_polygon=_elements.geometry)
 
