@@ -1,7 +1,6 @@
 """Module algorithms/interface.py"""
 import logging
 import sys
-import datetime
 
 import boto3
 import geopandas
