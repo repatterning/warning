@@ -38,7 +38,8 @@ class Interface:
         """
         Which gauges, if any, lie within a warning area?
 
-
+        :param data:
+        :param reference:
         :return:
         """
 
@@ -67,6 +68,7 @@ class Interface:
         data: geopandas.GeoDataFrame = src.cartography.data.Data(
             connector=self.__connector, arguments=self.__arguments).exc()
         data: geopandas.GeoDataFrame = data.to_crs(epsg=int(reference.crs.srs.split(':')[1]))
+        data.info()
 
         # Hence
         frame: geopandas.GeoDataFrame = self.__members(data=data, reference=reference)
