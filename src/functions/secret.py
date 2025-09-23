@@ -29,7 +29,6 @@ class Secret:
                           Web Services (AWS) profile details, which allows for programmatic interaction with AWS.
         """
 
-        # self.__session = boto3.session.Session()
         self.__secrets_manager = connector.client(service_name='secretsmanager')
 
     def __get__value(self, secret_id: str) -> str:
