@@ -1,6 +1,7 @@
 """Module algorithms/interface.py"""
 import logging
 import sys
+import datetime
 
 import boto3
 import geopandas
@@ -59,7 +60,7 @@ class Interface:
 
         return pd.concat(initial, axis=0, ignore_index=True)
 
-    def exc(self):
+    def exc(self) -> dict:
         """
 
         :return:
@@ -80,5 +81,7 @@ class Interface:
         # Update the warnings data library
         message = src.cartography.updating.Updating(
             service=self.__service, s3_parameters=self.__s3_parameters).exc(frame=frame)
+        logging.info(message)
 
-
+        return {'starting': frame['starting'].min(),
+                'ending': frame['ending'].max()}
