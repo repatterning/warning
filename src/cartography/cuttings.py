@@ -37,7 +37,7 @@ class Cuttings:
 
         return self.__reference.loc[outputs, :]
 
-    def inside(self, _polygon: shapely.geometry.polygon.Polygon) -> int:
+    def states(self, _polygon: shapely.geometry.polygon.Polygon) -> int:
         """
 
         :param _polygon: The polygon of a weather warning area
