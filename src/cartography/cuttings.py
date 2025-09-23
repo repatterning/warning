@@ -1,8 +1,10 @@
 """Module cuttings.py"""
 import logging
+
 import geopandas
 import shapely
-import datetime
+
+import src.elements.system as stm
 
 
 class Cuttings:
@@ -17,6 +19,7 @@ class Cuttings:
         """
 
         self.__reference = reference
+        self.__r_fields = ['ts_id', 'station_id', 'catchment_id', 'geometry']
 
     def __is_member(self, _polygon: shapely.geometry.polygon.Polygon):
         """
@@ -28,7 +31,7 @@ class Cuttings:
 
         return self.__reference.geometry.apply(lambda y: y.within(_polygon))
 
-    def members(self, _elements: tuple) -> geopandas.GeoDataFrame:
+    def members(self, _elements: stm.System) -> geopandas.GeoDataFrame:
         """
         .geometry: shapely.geometry.polygon.Polygon -> The polygon of a weather warning area
 
@@ -37,8 +40,15 @@ class Cuttings:
         """
 
         logging.info(_elements)
-        logging.info(type(_elements))
 
-        outputs = self.__is_member(_polygon=_elements.geometry)
+        states = self.__is_member(_polygon=_elements.geometry)
 
-        return self.__reference.loc[outputs, :]
+        frame = self.__reference.copy().loc[states, self.__r_fields]
+        frame['issued_date'] = _elements.issuedDate
+        frame['warning_level'] = _elements.warningLevel
+        frame['warning_id'] = _elements.warningId
+        frame['modified'] = _elements.modifiedDate
+        frame['starting'] = _elements.validFromDate
+        frame['ending'] = _elements.validToDate
+
+        return frame
