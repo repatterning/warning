@@ -54,7 +54,9 @@ class Settings:
             'role_arn': self.__secret.exc(secret_id=self.__project_key_name, node='schedule-target-execution-role-arn'),
             'delete_after_completion': True,
             'use_flexible_window_time': True,
-            'maximum_window_in_minutes': 5
+            'maximum_window_in_minutes': 5,
+            'maximum_event_age_in_seconds': 900,
+            'maximum_retry_attempts': 1
         }
 
         return arguments
