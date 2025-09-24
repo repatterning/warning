@@ -69,7 +69,7 @@ class Interface:
                 connector=self.__connector).create_schedule(settings=settings)
         else:
             logging.info('The event bridge schedule - %s - exists; updating.',
-                         response.get('ResponseMetadata').get('Name'))
+                         response.get('Name'))
             message = src.compute.schedule.Schedule(
                 connector=self.__connector).create_schedule(settings=settings, update=True)
 
