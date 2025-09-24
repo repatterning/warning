@@ -24,13 +24,12 @@ def main():
 
     # Update the warnings data library
     state: bool = src.updating.Updating(
-        service=service, s3_parameters=s3_parameters).exc(frame=frame)
+        service=service, s3_parameters=s3_parameters).exc(frame=frame.copy())
 
     # Hence, orchestrate and launch a system
     if state:
         src.compute.interface.Interface(
-            connector=connector, arguments=arguments).exc(
-            starting=frame['starting'].min(), ending=frame['ending'].max())
+            connector=connector, arguments=arguments).exc(frame=frame.copy())
 
     # Delete Cache Points
     src.functions.cache.Cache().exc()
@@ -49,12 +48,12 @@ if __name__ == '__main__':
                         datefmt='%Y-%m-%d %H:%M:%S')
 
     # Modules
+    import src.cartography.interface
+    import src.compute.interface
     import src.elements.service as sr
     import src.elements.s3_parameters as s3p
-    import src.compute.interface
     import src.functions.cache
     import src.preface.interface
-    import src.cartography.interface
     import src.updating
 
     connector: boto3.session.Session
