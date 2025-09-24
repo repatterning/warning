@@ -71,7 +71,7 @@ class Data:
 
         try:
             frame = geopandas.read_file(
-                filename=os.path.join(self.__configurations.data_, 'latest.geojson'))
+                filename=self.__configurations.area_)
             frame['warningId'] = str(uuid.uuid4())
             return frame
         except FileNotFoundError as err:
