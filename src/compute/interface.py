@@ -62,10 +62,13 @@ class Interface:
         # Does the schedule exist?
         sch = self.__connector.client(service_name='scheduler')
         try:
-            response = sch.get_schedule(
+            response: dict = sch.get_schedule(
                 GroupName=settings.get('group_name'), Name=settings.get('name'))
         except sch.exceptions.ResourceNotFoundException:
             src.compute.schedule.Schedule(
                 connector=self.__connector).create_schedule(settings=settings)
         else:
-            logging.info('\n\nSCHEDULE:\n%s\n%s\n', response, type(response))
+            logging.info('The event bridge schedule - %s - exists; updating.',
+                         response.get('ResponseMetadata').get('Name'))
+            src.compute.schedule.Schedule(
+                connector=self.__connector).create_schedule(settings=settings, update=True)
