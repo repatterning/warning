@@ -65,12 +65,10 @@ class Interface:
             response: dict = sch.get_schedule(
                 GroupName=settings.get('group_name'), Name=settings.get('name'))
         except sch.exceptions.ResourceNotFoundException:
-            message = src.compute.schedule.Schedule(
+            src.compute.schedule.Schedule(
                 connector=self.__connector).create_schedule(settings=settings)
         else:
             logging.info('The event bridge schedule - %s - exists; updating.',
                          response.get('Name'))
-            message = src.compute.schedule.Schedule(
+            src.compute.schedule.Schedule(
                 connector=self.__connector).create_schedule(settings=settings, update=True)
-
-        logging.info(message)
