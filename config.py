@@ -23,7 +23,7 @@ class Config:
         logging.info(self.stamp)
 
         # Testing
-        self.area_ = 'https://raw.githubusercontent.com/repatterning/warning/refs/heads/develop/data/latest.geojson'
+        self.area_ = 'https://raw.githubusercontent.com/repatterning/.github/refs/heads/master/profile/latest.geojson'
 
         # Directories
         self.data_ = os.path.join(os.getcwd(), 'data')
