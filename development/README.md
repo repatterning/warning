@@ -3,7 +3,6 @@
 
 ## Environments
 
-
 <br>
 
 ### Remote Development
@@ -205,7 +204,6 @@ Pattern:
   }
 }
 ```
-
 
 <br>
 <br>
