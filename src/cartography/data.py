@@ -1,7 +1,7 @@
 """Module algorithms/interface.py"""
 import io
 import logging
-import os.path
+import sys
 import uuid
 import xml.etree.ElementTree as ElTree
 
@@ -98,8 +98,13 @@ class Data:
         # get geojson data
         data = self.__data(page=page, headers=headers)
 
-        # Initially; later -> logging.info('no warnings'), src.functions.cache.Cache().exc(), sys.exit()
-        if data.empty:
+        # Hence
+        if data.empty & self.__arguments.get('testing'):
             return self.__temporary()
+
+        if data.empty & ~self.__arguments.get('testing'):
+            logging.info('no warnings')
+            src.functions.cache.Cache().exc()
+            sys.exit(0)
 
         return data
