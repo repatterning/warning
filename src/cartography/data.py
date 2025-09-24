@@ -1,6 +1,8 @@
 """Module algorithms/interface.py"""
 import io
 import logging
+import datetime
+import pytz
 import sys
 import uuid
 import xml.etree.ElementTree as ElTree
@@ -30,6 +32,8 @@ class Data:
 
         self.__connector = connector
         self.__arguments = arguments
+
+        self.__minutes = 16
 
         # Instances
         self.__configurations = config.Config()
@@ -66,13 +70,14 @@ class Data:
         :return:
         """
 
-        # valid_from_date = np.datetime64('now', 'ms')
-        # valid_to_date = valid_from_date + np.timedelta64(5, 'h')
+        baseline = datetime.datetime.now(pytz.utc)
 
         try:
             frame = geopandas.read_file(
                 filename=self.__configurations.area_)
             frame['warningId'] = str(uuid.uuid4())
+            frame['validFromDate'] = baseline + datetime.timedelta(minutes=self.__minutes)
+            frame['validToDate'] = baseline + datetime.timedelta(minutes=2*self.__minutes)
             return frame
         except FileNotFoundError as err:
             raise err from err
