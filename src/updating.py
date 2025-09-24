@@ -1,15 +1,11 @@
 """Module data/updating.py"""
-import os
-
 import pandas as pd
 
-import config
 import src.cartography.metadata
 import src.elements.s3_parameters as s3p
 import src.elements.service as sr
 import src.elements.text_attributes as txa
 import src.functions.cache
-import src.functions.directories
 import src.functions.streams
 import src.s3.upload
 
@@ -31,8 +27,6 @@ class Updating:
         self.__s3_parameters = s3_parameters
 
         # Instances
-        self.__configurations = config.Config()
-        self.__directories = src.functions.directories.Directories()
         self.__streams = src.functions.streams.Streams()
         self.__metadata = src.cartography.metadata.Metadata()
 
