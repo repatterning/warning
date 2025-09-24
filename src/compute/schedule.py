@@ -22,11 +22,12 @@ class Schedule:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
 
-    def create_schedule(self, settings: dict) -> str:
+    def create_schedule(self, settings: dict, update: bool = False) -> str:
         """
         Creates a new schedule with the specified parameters.
 
         :param settings: refer to compute/settings.py
+        :param update: Update?
         :return:
             The ARN of the created schedule.
         """
@@ -39,7 +40,14 @@ class Schedule:
                 'ScheduleExpression': settings.get('schedule_expression'),
                 'ScheduleExpressionTimezone': 'Europe/Dublin',
                 'GroupName': settings.get('group_name'),
-                'Target': {'Arn': settings.get('arn'), 'RoleArn': settings.get('role_arn')},
+                'Target': {
+                    'Arn': settings.get('arn'),
+                    'RoleArn': settings.get('role_arn'),
+                    'RetryPolicy': {
+                        'MaximumEventAgeInSeconds': settings.get('maximum_event_age_in_seconds'),
+                        'MaximumRetryAttempts': settings.get('maximum_retry_attempts')
+                    }
+                },
                 'StartDate': settings.get('starting'),
                 'EndDate': settings.get('ending')}
 
@@ -53,7 +61,10 @@ class Schedule:
                 parameters['FlexibleTimeWindow'] = {
                     'Mode': 'OFF', 'MaximumWindowInMinutes': 0}
 
-            response = self.__scheduler_client.create_schedule(**parameters)
+            if update:
+                response = self.__scheduler_client.update_schedule(**parameters)
+            else:
+                response = self.__scheduler_client.create_schedule(**parameters)
 
             return response['ScheduleArn']
 
