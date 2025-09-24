@@ -1,5 +1,6 @@
 """Module compute/interface.py"""
 import datetime
+import logging
 
 import boto3
 import geopandas
@@ -31,16 +32,16 @@ class Interface:
 
     def __timestamp(self, value: pd.Timestamp) -> datetime.datetime:
         """
-        zoneinfo.ZoneInfo('Europe/London')
+        self.__place.localize(_reset)
 
         :param value:
         :return:
         """
 
         _initial = value.to_pydatetime()
-        _free = datetime.datetime.fromtimestamp(_initial.timestamp(), tz=None)
+        _reset = datetime.datetime.fromtimestamp(_initial.timestamp(), tz=self.__place)
 
-        return self.__place.localize(_free)
+        return _reset
 
     def exc(self, frame: geopandas.GeoDataFrame):
         """
@@ -49,11 +50,25 @@ class Interface:
         :return:
         """
 
+        # Cloud Compute Times: The data times and the cloud compute times exist within different zones
         starting = self.__timestamp(value = frame['starting'].min())
         ending = self.__timestamp(value = frame['ending'].max())
 
+        # Schedule Settings
         settings = src.compute.settings.Settings(
             connector=self.__connector, project_key_name=self.__arguments.get('project_key_name')).exc(
             starting=starting, ending=ending)
 
-        src.compute.schedule.Schedule(connector=self.__connector).create_schedule(settings=settings)
+        # Does the schedule exist?
+        sch = self.__connector.client(service_name='scheduler')
+        try:
+            response: dict = sch.get_schedule(
+                GroupName=settings.get('group_name'), Name=settings.get('name'))
+        except sch.exceptions.ResourceNotFoundException:
+            src.compute.schedule.Schedule(
+                connector=self.__connector).create_schedule(settings=settings)
+        else:
+            logging.info('The event bridge schedule - %s - exists; updating.',
+                         response.get('Name'))
+            src.compute.schedule.Schedule(
+                connector=self.__connector).create_schedule(settings=settings, update=True)

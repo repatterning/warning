@@ -3,9 +3,7 @@
 
 ## Environments
 
-* Steps | Met Office National Severe Weather Warnings Service (<abbr title="National Severe Weather Warnings Service">NSWWS</abbr>) [Public API (Application Programming Interface) Instructions](https://metoffice.github.io/nswws-public-api/instructions.html)
-* [Atom Feed](https://metoffice.github.io/nswws-public-api/atom-feed.html)
-* [x-api-key](https://apidog.com/blog/pass-x-api-key-header)
+<br>
 
 ### Remote Development
 
@@ -151,6 +149,61 @@ python -m flake8 --count --exit-zero --max-complexity=10 --max-line-length=127 -
 ```
 
 inspects complexity.
+
+
+<br>
+<br>
+
+## Event Bridge
+
+* Steps | Met Office National Severe Weather Warnings Service (<abbr title="National Severe Weather Warnings Service">NSWWS</abbr>) [Public API (Application Programming Interface) Instructions](https://metoffice.github.io/nswws-public-api/instructions.html)
+* [Atom Feed](https://metoffice.github.io/nswws-public-api/atom-feed.html)
+* [x-api-key](https://apidog.com/blog/pass-x-api-key-header)
+* [PyYAML](https://pyyaml.org/wiki/PyYAMLDocumentation)
+
+<br>
+
+### Schedule Metadata
+
+Pattern:
+
+```shell
+{
+  'ResponseMetadata': {
+    'RequestId': '', 
+    'HTTPStatusCode': 200, 
+    'HTTPHeaders': {
+      'x-amzn-requestid': '', 
+      'content-type': 'application/json', 
+      'content-length': '935', 
+      'date': 'Wed, 24 Sep 2025 20:04:06 GMT'
+      }, 
+    'RetryAttempts': 0
+  }, 
+  'ActionAfterCompletion': 'DELETE', 
+  'Arn': '', 
+  'CreationDate': datetime.datetime(2025, 9, 24, 19, 57, 54, 126000, tzinfo=tzlocal()), 
+  'EndDate': datetime.datetime(2025, 9, 24, 20, 33, 28, tzinfo=tzlocal()), 
+  'FlexibleTimeWindow': {
+    'MaximumWindowInMinutes': 5, 
+    'Mode': 'FLEXIBLE'}, 
+  'GroupName': '', 
+  'LastModificationDate': datetime.datetime(2025, 9, 24, 20, 1, 32, 314000, tzinfo=tzlocal()), 
+  'Name': '', 
+  'ScheduleExpression': 'rate(2 hours)', 
+  'ScheduleExpressionTimezone': 'Europe/Dublin', 
+  'StartDate': datetime.datetime(2025, 9, 24, 20, 17, 28, tzinfo=tzlocal()), 
+  'State': 'ENABLED', 
+  'Target': {
+    'Arn': '', 
+    'RetryPolicy': {
+      'MaximumEventAgeInSeconds': 900, 
+      'MaximumRetryAttempts': 1
+      }, 
+    'RoleArn': ''
+  }
+}
+```
 
 <br>
 <br>

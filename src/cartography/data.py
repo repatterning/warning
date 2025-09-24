@@ -1,13 +1,15 @@
 """Module algorithms/interface.py"""
+import datetime
 import io
 import logging
-import os.path
+import sys
 import uuid
 import xml.etree.ElementTree as ElTree
 
 import boto3
 import geopandas
 import pandas as pd
+import pytz
 import requests
 
 import config
@@ -30,6 +32,8 @@ class Data:
 
         self.__connector = connector
         self.__arguments = arguments
+
+        self.__minutes = 16
 
         # Instances
         self.__configurations = config.Config()
@@ -66,13 +70,14 @@ class Data:
         :return:
         """
 
-        # valid_from_date = np.datetime64('now', 'ms')
-        # valid_to_date = valid_from_date + np.timedelta64(5, 'h')
+        baseline = datetime.datetime.now(pytz.utc)
 
         try:
             frame = geopandas.read_file(
-                filename=os.path.join(self.__configurations.data_, 'latest.geojson'))
+                filename=self.__configurations.area_)
             frame['warningId'] = str(uuid.uuid4())
+            frame['validFromDate'] = baseline + datetime.timedelta(minutes=self.__minutes)
+            frame['validToDate'] = baseline + datetime.timedelta(minutes=2*self.__minutes)
             return frame
         except FileNotFoundError as err:
             raise err from err
@@ -92,14 +97,18 @@ class Data:
 
         # Retrieve the XML Feed; time out -> seconds
         response = requests.get(url=url, headers=headers, timeout=30)
-        logging.info(response.content)
         page: ElTree.Element = ElTree.fromstring(response.content)
 
         # get geojson data
         data = self.__data(page=page, headers=headers)
 
-        # Initially; later -> logging.info('no warnings'), src.functions.cache.Cache().exc(), sys.exit()
-        if data.empty:
+        # Hence
+        if data.empty & self.__arguments.get('testing'):
             return self.__temporary()
+
+        if data.empty & ~self.__arguments.get('testing'):
+            logging.info('no warnings')
+            src.functions.cache.Cache().exc()
+            sys.exit(0)
 
         return data

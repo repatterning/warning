@@ -22,6 +22,9 @@ class Config:
         self.stamp = now.strftime('%Y-%m-%d')
         logging.info(self.stamp)
 
+        # Testing
+        self.area_ = 'https://raw.githubusercontent.com/repatterning/.github/refs/heads/master/profile/latest.geojson'
+
         # Directories
         self.data_ = os.path.join(os.getcwd(), 'data')
         self.warehouse = os.path.join(os.getcwd(), 'warehouse')
