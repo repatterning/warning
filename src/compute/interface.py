@@ -32,16 +32,16 @@ class Interface:
 
     def __timestamp(self, value: pd.Timestamp) -> datetime.datetime:
         """
-        self.__place.localize(_free)
+        self.__place.localize(_reset)
 
         :param value:
         :return:
         """
 
         _initial = value.to_pydatetime()
-        _free = datetime.datetime.fromtimestamp(_initial.timestamp(), tz=self.__place)
+        _reset = datetime.datetime.fromtimestamp(_initial.timestamp(), tz=self.__place)
 
-        return _free
+        return _reset
 
     def exc(self, frame: geopandas.GeoDataFrame):
         """
@@ -65,10 +65,12 @@ class Interface:
             response: dict = sch.get_schedule(
                 GroupName=settings.get('group_name'), Name=settings.get('name'))
         except sch.exceptions.ResourceNotFoundException:
-            src.compute.schedule.Schedule(
+            message = src.compute.schedule.Schedule(
                 connector=self.__connector).create_schedule(settings=settings)
         else:
             logging.info('The event bridge schedule - %s - exists; updating.',
                          response.get('ResponseMetadata').get('Name'))
-            src.compute.schedule.Schedule(
+            message = src.compute.schedule.Schedule(
                 connector=self.__connector).create_schedule(settings=settings, update=True)
+
+        logging.info(message)
