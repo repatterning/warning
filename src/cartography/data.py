@@ -97,7 +97,6 @@ class Data:
 
         # Retrieve the XML Feed; time out -> seconds
         response = requests.get(url=url, headers=headers, timeout=30)
-        logging.info(response.content)
         page: ElTree.Element = ElTree.fromstring(response.content)
 
         # get geojson data
