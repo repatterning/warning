@@ -1,10 +1,10 @@
 """Module compute/interface.py"""
-import logging
-import boto3
 import datetime
 
+import boto3
 import geopandas
 import pandas as pd
+import pytz
 
 import src.compute.schedule
 import src.compute.settings
@@ -26,17 +26,21 @@ class Interface:
         self.__connector = connector
         self.__arguments = arguments
 
-    @staticmethod
-    def __timestamp(value: pd.Timestamp) -> datetime.datetime:
+        # Time & Place
+        self.__place = pytz.timezone('Europe/Dublin')
+
+    def __timestamp(self, value: pd.Timestamp) -> datetime.datetime:
         """
+        zoneinfo.ZoneInfo('Europe/London')
 
         :param value:
         :return:
         """
 
-        _st = value.to_pydatetime()
+        _initial = value.to_pydatetime()
+        _free = datetime.datetime.fromtimestamp(_initial.timestamp(), tz=None)
 
-        return datetime.datetime.fromtimestamp(_st.timestamp())
+        return self.__place.localize(_free)
 
     def exc(self, frame: geopandas.GeoDataFrame):
         """
