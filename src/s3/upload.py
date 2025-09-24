@@ -56,7 +56,7 @@ class Upload:
             response = bucket.put_object(
                 Body=buffer.getvalue(),
                 Key=key_name, Metadata=metadata)
-            self.__logger.info('%s\n%s', key_name, response)
+            self.__logger.info('%s\n%s', key_name, type(response))
             return bool(response)
         except botocore.exceptions.ClientError as err:
             raise err from err
