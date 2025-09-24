@@ -3,12 +3,9 @@
 
 ## Environments
 
-* [Weather Service Data](https://www.metoffice.gov.uk/binaries/content/assets/metofficegovuk/pdf/data/pwms_nswws.pdf)
-* [Introduction | Met Office <abbr title="National Severe Weather Warnings Service">NSWWS</abbr> Public API](https://metoffice.github.io/nswws-public-api/)
-* [Steps | Met Office <abbr title="National Severe Weather Warnings Service">NSWWS</abbr> Public API](https://metoffice.github.io/nswws-public-api/instructions.html)
+* Steps | Met Office National Severe Weather Warnings Service (<abbr title="National Severe Weather Warnings Service">NSWWS</abbr>) [Public API (Application Programming Interface) Instructions](https://metoffice.github.io/nswws-public-api/instructions.html)
 * [Atom Feed](https://metoffice.github.io/nswws-public-api/atom-feed.html)
 * [x-api-key](https://apidog.com/blog/pass-x-api-key-header)
-
 
 ### Remote Development
 
