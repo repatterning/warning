@@ -45,18 +45,24 @@ class Settings:
         """
 
         arguments = {
-            'name': 'HydrographyWarningSystem',
-            'schedule_expression': 'rate(2 hours)',
-            'starting': starting,
-            'ending': ending,
-            'group_name': self.__secret.exc(secret_id=self.__project_key_name, node='schedule-group'),
-            'arn': self.__secret.exc(secret_id=self.__project_key_name, node='schedule-target-arn-warning-system'),
-            'role_arn': self.__secret.exc(secret_id=self.__project_key_name, node='schedule-target-execution-role-arn'),
-            'delete_after_completion': True,
-            'use_flexible_window_time': True,
-            'maximum_window_in_minutes': 5,
-            'maximum_event_age_in_seconds': 900,
-            'maximum_retry_attempts': 1
+            'Name': 'HydrographyWarningSystem',
+            'ScheduleExpression': 'rate(2 hours)',
+            'ScheduleExpressionTimezone': 'Europe/Dublin',
+            'StartDate': starting,
+            'EndDate': ending,
+            'GroupName': self.__secret.exc(secret_id=self.__project_key_name, node='schedule-group'),
+            'Target': {
+                'Arn': self.__secret.exc(secret_id=self.__project_key_name, node='schedule-target-arn-warning-system'),
+                'RoleArn': self.__secret.exc(secret_id=self.__project_key_name, node='schedule-target-execution-role-arn'),
+                'RetryPolicy': {
+                    'MaximumEventAgeInSeconds': 900,
+                    'MaximumRetryAttempts': 1
+                }
+            },
+            'ActionAfterCompletion': 'DELETE',
+            'FlexibleTimeWindow': {
+                'Mode': 'FLEXIBLE', 'MaximumWindowInMinutes': 3
+            }
         }
 
         return arguments
