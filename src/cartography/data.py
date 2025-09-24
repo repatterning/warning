@@ -1,8 +1,7 @@
 """Module algorithms/interface.py"""
+import datetime
 import io
 import logging
-import datetime
-import pytz
 import sys
 import uuid
 import xml.etree.ElementTree as ElTree
@@ -10,6 +9,7 @@ import xml.etree.ElementTree as ElTree
 import boto3
 import geopandas
 import pandas as pd
+import pytz
 import requests
 
 import config
