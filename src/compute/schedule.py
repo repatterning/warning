@@ -15,7 +15,6 @@ class Schedule:
         Constructor
         """
 
-        # self.__scheduler_client = boto3.client('scheduler')
         self.__scheduler_client = connector.client(service_name='scheduler')
 
         # Logging
@@ -31,6 +30,8 @@ class Schedule:
         :return:
             The ARN of the created schedule.
         """
+
+        self.__logger.info('\n\nSETTINGS:\n%s', settings)
 
         try:
             parameters = {
