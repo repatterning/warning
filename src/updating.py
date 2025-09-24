@@ -62,6 +62,7 @@ class Updating:
         :return:
         """
 
+        frame.drop(columns='geometry', inplace=True)
         affix = 'warning/data.csv'
         uri = f's3://{self.__s3_parameters.internal}/{affix}'
 
