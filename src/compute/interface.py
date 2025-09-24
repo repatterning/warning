@@ -31,7 +31,6 @@ class Interface:
 
     def __timestamp(self, value: pd.Timestamp) -> datetime.datetime:
         """
-        zoneinfo.ZoneInfo('Europe/London')
 
         :param value:
         :return:
