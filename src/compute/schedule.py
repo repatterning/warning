@@ -27,14 +27,16 @@ class Schedule:
         """
         Creates a new schedule with the specified parameters.
 
-        :param settings:
+        :param settings: refer to compute/settings.py
         :return:
             The ARN of the created schedule.
         """
+
         try:
             parameters = {
                 'Name': settings.get('name'),
                 'ScheduleExpression': settings.get('schedule_expression'),
+                'ScheduleExpressionTimezone': 'Europe/Dublin',
                 'GroupName': settings.get('group_name'),
                 'Target': {'Arn': settings.get('arn'), 'RoleArn': settings.get('role_arn')},
                 'StartDate': settings.get('starting'),
