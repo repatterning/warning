@@ -70,7 +70,7 @@ class Schedule:
 
         except botocore.exceptions.ClientError as err:
             if err.response['Error']['Code'] == 'ConflictException':
-                self.__logger.error('Failed to create schedule %s: %s', settings.get('name'), err.response['Error']['Message'])
+                self.__logger.error('Error creating schedule: %s\n%s', settings.get('name'), err.response['Error']['Message'])
             else:
                 self.__logger.error('Error creating schedule: %s', err.response['Error']['Message'])
             raise
