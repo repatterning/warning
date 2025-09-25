@@ -11,14 +11,15 @@ class Settings:
     Creates a schedule's dictionary of arguments.
     """
 
-    def __init__(self, connector: boto3.session.Session, project_key_name: str):
+    def __init__(self, connector: boto3.session.Session, arguments: dict):
         """
 
         :param connector: A boto3 session instance, it retrieves the developer's <default> Amazon
                           Web Services (AWS) profile details, which allows for programmatic interaction with AWS.
+        :param arguments: A set of arguments vis-à-vis computation & data operations objectives.
         """
 
-        self.__project_key_name = project_key_name
+        self.__project_key_name = arguments.get('project_key_name')
 
         # Secrets
         self.__secret = src.functions.secret.Secret(connector=connector)
