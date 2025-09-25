@@ -11,17 +11,20 @@ class Settings:
     Creates a schedule's dictionary of arguments.
     """
 
-    def __init__(self, connector: boto3.session.Session, project_key_name: str):
+    def __init__(self, connector: boto3.session.Session, arguments: dict):
         """
 
         :param connector: A boto3 session instance, it retrieves the developer's <default> Amazon
                           Web Services (AWS) profile details, which allows for programmatic interaction with AWS.
+        :param arguments: A set of arguments vis-à-vis computation & data operations objectives.
         """
 
-        self.__project_key_name = project_key_name
+        self.__project_key_name = arguments.get('project_key_name')
 
         # Secrets
         self.__secret = src.functions.secret.Secret(connector=connector)
+
+        self.__scheduler: dict = arguments.get('scheduler')
 
     def exc(self, starting: datetime.datetime, ending: datetime.datetime) -> dict:
         """
@@ -44,10 +47,10 @@ class Settings:
         :return:
         """
 
-        arguments = {
-            'Name': 'HydrographyWarningSystem',
-            'ScheduleExpression': 'rate(2 hours)',
-            'ScheduleExpressionTimezone': 'Europe/Dublin',
+        settings = {
+            'Name': self.__scheduler.get('name'),
+            'ScheduleExpression': self.__scheduler.get('schedule_expression'),
+            'ScheduleExpressionTimezone': self.__scheduler.get('schedule_expression_timezone'),
             'StartDate': starting,
             'EndDate': ending,
             'GroupName': self.__secret.exc(secret_id=self.__project_key_name, node='schedule-group'),
@@ -55,14 +58,17 @@ class Settings:
                 'Arn': self.__secret.exc(secret_id=self.__project_key_name, node='schedule-target-arn-warning-system'),
                 'RoleArn': self.__secret.exc(secret_id=self.__project_key_name, node='schedule-target-execution-role-arn'),
                 'RetryPolicy': {
-                    'MaximumEventAgeInSeconds': 900,
-                    'MaximumRetryAttempts': 1
+                    'MaximumEventAgeInSeconds': self.__scheduler.get(
+                        'target').get('retry_policy').get('maximum_event_age_in_seconds'),
+                    'MaximumRetryAttempts': self.__scheduler.get(
+                        'target').get('retry_policy').get('maximum_retry_attempts')
                 }
             },
-            'ActionAfterCompletion': 'DELETE',
+            'ActionAfterCompletion': self.__scheduler.get('action_after_completion'),
             'FlexibleTimeWindow': {
-                'Mode': 'FLEXIBLE', 'MaximumWindowInMinutes': 3
+                'Mode': self.__scheduler.get('flexible_time_window').get('mode'),
+                'MaximumWindowInMinutes': self.__scheduler.get('flexible_time_window').get('maximum_window_in_minutes')
             }
         }
 
-        return arguments
+        return settings
