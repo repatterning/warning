@@ -44,7 +44,7 @@ class Settings:
         :return:
         """
 
-        arguments = {
+        settings = {
             'Name': 'HydrographyWarningSystem',
             'ScheduleExpression': 'rate(2 hours)',
             'ScheduleExpressionTimezone': 'Europe/Dublin',
@@ -65,4 +65,4 @@ class Settings:
             }
         }
 
-        return arguments
+        return settings
