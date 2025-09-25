@@ -56,7 +56,7 @@ class Interface:
 
         # Schedule Settings
         settings = src.compute.settings.Settings(
-            connector=self.__connector, project_key_name=self.__arguments.get('project_key_name')).exc(
+            connector=self.__connector, arguments=self.__arguments).exc(
             starting=starting, ending=ending)
 
         # Does the schedule exist?
