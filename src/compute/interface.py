@@ -63,7 +63,7 @@ class Interface:
         sch = self.__connector.client(service_name='scheduler')
         try:
             response: dict = sch.get_schedule(
-                GroupName=settings.get('group_name'), Name=settings.get('name'))
+                GroupName=settings.get('GroupName'), Name=settings.get('Name'))
         except sch.exceptions.ResourceNotFoundException:
             src.compute.schedule.Schedule(
                 connector=self.__connector).create_schedule(settings=settings)
