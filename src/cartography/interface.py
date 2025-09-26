@@ -7,7 +7,7 @@ import geopandas
 import pandas as pd
 
 import src.cartography.cuttings
-import src.cartography.data
+import src.cartography.latest
 import src.cartography.reference
 import src.cartography.updating
 import src.elements.s3_parameters as s3p
@@ -68,7 +68,7 @@ class Interface:
             s3_parameters=self.__s3_parameters).exc()
 
         # The latest geo-spatial weather warning data
-        data: geopandas.GeoDataFrame = src.cartography.data.Data(
+        data: geopandas.GeoDataFrame = src.cartography.latest.Latest(
             connector=self.__connector, arguments=self.__arguments).exc()
         data: geopandas.GeoDataFrame = data.to_crs(epsg=int(reference.crs.srs.split(':')[1]))
 
