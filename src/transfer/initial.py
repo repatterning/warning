@@ -80,4 +80,4 @@ class Initial:
             return True
 
         src.functions.cache.Cache().exc()
-        sys.exit('Unable to set up an Amazon S3 (Simple Storage Service) section.')
+        sys.exit('Unable to set up an Amazon S3 (Simple Storage Service) storage.')
