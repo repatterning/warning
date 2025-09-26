@@ -19,7 +19,7 @@ def main():
     logger.info('Starting: %s', datetime.datetime.now().isoformat(timespec='microseconds'))
 
     # Investigate Warnings
-    frame: geopandas.GeoDataFrame = src.cartography.interface.Interface(
+    data: geopandas.GeoDataFrame = src.cartography.interface.Interface(
         connector=connector, arguments=arguments, s3_parameters=s3_parameters).exc()
 
     # Transfer
@@ -27,7 +27,7 @@ def main():
 
     # Hence, orchestrate and launch a system
     src.compute.interface.Interface(
-        connector=connector, arguments=arguments).exc(frame=frame.copy())
+        connector=connector, arguments=arguments).exc(data=data.copy())
 
     # Delete Cache Points
     src.functions.cache.Cache().exc()
