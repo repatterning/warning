@@ -44,6 +44,7 @@ class Interface:
         logging.info(strings)
 
         # Transfer
+        '''
         if not strings.empty:
             src.transfer.initial.Initial(service=self.__service, s3_parameters=self.__s3_parameters).exc()
             messages = src.s3.ingress.Ingress(
@@ -52,3 +53,4 @@ class Interface:
             logging.info(messages)
         else:
             logging.info('Empty')
+        '''
