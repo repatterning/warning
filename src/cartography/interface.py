@@ -7,13 +7,13 @@ import geopandas
 import pandas as pd
 
 import src.cartography.cuttings
-import src.cartography.data
+import src.cartography.latest
 import src.cartography.reference
+import src.cartography.updating
 import src.elements.s3_parameters as s3p
 import src.elements.system as stm
 import src.functions.cache
 import src.functions.streams
-import src.updating
 
 
 class Interface:
@@ -37,18 +37,18 @@ class Interface:
         self.__arguments = arguments
 
     @staticmethod
-    def __members(data: geopandas.GeoDataFrame, reference: geopandas.GeoDataFrame) -> geopandas.GeoDataFrame:
+    def __members(latest: geopandas.GeoDataFrame, reference: geopandas.GeoDataFrame) -> geopandas.GeoDataFrame:
         """
         Which gauges, if any, lie within a warning area?
 
-        :param data:
+        :param latest:
         :param reference:
         :return:
         """
 
         initial: list[geopandas.GeoDataFrame] = [
             src.cartography.cuttings.Cuttings(reference=reference).members(_elements=stm.System._make(_elements))
-            for _elements in data.itertuples()]
+            for _elements in latest.itertuples()]
 
         if len(initial) == 0:
             logging.info('No warnings')
@@ -68,11 +68,14 @@ class Interface:
             s3_parameters=self.__s3_parameters).exc()
 
         # The latest geo-spatial weather warning data
-        data: geopandas.GeoDataFrame = src.cartography.data.Data(
+        latest: geopandas.GeoDataFrame = src.cartography.latest.Latest(
             connector=self.__connector, arguments=self.__arguments).exc()
-        data: geopandas.GeoDataFrame = data.to_crs(epsg=int(reference.crs.srs.split(':')[1]))
+        latest: geopandas.GeoDataFrame = latest.to_crs(epsg=int(reference.crs.srs.split(':')[1]))
 
         # Hence
-        frame: geopandas.GeoDataFrame = self.__members(data=data, reference=reference)
+        data: geopandas.GeoDataFrame = self.__members(latest=latest, reference=reference)
 
-        return frame
+        # Update the warnings data library
+        src.cartography.updating.Updating(s3_parameters=self.__s3_parameters).exc(data=data)
+
+        return data

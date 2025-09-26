@@ -29,7 +29,7 @@ class Initial:
 
         self.__service: sr.Service = service
         self.__s3_parameters: s3p.S3Parameters = s3_parameters
-        self.__bucket_name = self.__s3_parameters.external
+        self.__bucket_name = self.__s3_parameters.internal
 
         # Configurations, etc.
         self.__prefix = config.Config().prefix
@@ -80,4 +80,4 @@ class Initial:
             return True
 
         src.functions.cache.Cache().exc()
-        sys.exit('Unable to set up an Amazon S3 (Simple Storage Service) section.')
+        sys.exit('Unable to set up an Amazon S3 (Simple Storage Service) storage.')
