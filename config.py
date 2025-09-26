@@ -33,4 +33,5 @@ class Config:
         self.s3_parameters_key = 's3_parameters.yaml'
         self.argument_key = 'warning/arguments.json'
         self.prefix: str = 'warning'
-        self.affix = f'{self.prefix}/data.csv'
+        self.library_ = f'{self.prefix}/data.csv'
+        self.latest_ = f'{self.prefix}/latest.geojson'
