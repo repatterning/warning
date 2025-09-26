@@ -93,7 +93,7 @@ class Latest:
 
         try:
             data.to_file(
-                filename=os.path.join(self.__configurations.warehouse, self.__configurations.latest_),
+                filename=os.path.join(self.__configurations.warehouse, self.__configurations.warning_latest_),
                 driver='GeoJSON')
         except OSError as err:
             raise err from err
