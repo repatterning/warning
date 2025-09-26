@@ -68,11 +68,14 @@ class Interface:
             s3_parameters=self.__s3_parameters).exc()
 
         # The latest geo-spatial weather warning data
-        data: geopandas.GeoDataFrame = src.cartography.data.Data(
+        data_: geopandas.GeoDataFrame = src.cartography.data.Data(
             connector=self.__connector, arguments=self.__arguments).exc()
-        data: geopandas.GeoDataFrame = data.to_crs(epsg=int(reference.crs.srs.split(':')[1]))
+        data: geopandas.GeoDataFrame = data_.to_crs(epsg=int(reference.crs.srs.split(':')[1]))
 
         # Hence
         frame: geopandas.GeoDataFrame = self.__members(data=data, reference=reference)
+
+        # Update the warnings data library
+        src.updating.Updating(s3_parameters=self.__s3_parameters).exc(frame=frame)
 
         return frame
