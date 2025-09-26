@@ -28,32 +28,34 @@ class Updating:
         self.__configurations = config.Config()
         self.__streams = src.functions.streams.Streams()
 
-    def __update(self, uri: str, frame: pd.DataFrame) -> str:
+    def __update(self, uri: str, data: pd.DataFrame) -> str:
         """
 
         :param uri: Storage path.
-        :param frame: Warning data
+        :param data: Warning data
         :return:
         """
 
         # If the file does not exist, an empty data frame is returned
         text = txa.TextAttributes(uri=uri, header=0)
         original = self.__streams.read(text=text)
-        instances = pd.concat([original, frame], axis=0, ignore_index=True)
+        instances = pd.concat([original, data], axis=0, ignore_index=True)
         instances.drop_duplicates(inplace=True)
 
         return self.__streams.write(
             blob=instances,
-            path=os.path.join(self.__configurations.warehouse, self.__configurations.library_.replace('/', os.sep)))
+            path=os.path.join(
+                self.__configurations.warehouse,
+                self.__configurations.warning_data_.replace('/', os.sep)))
 
-    def exc(self, frame: pd.DataFrame) -> str:
+    def exc(self, data: pd.DataFrame) -> str:
         """
 
-        :param frame: The data of a gauge.
+        :param data: The data of a gauge.
         :return:
         """
 
-        frame.drop(columns='geometry', inplace=True)
-        uri = f's3://{self.__s3_parameters.internal}/{self.__configurations.library_}'
+        data.drop(columns='geometry', inplace=True)
+        uri = f's3://{self.__s3_parameters.internal}/{self.__configurations.warning_data_}'
 
-        return self.__update(uri=uri, frame=frame)
+        return self.__update(uri=uri, data=data)
