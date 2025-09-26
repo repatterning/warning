@@ -27,10 +27,10 @@ class Config:
 
         # Directories
         self.data_ = os.path.join(os.getcwd(), 'data')
-        self.warehouse = os.path.join(os.getcwd(), 'warehouse')
+        self.warehouse: str = os.path.join(os.getcwd(), 'warehouse')
 
         # Keys, etc
         self.s3_parameters_key = 's3_parameters.yaml'
         self.argument_key = 'warning/arguments.json'
-
-        self.prefix = 'warning'
+        self.prefix: str = 'warning'
+        self.affix = f'{self.prefix}/data.csv'
