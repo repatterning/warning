@@ -29,7 +29,7 @@ class Initial:
 
         self.__service: sr.Service = service
         self.__s3_parameters: s3p.S3Parameters = s3_parameters
-        self.__bucket_name = self.__s3_parameters.external
+        self.__bucket_name = self.__s3_parameters.internal
 
         # Configurations, etc.
         self.__prefix = config.Config().prefix
