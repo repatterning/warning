@@ -27,6 +27,7 @@ class Config:
 
         # Directories
         self.warehouse: str = os.path.join(os.getcwd(), 'warehouse')
+        self.warning_ = os.path.join(self.warehouse, 'warning')
 
         # Keys, etc
         self.s3_parameters_key = 's3_parameters.yaml'
