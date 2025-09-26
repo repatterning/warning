@@ -26,12 +26,11 @@ class Config:
         self.area_ = 'https://raw.githubusercontent.com/repatterning/.github/refs/heads/master/profile/latest.geojson'
 
         # Directories
-        self.data_ = os.path.join(os.getcwd(), 'data')
         self.warehouse: str = os.path.join(os.getcwd(), 'warehouse')
 
         # Keys, etc
         self.s3_parameters_key = 's3_parameters.yaml'
         self.argument_key = 'warning/arguments.json'
         self.prefix: str = 'warning'
-        self.library_ = f'{self.prefix}/data.csv'
-        self.latest_ = f'{self.prefix}/latest.geojson'
+        self.warning_data_ = f'{self.prefix}/data.csv'
+        self.warning_latest_ = f'{self.prefix}/latest.geojson'
