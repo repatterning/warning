@@ -43,7 +43,8 @@ class Updating:
         instances.drop_duplicates(inplace=True)
 
         return self.__streams.write(
-            blob=instances, path=os.path.join(self.__configurations.warehouse, self.__configurations.affix.replace('/', os.sep)))
+            blob=instances,
+            path=os.path.join(self.__configurations.warehouse, self.__configurations.library_.replace('/', os.sep)))
 
     def exc(self, frame: pd.DataFrame) -> str:
         """
@@ -53,6 +54,6 @@ class Updating:
         """
 
         frame.drop(columns='geometry', inplace=True)
-        uri = f's3://{self.__s3_parameters.internal}/{self.__configurations.affix}'
+        uri = f's3://{self.__s3_parameters.internal}/{self.__configurations.library_}'
 
         return self.__update(uri=uri, frame=frame)
