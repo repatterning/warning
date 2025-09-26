@@ -1,6 +1,7 @@
 """Module algorithms/interface.py"""
 import datetime
 import io
+import os
 import logging
 import sys
 import uuid
@@ -82,6 +83,21 @@ class Data:
         except FileNotFoundError as err:
             raise err from err
 
+    # noinspection PyTypeChecker
+    def __persist(self, data: geopandas.GeoDataFrame):
+        """
+
+        :param data:
+        :return:
+        """
+
+        try:
+            data.to_file(
+                filename=os.path.join(self.__configurations.warehouse, self.__configurations.latest_),
+                driver='GeoJSON')
+        except OSError as err:
+            raise err from err
+
     def exc(self) -> geopandas.GeoDataFrame:
         """
 
@@ -104,11 +120,13 @@ class Data:
 
         # Hence
         if data.empty & self.__arguments.get('testing'):
-            return self.__temporary()
+            data = self.__temporary()
 
         if data.empty & ~self.__arguments.get('testing'):
             logging.info('no warnings')
             src.functions.cache.Cache().exc()
             sys.exit(0)
+
+        self.__persist(data=data)
 
         return data
