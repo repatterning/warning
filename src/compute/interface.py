@@ -43,16 +43,16 @@ class Interface:
 
         return _reset
 
-    def exc(self, frame: geopandas.GeoDataFrame):
+    def exc(self, data: geopandas.GeoDataFrame):
         """
 
-        :param frame:
+        :param data:
         :return:
         """
 
         # Cloud Compute Times: The data times and the cloud compute times exist within different zones
-        starting = self.__timestamp(value = frame['starting'].min())
-        ending = self.__timestamp(value = frame['ending'].max())
+        starting = self.__timestamp(value = data['starting'].min())
+        ending = self.__timestamp(value = data['ending'].max())
 
         # Schedule Settings
         settings = src.compute.settings.Settings(
