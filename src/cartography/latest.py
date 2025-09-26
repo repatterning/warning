@@ -18,7 +18,7 @@ import src.functions.cache
 import src.functions.secret
 
 
-class Data:
+class Latest:
     """
     The interface to the programs of the algorithms package.
     """
