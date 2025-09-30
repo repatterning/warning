@@ -26,6 +26,8 @@ class Interface:
 
         self.__connector = connector
         self.__arguments = arguments
+        self.__settings = src.compute.settings.Settings(
+            connector=self.__connector, arguments=self.__arguments)
 
         # Time & Place
         self.__place = pytz.timezone('Europe/Dublin')
@@ -54,21 +56,25 @@ class Interface:
         starting = self.__timestamp(value = data['starting'].min())
         ending = self.__timestamp(value = data['ending'].max())
 
-        # Schedule Settings
-        settings = src.compute.settings.Settings(
-            connector=self.__connector, arguments=self.__arguments).exc(
-            starting=starting, ending=ending)
+        # Schedule Client
+        __schedule_client = self.__connector.client(service_name='scheduler')
 
-        # Does the schedule exist?
-        sch = self.__connector.client(service_name='scheduler')
-        try:
-            response: dict = sch.get_schedule(
-                GroupName=settings.get('GroupName'), Name=settings.get('Name'))
-        except sch.exceptions.ResourceNotFoundException:
-            src.compute.schedule.Schedule(
-                connector=self.__connector).create_schedule(settings=settings)
-        else:
-            logging.info('The event bridge schedule - %s - exists; updating.',
-                         response.get('Name'))
-            src.compute.schedule.Schedule(
-                connector=self.__connector).create_schedule(settings=settings, update=True)
+        # Hence
+        for scheduler in ['scheduler_events', 'scheduler_events_fundamental']:
+
+            # Schedule Settings
+            settings = self.__settings.exc(
+                starting=starting, ending=ending, scheduler=scheduler)
+
+            # If the schedule does not exist, create; otherwise, update.
+            try:
+                response: dict = __schedule_client.get_schedule(
+                    GroupName=settings.get('GroupName'), Name=settings.get('Name'))
+            except __schedule_client.exceptions.ResourceNotFoundException:
+                src.compute.schedule.Schedule(
+                    connector=self.__connector).create_schedule(settings=settings)
+            else:
+                logging.info('The event bridge schedule - %s - exists; updating.',
+                             response.get('Name'))
+                src.compute.schedule.Schedule(
+                    connector=self.__connector).create_schedule(settings=settings, update=True)

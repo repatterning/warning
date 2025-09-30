@@ -19,14 +19,13 @@ class Settings:
         :param arguments: A set of arguments vis-à-vis computation & data operations objectives.
         """
 
-        self.__project_key_name = arguments.get('project_key_name')
+        self.__arguments: dict = arguments
+        self.__project_key_name: str = arguments.get('project_key_name')
 
         # Secrets
         self.__secret = src.functions.secret.Secret(connector=connector)
 
-        self.__scheduler: dict = arguments.get('scheduler')
-
-    def exc(self, starting: datetime.datetime, ending: datetime.datetime) -> dict:
+    def exc(self, starting: datetime.datetime, ending: datetime.datetime, scheduler: str) -> dict:
         """
         For more about a schedule's parameters & arguments visit
         <a
@@ -42,32 +41,37 @@ class Settings:
         use_flexible_time_window: Whether to use a flexible time window.<br>
         maximum_window_in_minutes: The span of the afore flexible time window.<br><br>
 
-        :param starting: The start time
+        :param starting: The start time<br>
         :param ending: The end time<br>
+        :param scheduler: A string for identifying the scheduler details in focus
         :return:
         """
 
+        __scheduler = self.__arguments.get(scheduler)
+
         settings = {
-            'Name': self.__scheduler.get('name'),
-            'ScheduleExpression': self.__scheduler.get('schedule_expression'),
-            'ScheduleExpressionTimezone': self.__scheduler.get('schedule_expression_timezone'),
+            'Name': __scheduler.get('name'),
+            'ScheduleExpression': __scheduler.get('schedule_expression'),
+            'ScheduleExpressionTimezone': __scheduler.get('schedule_expression_timezone'),
             'StartDate': starting,
             'EndDate': ending,
             'GroupName': self.__secret.exc(secret_id=self.__project_key_name, node='schedule-group'),
             'Target': {
-                'Arn': self.__secret.exc(secret_id=self.__project_key_name, node='schedule-target-arn-warning-system'),
+                'Arn': self.__secret.exc(
+                    secret_id=self.__project_key_name,
+                    node=__scheduler.get('target').get('arn_node')),
                 'RoleArn': self.__secret.exc(secret_id=self.__project_key_name, node='schedule-target-execution-role-arn'),
                 'RetryPolicy': {
-                    'MaximumEventAgeInSeconds': self.__scheduler.get(
+                    'MaximumEventAgeInSeconds': __scheduler.get(
                         'target').get('retry_policy').get('maximum_event_age_in_seconds'),
-                    'MaximumRetryAttempts': self.__scheduler.get(
+                    'MaximumRetryAttempts': __scheduler.get(
                         'target').get('retry_policy').get('maximum_retry_attempts')
                 }
             },
-            'ActionAfterCompletion': self.__scheduler.get('action_after_completion'),
+            'ActionAfterCompletion': __scheduler.get('action_after_completion'),
             'FlexibleTimeWindow': {
-                'Mode': self.__scheduler.get('flexible_time_window').get('mode'),
-                'MaximumWindowInMinutes': self.__scheduler.get('flexible_time_window').get('maximum_window_in_minutes')
+                'Mode': __scheduler.get('flexible_time_window').get('mode'),
+                'MaximumWindowInMinutes': __scheduler.get('flexible_time_window').get('maximum_window_in_minutes')
             }
         }
 
