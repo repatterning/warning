@@ -33,13 +33,14 @@ class Settings:
         target="_blank">EventBridgeScheduler.Client.create_schedule()</a><br><br>
 
         name: The schedule's name.<br>
-        schedule_expression: The timing schedule.<br>
-        group_name: The name of the schedule group.<br>
+        schedule expression: The timing schedule.<br>
+        group name: The name of the schedule group.<br>
         arn: The Amazon Resource Name (ARN) of the target.<br>
-        role_arn: The Amazon Resource Name (ARN) of the execution IAM role.<br>
-        delete_after_completion: Whether to delete the schedule after it completes.<br>
-        use_flexible_time_window: Whether to use a flexible time window.<br>
-        maximum_window_in_minutes: The span of the afore flexible time window.<br><br>
+        role arn: The Amazon Resource Name (ARN) of the execution IAM role.<br>
+        action after completion: Either `delete` or `none`.<br>
+        flexible time window:
+            mode: `OFF`|`FLEXIBLE`<br>
+            maximum window in minutes: The span of the afore flexible time window.<br><br>
 
         :param starting: The start time<br>
         :param ending: The end time<br>
