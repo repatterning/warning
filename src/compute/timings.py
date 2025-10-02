@@ -4,7 +4,7 @@ import datetime
 
 class Timings:
     """
-
+    Calculates event bridge times
     """
 
     def __init__(self, arguments: dict, starting: datetime.datetime, ending: datetime.datetime):
