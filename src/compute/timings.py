@@ -10,7 +10,7 @@ class Timings:
     def __init__(self, arguments: dict, starting: datetime.datetime, ending: datetime.datetime):
         """
 
-        :param arguments:
+        :param arguments: A set of arguments vis-à-vis computation & data operations objectives.
         :param starting:
         :param ending:
         """
