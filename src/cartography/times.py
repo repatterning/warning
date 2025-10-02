@@ -1,5 +1,6 @@
-import os
+"""Module cartography/times.py"""
 import logging
+import os
 
 import geopandas
 
