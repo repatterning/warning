@@ -27,8 +27,6 @@ class Interface:
 
         self.__connector = connector
         self.__arguments = arguments
-        self.__settings = src.compute.settings.Settings(
-            connector=self.__connector, arguments=self.__arguments)
 
         # Time & Place
         self.__place = pytz.timezone('Europe/Dublin')
@@ -60,17 +58,15 @@ class Interface:
         # Schedule Client
         __schedule_client = self.__connector.client(service_name='scheduler')
 
+        # Settings
+        __settings = src.compute.settings.Settings(
+            connector=self.__connector, arguments=self.__arguments, starting=starting, ending=ending)
+
         # Hence
         for scheduler in ['scheduler_events_forecasting', 'scheduler_events_fundamental', 'scheduler_continuous']:
 
             # Schedule Settings
-            if scheduler == 'scheduler_continuous':
-                __starting, __ending = src.compute.continuous.Continuous(arguments=self.__arguments).exc(ending=ending)
-                settings = self.__settings.exc(
-                    starting=__starting, ending=__ending, scheduler=scheduler)
-            else:
-                settings = self.__settings.exc(
-                    starting=starting, ending=ending, scheduler=scheduler)
+            settings = __settings.exc(scheduler=scheduler)
 
             # If the schedule does not exist, create; otherwise, update.
             try:
