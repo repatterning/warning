@@ -9,6 +9,7 @@ import pytz
 
 import src.compute.schedule
 import src.compute.settings
+import src.compute.continuous
 
 
 class Interface:
@@ -60,11 +61,16 @@ class Interface:
         __schedule_client = self.__connector.client(service_name='scheduler')
 
         # Hence
-        for scheduler in ['scheduler_events_forecasting', 'scheduler_events_fundamental']:
+        for scheduler in ['scheduler_events_forecasting', 'scheduler_events_fundamental', 'scheduler_continuous']:
 
             # Schedule Settings
-            settings = self.__settings.exc(
-                starting=starting, ending=ending, scheduler=scheduler)
+            if scheduler == 'scheduler_continuous':
+                __starting, __ending = src.compute.continuous.Continuous(arguments=self.__arguments).exc(ending=ending)
+                settings = self.__settings.exc(
+                    starting=__starting, ending=__ending, scheduler=scheduler)
+            else:
+                settings = self.__settings.exc(
+                    starting=starting, ending=ending, scheduler=scheduler)
 
             # If the schedule does not exist, create; otherwise, update.
             try:
