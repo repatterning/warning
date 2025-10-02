@@ -11,7 +11,7 @@ class Continuous:
     def __init__(self, arguments: dict):
         """
 
-        :param arguments:
+        :param arguments: A set of arguments vis-à-vis computation & data operations objectives.
         """
 
         self.__terminate: dict = arguments.get('scheduler_continuous').get('terminate')
