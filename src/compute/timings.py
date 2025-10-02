@@ -13,7 +13,7 @@ class Timings:
         """
         Builds cron expressions, e.g., "cron(45 09,21 * * ? *)"
 
-        :param focus: 
+        :param focus:
         :return:
         """
 
@@ -56,4 +56,4 @@ class Timings:
             case 'scheduler_continuous':
                 logging.info(focus)
             case _:
-                raise ValueError('{focus} is not an option.')
+                raise ValueError(f'{focus} is not an option.')
