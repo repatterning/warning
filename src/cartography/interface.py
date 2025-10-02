@@ -36,8 +36,10 @@ class Interface:
         self.__s3_parameters = s3_parameters
         self.__arguments = arguments
 
-    @staticmethod
-    def __members(latest: geopandas.GeoDataFrame, reference: geopandas.GeoDataFrame) -> geopandas.GeoDataFrame:
+        # Fields
+        self.__fields = [field for field in list(stm.System._fields) if field != 'Index']
+
+    def __members(self, latest: geopandas.GeoDataFrame, reference: geopandas.GeoDataFrame) -> geopandas.GeoDataFrame:
         """
         Which gauges, if any, lie within a warning area?
 
@@ -48,7 +50,7 @@ class Interface:
 
         initial: list[geopandas.GeoDataFrame] = [
             src.cartography.cuttings.Cuttings(reference=reference).members(_elements=stm.System._make(_elements))
-            for _elements in latest.itertuples()]
+            for _elements in latest[self.__fields].itertuples()]
 
         if len(initial) == 0:
             logging.info('No warnings')
