@@ -1,15 +1,23 @@
-import logging
 import datetime
+
+import src.compute.continuous
+
 
 class Timings:
 
     def __init__(self, arguments: dict, starting: datetime.datetime, ending: datetime.datetime):
+        """
+
+        :param arguments:
+        :param starting:
+        :param ending:
+        """
 
         self.__arguments = arguments
         self.__starting = starting
         self.__ending = ending
 
-    def __events_forecasting(self, focus: str):
+    def __events_forecasting(self, focus: str) -> dict:
         """
         Builds cron expressions, e.g., "cron(45 09,21 * * ? *)"
 
@@ -33,7 +41,7 @@ class Timings:
 
         return __scheduler
 
-    def __events_fundamental(self, focus: str):
+    def __events_fundamental(self, focus: str) -> dict:
         """
 
         :param focus:
@@ -46,14 +54,35 @@ class Timings:
 
         return __scheduler
 
-    def exc(self, focus: str):
+    def __continuous(self, focus: str) -> dict:
+        """
+
+        :param focus:
+        :return:
+        """
+
+        __starting, __ending = src.compute.continuous.Continuous(
+            arguments=self.__arguments).exc(ending=self.__ending)
+
+        __scheduler = self.__arguments.get(focus)
+        __scheduler['starting'] = __starting
+        __scheduler['ending'] = __starting
+
+        return __scheduler
+
+    def exc(self, focus: str) -> dict:
+        """
+
+        :param focus:
+        :return:
+        """
 
         match focus:
             case 'scheduler_events_forecasting':
                 return self.__events_forecasting(focus=focus)
             case 'scheduler_events_fundamental':
-                logging.info(focus)
+                return self.__events_fundamental(focus=focus)
             case 'scheduler_continuous':
-                logging.info(focus)
+                return self.__continuous(focus=focus)
             case _:
                 raise ValueError(f'{focus} is not an option.')
