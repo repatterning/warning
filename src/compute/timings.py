@@ -1,4 +1,4 @@
-"""Module timings.py"""
+"""Module compute/timings.py"""
 import datetime
 
 
