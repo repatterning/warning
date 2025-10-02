@@ -25,7 +25,8 @@ class Continuous:
 
         # Start
         __next = ending.date() + datetime.timedelta(days=1)
-        __starting = datetime.datetime(year=__next.year, month=__next.month, day=__next.day, hour=2, minute=5, second=0)
+        __starting = datetime.datetime(
+            year=__next.year, month=__next.month, day=__next.day, hour=2, minute=5, second=0)
 
         # End
         __ending = datetime.datetime(
