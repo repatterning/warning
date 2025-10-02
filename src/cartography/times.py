@@ -37,13 +37,13 @@ class Times:
         # The data
         data.info()
         self.__logger.info(data)
-        self.__logger.info(data['ending'].max())
-        self.__logger.info(data['starting'].min())
+        self.__logger.info(data['ending'].max().strftime('%Y-%m-%d %H:%M:%S'))
+        self.__logger.info(data['starting'].min().strftime('%Y-%m-%d %H:%M:%S'))
 
         # The time limits, and storage object
         nodes = {
-            'starting': data['starting'].min(),
-            'ending': data['ending'].max()
+            'starting': data['starting'].min().strftime('%Y-%m-%d %H:%M:%S'),
+            'ending': data['ending'].max().strftime('%Y-%m-%d %H:%M:%S')
         }
         path = os.path.join(self.__configurations.warning_, 'times.json')
 
