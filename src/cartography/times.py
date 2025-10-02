@@ -34,17 +34,19 @@ class Times:
         :return:
         """
 
+        # The data
         data.info()
         self.__logger.info(data)
         self.__logger.info(data['ending'].max())
         self.__logger.info(data['starting'].min())
 
+        # The time limits, and storage object
         nodes = {
             'starting': data['starting'].min(),
             'ending': data['ending'].max()
         }
-
         path = os.path.join(self.__configurations.warning_, 'times.json')
 
+        # Persist
         objects = src.functions.objects.Objects()
         objects.write(nodes=nodes, path=path)
