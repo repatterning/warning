@@ -3,6 +3,9 @@ import typing
 
 
 class Continuous:
+    """
+    Calculates the latest schedule times for the standard hydrography state machine
+    """
 
     def __init__(self, arguments: dict):
         """
