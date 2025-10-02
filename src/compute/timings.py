@@ -13,6 +13,7 @@ class Timings:
         """
         Builds cron expressions, e.g., "cron(45 09,21 * * ? *)"
 
+        :param focus: 
         :return:
         """
 
@@ -23,10 +24,23 @@ class Timings:
         start = self.__starting + datetime.timedelta(minutes=25)
         inbetween = start + datetime.timedelta(hours=12)
 
-
+        # Scheduler
         __scheduler = self.__arguments.get(focus)
         __scheduler['schedule_expression'] = expression.format(
             minute=start.minute, initial=start.hour, later=inbetween.hour)
+        __scheduler['starting'] = self.__starting
+        __scheduler['ending'] = self.__ending
+
+        return __scheduler
+
+    def __events_fundamental(self, focus: str):
+        """
+
+        :param focus:
+        :return:
+        """
+
+        __scheduler = self.__arguments.get(focus)
         __scheduler['starting'] = self.__starting
         __scheduler['ending'] = self.__ending
 
