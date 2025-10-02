@@ -10,6 +10,7 @@ import src.cartography.cuttings
 import src.cartography.latest
 import src.cartography.reference
 import src.cartography.updating
+import src.cartography.times
 import src.elements.s3_parameters as s3p
 import src.elements.system as stm
 import src.functions.cache
@@ -79,5 +80,8 @@ class Interface:
 
         # Update the warnings data library
         src.cartography.updating.Updating(s3_parameters=self.__s3_parameters).exc(data=data)
+
+        # Times
+        src.cartography.times.Times().exc(data=data)
 
         return data
