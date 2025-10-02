@@ -31,13 +31,13 @@ class Timings:
         # The cron expression template
         expression = "cron({minute} {initial},{later} * * ? *)"
 
-        # The start & in-between times
+        # Arithmetic
         start = self.__starting + datetime.timedelta(minutes=25)
-        inbetween = start + datetime.timedelta(hours=12)
+        additional = start + datetime.timedelta(hours=12)
 
-        # Scheduler
+        # Hence
         __scheduler['schedule_expression'] = expression.format(
-            minute=start.minute, initial=start.hour, later=inbetween.hour)
+            minute=start.minute, initial=start.hour, later=additional.hour)
         __scheduler['starting'] = self.__starting
         __scheduler['ending'] = self.__ending
 
@@ -51,6 +51,8 @@ class Timings:
         """
 
         __scheduler = self.__arguments.get(scheduler)
+
+        # Hence
         __scheduler['starting'] = self.__starting
         __scheduler['ending'] = self.__ending
 
@@ -65,6 +67,7 @@ class Timings:
 
         __scheduler = self.__arguments.get(scheduler)
 
+        # Arithmetic
         __next = self.__ending.date() + datetime.timedelta(days=1)
         __starting = datetime.datetime(
             year=__next.year, month=__next.month, day=__next.day, hour=2, minute=5, second=0)
@@ -72,6 +75,7 @@ class Timings:
             year=__scheduler.get('terminate').get('year'), month=__scheduler.get('terminate').get('month'),
             day=__scheduler.get('terminate').get('day'))
 
+        # Hence
         __scheduler['starting'] = __starting
         __scheduler['ending'] = __starting
 
