@@ -60,7 +60,7 @@ class Interface:
         __schedule_client = self.__connector.client(service_name='scheduler')
 
         # Hence
-        for scheduler in ['scheduler_events', 'scheduler_events_fundamental']:
+        for scheduler in ['scheduler_events_forecasting', 'scheduler_events_fundamental']:
 
             # Schedule Settings
             settings = self.__settings.exc(
