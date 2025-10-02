@@ -77,7 +77,7 @@ class Timings:
 
         # Hence
         __scheduler['starting'] = __starting
-        __scheduler['ending'] = __starting
+        __scheduler['ending'] = __ending
 
         return __scheduler
 
