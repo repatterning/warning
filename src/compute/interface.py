@@ -9,7 +9,6 @@ import pytz
 
 import src.compute.schedule
 import src.compute.settings
-import src.compute.continuous
 
 
 class Interface:
