@@ -1,10 +1,11 @@
+"""Module cartography/continuous.py"""
 import datetime
 import typing
 
 
 class Continuous:
     """
-    Calculates the latest schedule times for the standard hydrography state machine
+    Calculates the latest schedule times of the standard hydrography state machine.
     """
 
     def __init__(self, arguments: dict):
