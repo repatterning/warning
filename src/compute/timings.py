@@ -1,9 +1,10 @@
 import datetime
 
-import src.compute.continuous
-
 
 class Timings:
+    """
+
+    """
 
     def __init__(self, arguments: dict, starting: datetime.datetime, ending: datetime.datetime):
         """
@@ -25,6 +26,8 @@ class Timings:
         :return:
         """
 
+        __scheduler = self.__arguments.get(scheduler)
+
         # The cron expression template
         expression = "cron({minute} {initial},{later} * * ? *)"
 
@@ -33,7 +36,6 @@ class Timings:
         inbetween = start + datetime.timedelta(hours=12)
 
         # Scheduler
-        __scheduler = self.__arguments.get(scheduler)
         __scheduler['schedule_expression'] = expression.format(
             minute=start.minute, initial=start.hour, later=inbetween.hour)
         __scheduler['starting'] = self.__starting
@@ -61,10 +63,15 @@ class Timings:
         :return:
         """
 
-        __starting, __ending = src.compute.continuous.Continuous(
-            arguments=self.__arguments).exc(ending=self.__ending)
-
         __scheduler = self.__arguments.get(scheduler)
+
+        __next = self.__ending.date() + datetime.timedelta(days=1)
+        __starting = datetime.datetime(
+            year=__next.year, month=__next.month, day=__next.day, hour=2, minute=5, second=0)
+        __ending = datetime.datetime(
+            year=__scheduler.get('terminate').get('year'), month=__scheduler.get('terminate').get('month'),
+            day=__scheduler.get('terminate').get('day'))
+
         __scheduler['starting'] = __starting
         __scheduler['ending'] = __starting
 
