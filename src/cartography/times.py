@@ -30,21 +30,21 @@ class Times:
     def exc(self, data: geopandas.GeoDataFrame):
         """
 
-        :param data:
+        :param data: About the latest weather warning, and the stations therein.
         :return:
         """
 
         # The data
         data.info()
-        self.__logger.info(data)
-        self.__logger.info(data['ending'].max().strftime('%Y-%m-%d %H:%M:%S'))
-        self.__logger.info(data['starting'].min().strftime('%Y-%m-%d %H:%M:%S'))
 
-        # The time limits, and storage object
+        # The time limits
         nodes = {
             'starting': data['starting'].min().strftime('%Y-%m-%d %H:%M:%S'),
             'ending': data['ending'].max().strftime('%Y-%m-%d %H:%M:%S')
         }
+        self.__logger.info(nodes)
+
+        # Storage
         path = os.path.join(self.__configurations.warning_, 'times.json')
 
         # Persist
