@@ -64,7 +64,8 @@ class Interface:
             connector=self.__connector, arguments=self.__arguments, starting=starting, ending=ending)
 
         # Hence
-        for scheduler in ['scheduler_events_forecasting', 'scheduler_events_fundamental', 'scheduler_continuous']:
+        for scheduler in ['scheduler_events_forecasting', 'scheduler_events_fundamental',
+                          'scheduler_continuous', 'scheduler_warning']:
 
             # Schedule Settings
             settings = __settings.exc(scheduler=scheduler)
