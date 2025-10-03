@@ -4,6 +4,7 @@ import datetime
 import boto3
 
 import src.functions.secret
+import src.compute.timings
 
 
 class Settings:
@@ -11,21 +12,25 @@ class Settings:
     Creates a schedule's dictionary of arguments.
     """
 
-    def __init__(self, connector: boto3.session.Session, arguments: dict):
+    def __init__(self, connector: boto3.session.Session, arguments: dict,
+                 starting: datetime.datetime, ending: datetime.datetime):
         """
 
         :param connector: A boto3 session instance, it retrieves the developer's <default> Amazon
                           Web Services (AWS) profile details, which allows for programmatic interaction with AWS.
         :param arguments: A set of arguments vis-à-vis computation & data operations objectives.
+        :param starting: The start time<br>
+        :param ending: The end time<br>
         """
 
-        self.__arguments: dict = arguments
+        # Project
         self.__project_key_name: str = arguments.get('project_key_name')
 
-        # Secrets
+        # Instances
         self.__secret = src.functions.secret.Secret(connector=connector)
+        self.__timings = src.compute.timings.Timings(arguments=arguments, starting=starting, ending=ending)
 
-    def exc(self, starting: datetime.datetime, ending: datetime.datetime, scheduler: str) -> dict:
+    def exc(self, scheduler: str) -> dict:
         """
         For more about a schedule's parameters & arguments visit
         <a
@@ -33,28 +38,28 @@ class Settings:
         target="_blank">EventBridgeScheduler.Client.create_schedule()</a><br><br>
 
         name: The schedule's name.<br>
-        schedule_expression: The timing schedule.<br>
-        group_name: The name of the schedule group.<br>
+        schedule expression: The timing schedule.<br>
+        group name: The name of the schedule group.<br>
         arn: The Amazon Resource Name (ARN) of the target.<br>
-        role_arn: The Amazon Resource Name (ARN) of the execution IAM role.<br>
-        delete_after_completion: Whether to delete the schedule after it completes.<br>
-        use_flexible_time_window: Whether to use a flexible time window.<br>
-        maximum_window_in_minutes: The span of the afore flexible time window.<br><br>
+        role arn: The Amazon Resource Name (ARN) of the execution IAM role.<br>
+        action after completion: Either `delete` or `none`.<br>
+        flexible time window:
+            mode: `OFF`|`FLEXIBLE`<br>
+            maximum window in minutes: The span of the afore flexible time window.<br><br>
 
-        :param starting: The start time<br>
-        :param ending: The end time<br>
+
         :param scheduler: A string for identifying the scheduler details in focus
         :return:
         """
 
-        __scheduler = self.__arguments.get(scheduler)
+        __scheduler = self.__timings.exc(scheduler=scheduler)
 
         settings = {
             'Name': __scheduler.get('name'),
             'ScheduleExpression': __scheduler.get('schedule_expression'),
             'ScheduleExpressionTimezone': __scheduler.get('schedule_expression_timezone'),
-            'StartDate': starting,
-            'EndDate': ending,
+            'StartDate': __scheduler.get('starting'),
+            'EndDate': __scheduler.get('ending'),
             'GroupName': self.__secret.exc(secret_id=self.__project_key_name, node='schedule-group'),
             'Target': {
                 'Arn': self.__secret.exc(

@@ -26,8 +26,6 @@ class Interface:
 
         self.__connector = connector
         self.__arguments = arguments
-        self.__settings = src.compute.settings.Settings(
-            connector=self.__connector, arguments=self.__arguments)
 
         # Time & Place
         self.__place = pytz.timezone('Europe/Dublin')
@@ -53,18 +51,24 @@ class Interface:
         """
 
         # Cloud Compute Times: The data times and the cloud compute times exist within different zones
-        starting = self.__timestamp(value = data['starting'].min())
-        ending = self.__timestamp(value = data['ending'].max())
+        value: pd.Timestamp = max(data['starting'].min(), pd.Timestamp(datetime.datetime.now(), tz='UTC'))
+        value: pd.Timestamp = value.ceil(freq='h')
+        starting = self.__timestamp(value = value + datetime.timedelta(minutes=10))
+        ending = self.__timestamp(value = data['ending'].max().ceil(freq='h'))
 
         # Schedule Client
         __schedule_client = self.__connector.client(service_name='scheduler')
 
+        # Settings
+        __settings = src.compute.settings.Settings(
+            connector=self.__connector, arguments=self.__arguments, starting=starting, ending=ending)
+
         # Hence
-        for scheduler in ['scheduler_events', 'scheduler_events_fundamental']:
+        for scheduler in ['scheduler_events_forecasting', 'scheduler_events_fundamental',
+                          'scheduler_continuous', 'scheduler_warning']:
 
             # Schedule Settings
-            settings = self.__settings.exc(
-                starting=starting, ending=ending, scheduler=scheduler)
+            settings = __settings.exc(scheduler=scheduler)
 
             # If the schedule does not exist, create; otherwise, update.
             try:
