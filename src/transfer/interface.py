@@ -30,6 +30,26 @@ class Interface:
 
         self.__metadata = src.transfer.metadata.Metadata().metadata
 
+    def __extra(self, strings: pd.DataFrame):
+        """
+
+        :param strings:
+        :return:
+        """
+
+        # Does a warning-period-times file exist?
+        indices = strings['key'].str.contains('times.json', case=False, regex=True)
+        frame = strings.copy().loc[indices, ['file', 'key', 'metadata']]
+
+        # If it does ...
+        if not frame.empty:
+            frame['key'] = frame['key'].apply(lambda x: f'warehouse/{x}')
+            messages = src.s3.ingress.Ingress(service=self.__service, bucket_name=self.__s3_parameters.external).exc(
+                strings=frame, tagging='project=hydrography')
+            logging.info(messages)
+        else:
+            logging.info('No warning period times.')
+
     def exc(self):
         """
 
@@ -41,7 +61,6 @@ class Interface:
         strings: pd.DataFrame = dictionary.exc(
             path=os.path.join(os.getcwd(), 'warehouse'), extension='*', prefix='')
         strings['metadata'] = strings['vertex'].apply(lambda x: self.__metadata[os.path.basename(x)])
-        logging.info(strings)
 
         # Transfer
         if not strings.empty:
@@ -51,4 +70,7 @@ class Interface:
                 strings=strings, tagging='project=hydrography')
             logging.info(messages)
         else:
-            logging.info('Empty')
+            logging.info('No warning period details.')
+
+        # For graphing
+        self.__extra(strings=strings)
