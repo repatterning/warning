@@ -4,6 +4,7 @@ import sys
 
 import boto3
 import geopandas
+import numpy as np
 import pandas as pd
 
 import src.cartography.cuttings
@@ -60,6 +61,17 @@ class Interface:
 
         return pd.concat(initial, axis=0, ignore_index=True)
 
+    def __temporary_filter(self, data: geopandas.GeoDataFrame):
+
+        if sum(data['warning_level'].str.upper() == 'RED') > 0:
+            instances = data.copy().loc[data['warning_level'].str.upper() == 'RED', :]
+        elif sum(data['warning_level'].str.upper() == 'AMBER') > 0:
+            instances = data.copy().loc[data['warning_level'].str.upper() == 'AMBER', :]
+        else:
+            instances = data.copy()
+
+        return instances
+
     def exc(self) -> geopandas.GeoDataFrame:
         """
 
@@ -77,6 +89,10 @@ class Interface:
 
         # Hence
         data: geopandas.GeoDataFrame = self.__members(latest=latest, reference=reference)
+        data = self.__temporary_filter(data=data.copy())
+
+        # catchments = data['catchment_id'].unique()
+        # catchments = np.sort(catchments, axis=-1)
 
         # Update the warnings data library
         src.cartography.updating.Updating(s3_parameters=self.__s3_parameters).exc(data=data)
