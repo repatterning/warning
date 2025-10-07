@@ -65,7 +65,7 @@ class Interface:
 
         # Hence
         for scheduler in ['scheduler_events_forecasting', 'scheduler_events_fundamental',
-                          'scheduler_continuous', 'scheduler_warning']:
+                          'scheduler_continuous']:
 
             # Schedule Settings
             settings = __settings.exc(scheduler=scheduler)
