@@ -61,7 +61,8 @@ class Interface:
 
         return pd.concat(initial, axis=0, ignore_index=True)
 
-    def __temporary_filter(self, data: geopandas.GeoDataFrame):
+    @staticmethod
+    def __filtering(data: geopandas.GeoDataFrame):
 
         if sum(data['warning_level'].str.upper() == 'RED') > 0:
             instances = data.copy().loc[data['warning_level'].str.upper() == 'RED', :]
@@ -71,6 +72,18 @@ class Interface:
             instances = data.copy()
 
         return instances
+
+    def __limiting(self, data: geopandas.GeoDataFrame) -> geopandas.GeoDataFrame:
+
+        limit = self.__arguments.get('n_catchments_limit')
+
+        catchments = data['catchment_id'].unique()
+
+        if catchments.shape[0] > limit:
+            excerpt = np.sort(catchments, axis=-1)[:limit]
+            data = data.copy().loc[data['catchment_id'].isin(excerpt), :]
+
+        return data
 
     def exc(self) -> geopandas.GeoDataFrame:
         """
@@ -89,10 +102,8 @@ class Interface:
 
         # Hence
         data: geopandas.GeoDataFrame = self.__members(latest=latest, reference=reference)
-        data = self.__temporary_filter(data=data.copy())
-
-        # catchments = data['catchment_id'].unique()
-        # catchments = np.sort(catchments, axis=-1)
+        data = self.__filtering(data=data.copy())
+        data = self.__limiting(data=data.copy())
 
         # Update the warnings data library
         src.cartography.updating.Updating(s3_parameters=self.__s3_parameters).exc(data=data)
