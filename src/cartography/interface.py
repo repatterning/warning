@@ -4,6 +4,7 @@ import sys
 
 import boto3
 import geopandas
+import numpy as np
 import pandas as pd
 
 import src.cartography.cuttings
@@ -60,6 +61,40 @@ class Interface:
 
         return pd.concat(initial, axis=0, ignore_index=True)
 
+    @staticmethod
+    def __filtering(data: geopandas.GeoDataFrame):
+        """
+
+        :param data:
+        :return:
+        """
+
+        if sum(data['warning_level'].str.upper() == 'RED') > 0:
+            instances = data.copy().loc[data['warning_level'].str.upper() == 'RED', :]
+        elif sum(data['warning_level'].str.upper() == 'AMBER') > 0:
+            instances = data.copy().loc[data['warning_level'].str.upper() == 'AMBER', :]
+        else:
+            instances = data.copy()
+
+        return instances
+
+    def __limiting(self, data: geopandas.GeoDataFrame) -> geopandas.GeoDataFrame:
+        """
+
+        :param data:
+        :return:
+        """
+
+        limit = self.__arguments.get('n_catchments_limit')
+
+        catchments = data['catchment_id'].unique()
+
+        if catchments.shape[0] > limit:
+            excerpt = np.sort(catchments, axis=-1)[-limit:]
+            data = data.copy().loc[data['catchment_id'].isin(excerpt), :]
+
+        return data
+
     def exc(self) -> geopandas.GeoDataFrame:
         """
 
@@ -77,6 +112,8 @@ class Interface:
 
         # Hence
         data: geopandas.GeoDataFrame = self.__members(latest=latest, reference=reference)
+        data = self.__filtering(data=data.copy())
+        data = self.__limiting(data=data.copy())
 
         # Update the warnings data library
         src.cartography.updating.Updating(s3_parameters=self.__s3_parameters).exc(data=data)
