@@ -63,6 +63,11 @@ class Interface:
 
     @staticmethod
     def __filtering(data: geopandas.GeoDataFrame):
+        """
+
+        :param data:
+        :return:
+        """
 
         if sum(data['warning_level'].str.upper() == 'RED') > 0:
             instances = data.copy().loc[data['warning_level'].str.upper() == 'RED', :]
@@ -74,6 +79,11 @@ class Interface:
         return instances
 
     def __limiting(self, data: geopandas.GeoDataFrame) -> geopandas.GeoDataFrame:
+        """
+
+        :param data:
+        :return:
+        """
 
         limit = self.__arguments.get('n_catchments_limit')
 
