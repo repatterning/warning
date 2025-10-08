@@ -12,16 +12,16 @@ class Settings:
     Creates a schedule's dictionary of arguments.
     """
 
-    def __init__(self, connector: boto3.session.Session, arguments: dict,
-                 starting: datetime.datetime, ending: datetime.datetime, future: datetime.datetime):
+    def __init__(self, connector: boto3.session.Session, arguments: dict, starting: datetime.datetime,
+                 ending: datetime.datetime, future: datetime.datetime):
         """
 
         :param connector: A boto3 session instance, it retrieves the developer's <default> Amazon
                           Web Services (AWS) profile details, which allows for programmatic interaction with AWS.
         :param arguments: A set of arguments vis-à-vis computation & data operations objectives.
-        :param starting: The start time<br>
-        :param ending: The end time<br>
-        :param future: The re-start point of the continuous states schedule
+        :param starting: The start time.<br>
+        :param ending: The end time.<br>
+        :param future: The re-start point of the continuous-states schedule.<br>
         """
 
         # Project
