@@ -69,7 +69,7 @@ class Timings:
         __scheduler = self.__arguments.get(scheduler)
 
         # Arithmetic
-        __next = self.__ending.date() + datetime.timedelta(days=1)
+        __next = self.__ending + datetime.timedelta(days=1)
         __starting = datetime.datetime(
             year=__next.year, month=__next.month, day=__next.day, hour=2, minute=5, second=0)
         __ending = datetime.datetime(
