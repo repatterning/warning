@@ -90,7 +90,7 @@ class Interface:
         catchments = data['catchment_id'].unique()
 
         if catchments.shape[0] > limit:
-            excerpt = np.sort(catchments, axis=-1)[:limit]
+            excerpt = np.sort(catchments, axis=-1)[-limit:]
             data = data.copy().loc[data['catchment_id'].isin(excerpt), :]
 
         return data
