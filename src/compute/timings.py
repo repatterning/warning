@@ -74,6 +74,7 @@ class Timings:
         __ending = datetime.datetime(
             year=__scheduler.get('terminate').get('year'), month=__scheduler.get('terminate').get('month'),
             day=__scheduler.get('terminate').get('day'))
+        __ending = __ending if __ending > self.__future else (self.__future + datetime.timedelta(days=1))
 
         # Hence
         __scheduler['starting'] = self.__future
