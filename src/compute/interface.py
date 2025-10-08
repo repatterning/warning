@@ -43,6 +43,19 @@ class Interface:
 
         return _reset
 
+    def __future(self, ending: datetime.datetime) -> datetime.datetime:
+        """
+
+        :param ending:
+        :return:
+        """
+
+        __next = ending + datetime.timedelta(days=1)
+        value = pd.Timestamp(
+            year=__next.year, month=__next.month, day=__next.day, hour=2, minute=5, second=0)
+
+        return self.__timestamp(value=value)
+
     def exc(self, data: geopandas.GeoDataFrame):
         """
 
@@ -56,17 +69,13 @@ class Interface:
         starting = self.__timestamp(value = value + datetime.timedelta(minutes=10))
         ending = self.__timestamp(value = data['ending'].max().ceil(freq='h'))
 
-        __next = ending + datetime.timedelta(days=1)
-        __future = pd.Timestamp(
-            year=__next.year, month=__next.month, day=__next.day, hour=2, minute=5, second=0)
-        future = self.__timestamp(value=__future)
-
         # Schedule Client
         __schedule_client = self.__connector.client(service_name='scheduler')
 
         # Settings
         __settings = src.compute.settings.Settings(
-            connector=self.__connector, arguments=self.__arguments, starting=starting, ending=ending, future=future)
+            connector=self.__connector, arguments=self.__arguments, starting=starting,
+            ending=ending, future=self.__future(ending=ending))
 
         # Hence
         for scheduler in ['scheduler_events_forecasting', 'scheduler_events_fundamental',
