@@ -82,24 +82,6 @@ class Timings:
 
         return __scheduler
 
-    def __warning(self, scheduler: str):
-        """
-
-        :param scheduler:
-        :return:
-        """
-
-        __scheduler = self.__arguments.get(scheduler)
-
-        # Arithmetic
-        __starting = self.__starting - datetime.timedelta(minutes=5)
-
-        # Hence
-        __scheduler['starting'] = __starting
-        __scheduler['ending'] = self.__ending
-
-        return __scheduler
-
     def exc(self, scheduler: str) -> dict:
         """
 
@@ -114,7 +96,5 @@ class Timings:
                 return self.__events_fundamental(scheduler=scheduler)
             case 'scheduler_continuous':
                 return self.__continuous(scheduler=scheduler)
-            case 'scheduler_warning':
-                return self.__warning(scheduler=scheduler)
             case _:
                 raise ValueError(f'{scheduler} is not an option.')
