@@ -13,7 +13,7 @@ class Settings:
     """
 
     def __init__(self, connector: boto3.session.Session, arguments: dict,
-                 starting: datetime.datetime, ending: datetime.datetime):
+                 starting: datetime.datetime, ending: datetime.datetime, future: datetime.datetime):
         """
 
         :param connector: A boto3 session instance, it retrieves the developer's <default> Amazon
@@ -21,6 +21,7 @@ class Settings:
         :param arguments: A set of arguments vis-à-vis computation & data operations objectives.
         :param starting: The start time<br>
         :param ending: The end time<br>
+        :param future: The re-start point of the continuous states schedule
         """
 
         # Project
@@ -28,7 +29,7 @@ class Settings:
 
         # Instances
         self.__secret = src.functions.secret.Secret(connector=connector)
-        self.__timings = src.compute.timings.Timings(arguments=arguments, starting=starting, ending=ending)
+        self.__timings = src.compute.timings.Timings(arguments=arguments, starting=starting, ending=ending, future=future)
 
     def exc(self, scheduler: str) -> dict:
         """
