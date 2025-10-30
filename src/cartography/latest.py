@@ -1,20 +1,13 @@
 """Module algorithms/interface.py"""
-import datetime
 import io
-import os
-import logging
-import sys
-import uuid
 import xml.etree.ElementTree as ElTree
 
 import boto3
 import geopandas
 import pandas as pd
-import pytz
 import requests
 
 import config
-import src.functions.cache
 import src.functions.secret
 
 
@@ -33,8 +26,6 @@ class Latest:
 
         self.__connector = connector
         self.__arguments = arguments
-
-        self.__minutes = 16
 
         # Instances
         self.__configurations = config.Config()
@@ -65,39 +56,6 @@ class Latest:
 
         return frame
 
-    def __temporary(self) -> geopandas.GeoDataFrame:
-        """
-
-        :return:
-        """
-
-        baseline = datetime.datetime.now(pytz.utc)
-
-        try:
-            frame = geopandas.read_file(
-                filename=self.__configurations.area_)
-            frame['warningId'] = str(uuid.uuid4())
-            frame['validFromDate'] = baseline + datetime.timedelta(minutes=self.__minutes)
-            frame['validToDate'] = baseline + datetime.timedelta(minutes=2*self.__minutes)
-            return frame
-        except FileNotFoundError as err:
-            raise err from err
-
-    # noinspection PyTypeChecker
-    def __persist(self, data: geopandas.GeoDataFrame):
-        """
-
-        :param data:
-        :return:
-        """
-
-        try:
-            data.to_file(
-                filename=os.path.join(self.__configurations.warehouse, self.__configurations.warning_latest_),
-                driver='GeoJSON')
-        except OSError as err:
-            raise err from err
-
     def exc(self) -> geopandas.GeoDataFrame:
         """
 
@@ -117,16 +75,5 @@ class Latest:
 
         # get geojson data
         data = self.__data(page=page, headers=headers)
-
-        # Hence
-        if data.empty & self.__arguments.get('testing'):
-            data = self.__temporary()
-
-        if data.empty & ~self.__arguments.get('testing'):
-            logging.info('no warnings')
-            src.functions.cache.Cache().exc()
-            sys.exit(0)
-
-        self.__persist(data=data)
 
         return data
