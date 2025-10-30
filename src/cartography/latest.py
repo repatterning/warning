@@ -7,7 +7,6 @@ import geopandas
 import pandas as pd
 import requests
 
-import config
 import src.functions.secret
 
 
@@ -28,7 +27,6 @@ class Latest:
         self.__arguments = arguments
 
         # Instances
-        self.__configurations = config.Config()
         self.__secret = src.functions.secret.Secret(connector=self.__connector)
 
     @staticmethod
