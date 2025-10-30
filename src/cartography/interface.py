@@ -1,21 +1,16 @@
 """Module algorithms/interface.py"""
 import logging
-import sys
 
 import boto3
 import geopandas
 import numpy as np
-import pandas as pd
 
-import src.cartography.cuttings
 import src.cartography.latest
+import src.cartography.members
 import src.cartography.reference
-import src.cartography.updating
 import src.cartography.times
+import src.cartography.updating
 import src.elements.s3_parameters as s3p
-import src.elements.system as stm
-import src.functions.cache
-import src.functions.streams
 
 
 class Interface:
@@ -37,29 +32,6 @@ class Interface:
         self.__connector = connector
         self.__s3_parameters = s3_parameters
         self.__arguments = arguments
-
-        # Fields
-        self.__fields = [field for field in list(stm.System._fields) if field != 'Index']
-
-    def __members(self, latest: geopandas.GeoDataFrame, reference: geopandas.GeoDataFrame) -> geopandas.GeoDataFrame:
-        """
-        Which gauges, if any, lie within a warning area?
-
-        :param latest:
-        :param reference:
-        :return:
-        """
-
-        initial: list[geopandas.GeoDataFrame] = [
-            src.cartography.cuttings.Cuttings(reference=reference).members(_elements=stm.System._make(_elements))
-            for _elements in latest[self.__fields].itertuples()]
-
-        if len(initial) == 0:
-            logging.info('No warnings')
-            src.functions.cache.Cache().exc()
-            sys.exit(0)
-
-        return pd.concat(initial, axis=0, ignore_index=True)
 
     @staticmethod
     def __filtering(data: geopandas.GeoDataFrame):
@@ -108,10 +80,10 @@ class Interface:
         # The latest geo-spatial weather warning data
         latest: geopandas.GeoDataFrame = src.cartography.latest.Latest(
             connector=self.__connector, arguments=self.__arguments).exc()
-        latest: geopandas.GeoDataFrame = latest.to_crs(epsg=int(reference.crs.srs.split(':')[1]))
 
         # Hence
-        data: geopandas.GeoDataFrame = self.__members(latest=latest, reference=reference)
+        data: geopandas.GeoDataFrame = src.cartography.members.Members(
+            arguments=self.__arguments).exc(latest=latest, reference=reference)
         data = self.__filtering(data=data.copy())
         data = self.__limiting(data=data.copy())
 
