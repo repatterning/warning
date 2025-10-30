@@ -1,6 +1,4 @@
 """Module algorithms/interface.py"""
-import logging
-
 import boto3
 import geopandas
 import numpy as np
