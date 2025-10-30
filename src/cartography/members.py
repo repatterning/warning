@@ -56,8 +56,6 @@ class Members:
         :return:
         """
 
-        logging.info(latest)
-
         initial: list[geopandas.GeoDataFrame] = [
             src.cartography.cuttings.Cuttings(reference=reference).members(_elements=stm.System._make(_elements))
             for _elements in latest[self.__fields].itertuples()]
@@ -69,6 +67,17 @@ class Members:
 
         # noinspection PyTypeChecker
         return pd.concat(initial, axis=0, ignore_index=True)
+
+    @staticmethod
+    def __exit():
+        """
+
+        :return:
+        """
+
+        logging.info('no warnings')
+        src.functions.cache.Cache().exc()
+        sys.exit(0)
 
     def exc(self, latest: geopandas.GeoDataFrame, reference: geopandas.GeoDataFrame) -> geopandas.GeoDataFrame:
         """
@@ -82,27 +91,23 @@ class Members:
 
         # If there are no live warnings, and we are not testing
         if latest.empty & (not self.__arguments.get('testing')):
-            logging.info('no warnings')
-            src.functions.cache.Cache().exc()
-            sys.exit(0)
+            self.__exit()
 
         # Placeholders
-        data = geopandas.GeoDataFrame()
         members = geopandas.GeoDataFrame()
 
         # Hence
         if not latest.empty:
-            data = latest
+            self.__persist(data=latest)
             latest: geopandas.GeoDataFrame = latest.to_crs(epsg=int(reference.crs.srs.split(':')[1]))
             members = self.__members(latest=latest, reference=reference)
-
-        if members.empty & self.__arguments.get('testing'):
+        elif members.empty & self.__arguments.get('testing'):
             latest = src.cartography.temporary.Temporary().__call__()
-            data = latest
+            self.__persist(data=latest)
             latest: geopandas.GeoDataFrame = latest.to_crs(epsg=int(reference.crs.srs.split(':')[1]))
             members = self.__members(latest=latest, reference=reference)
 
-        # Persist
-        self.__persist(data=data)
+        if members.empty:
+            self.__exit()
 
         return members
