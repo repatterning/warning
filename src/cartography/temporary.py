@@ -1,4 +1,4 @@
-
+"""Module temporary.py"""
 import logging
 import datetime
 import uuid
@@ -10,6 +10,9 @@ import config
 
 
 class Temporary:
+    """
+    Retrieves a temporary data set for testing
+    """
 
     def __init__(self):
         """
