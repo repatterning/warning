@@ -67,6 +67,7 @@ class Members:
             src.functions.cache.Cache().exc()
             sys.exit(0)
 
+        # noinspection PyTypeChecker
         return pd.concat(initial, axis=0, ignore_index=True)
 
     def exc(self, latest: geopandas.GeoDataFrame, reference: geopandas.GeoDataFrame) -> geopandas.GeoDataFrame:
@@ -93,11 +94,9 @@ class Members:
         if not latest.empty:
             data = latest
             latest: geopandas.GeoDataFrame = latest.to_crs(epsg=int(reference.crs.srs.split(':')[1]))
-            logging.info(latest)
             members = self.__members(latest=latest, reference=reference)
 
         if members.empty & self.__arguments.get('testing'):
-            logging.info('final')
             latest = src.cartography.temporary.Temporary().__call__()
             data = latest
             latest: geopandas.GeoDataFrame = latest.to_crs(epsg=int(reference.crs.srs.split(':')[1]))
