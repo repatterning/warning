@@ -67,7 +67,7 @@ class Interface:
         value: pd.Timestamp = max(data['starting'].min(), pd.Timestamp(datetime.datetime.now(), tz='UTC'))
         value: pd.Timestamp = value.ceil(freq='h')
         starting = self.__timestamp(value = value + datetime.timedelta(minutes=10))
-        ending = self.__timestamp(value = data['ending'].max().ceil(freq='h'))
+        ending = self.__timestamp(value = max(data['ending'].max().ceil(freq='h'), value + datetime.timedelta(hours=1)))
 
         # Schedule Client
         __schedule_client = self.__connector.client(service_name='scheduler')
