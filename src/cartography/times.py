@@ -34,9 +34,6 @@ class Times:
         :return:
         """
 
-        # The data
-        data.info()
-
         # The time limits
         nodes = {
             'starting': data['starting'].min().strftime('%Y-%m-%d %H:%M:%S'),
