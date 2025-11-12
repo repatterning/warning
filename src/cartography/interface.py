@@ -82,11 +82,12 @@ class Interface:
         # Hence
         data: geopandas.GeoDataFrame = src.cartography.members.Members(
             arguments=self.__arguments).exc(latest=latest, reference=reference)
+
         data = self.__filtering(data=data.copy())
         data = self.__limiting(data=data.copy())
 
         # Update the warnings data library
-        src.cartography.updating.Updating(s3_parameters=self.__s3_parameters).exc(data=data)
+        # src.cartography.updating.Updating(s3_parameters=self.__s3_parameters).exc(data=data)
 
         # Times
         src.cartography.times.Times().exc(data=data)
