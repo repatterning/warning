@@ -1,5 +1,4 @@
 """Module temporary.py"""
-import logging
 import datetime
 import uuid
 
@@ -19,7 +18,7 @@ class Temporary:
         Constructor
         """
 
-        self.__minutes = 15
+        self.__minutes = 35
 
         # Instances
         self.__configurations = config.Config()
@@ -38,7 +37,7 @@ class Temporary:
             frame['warningId'] = str(uuid.uuid4())
             frame['validFromDate'] = baseline + datetime.timedelta(minutes=self.__minutes)
             frame['validToDate'] = baseline + datetime.timedelta(minutes=3*self.__minutes)
-            logging.info(frame)
+            frame.info()
             return frame
         except FileNotFoundError as err:
             raise err from err

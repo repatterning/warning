@@ -61,9 +61,7 @@ class Members:
             for _elements in latest[self.__fields].itertuples()]
 
         if len(initial) == 0:
-            logging.info('No warnings')
-            src.functions.cache.Cache().exc()
-            sys.exit(0)
+            return geopandas.GeoDataFrame()
 
         # noinspection PyTypeChecker
         return pd.concat(initial, axis=0, ignore_index=True)
@@ -101,7 +99,9 @@ class Members:
             self.__persist(data=latest)
             latest: geopandas.GeoDataFrame = latest.to_crs(epsg=int(reference.crs.srs.split(':')[1]))
             members = self.__members(latest=latest, reference=reference)
-        elif members.empty & self.__arguments.get('testing'):
+
+        # Or
+        if members.empty & self.__arguments.get('testing'):
             latest = src.cartography.temporary.Temporary().__call__()
             self.__persist(data=latest)
             latest: geopandas.GeoDataFrame = latest.to_crs(epsg=int(reference.crs.srs.split(':')[1]))

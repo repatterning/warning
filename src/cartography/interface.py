@@ -55,10 +55,12 @@ class Interface:
         :return:
         """
 
+        # The number of catchments to focus on.  This will not apply we switch to
+        # the architecture that has a separate inference module.
         limit = self.__arguments.get('n_catchments_limit')
 
+        # Hence
         catchments = data['catchment_id'].unique()
-
         if catchments.shape[0] > limit:
             excerpt = np.sort(catchments, axis=-1)[-limit:]
             data = data.copy().loc[data['catchment_id'].isin(excerpt), :]
@@ -79,9 +81,11 @@ class Interface:
         latest: geopandas.GeoDataFrame = src.cartography.latest.Latest(
             connector=self.__connector, arguments=self.__arguments).exc()
 
-        # Hence
+        # Do any of the warnings apply to gauges within Scotland
         data: geopandas.GeoDataFrame = src.cartography.members.Members(
             arguments=self.__arguments).exc(latest=latest, reference=reference)
+
+        # Hence, filtering and limiting
         data = self.__filtering(data=data.copy())
         data = self.__limiting(data=data.copy())
 
@@ -89,6 +93,6 @@ class Interface:
         src.cartography.updating.Updating(s3_parameters=self.__s3_parameters).exc(data=data)
 
         # Times
-        src.cartography.times.Times().exc(data=data)
+        src.cartography.times.Times(arguments=self.__arguments).exc(data=data)
 
         return data
