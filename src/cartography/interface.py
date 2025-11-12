@@ -93,6 +93,6 @@ class Interface:
         # src.cartography.updating.Updating(s3_parameters=self.__s3_parameters).exc(data=data)
 
         # Times
-        src.cartography.times.Times().exc(data=data)
+        src.cartography.times.Times(arguments=self.__arguments).exc(data=data)
 
         return data
