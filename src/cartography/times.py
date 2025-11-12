@@ -13,11 +13,15 @@ class Times:
     The start & end times vis-à-vis a weather warning period.
     """
 
-    def __init__(self):
-        """
-        Constructor
+    def __init__(self, arguments: dict):
         """
 
+        :param arguments:
+        """
+
+        self.__arguments = arguments
+
+        # Configurations
         self.__configurations = config.Config()
 
         # Logging
@@ -37,7 +41,8 @@ class Times:
         # The time limits
         nodes = {
             'starting': data['starting'].min().strftime('%Y-%m-%d %H:%M:%S'),
-            'ending': data['ending'].max().strftime('%Y-%m-%d %H:%M:%S')
+            'ending': data['ending'].max().strftime('%Y-%m-%d %H:%M:%S'),
+            'testing': self.__arguments.get('testing')
         }
         self.__logger.info(nodes)
 
