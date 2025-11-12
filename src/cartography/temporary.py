@@ -18,7 +18,7 @@ class Temporary:
         Constructor
         """
 
-        self.__minutes = 15
+        self.__minutes = 135
 
         # Instances
         self.__configurations = config.Config()
