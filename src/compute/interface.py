@@ -78,8 +78,7 @@ class Interface:
             ending=ending, future=self.__future(ending=ending))
 
         # Hence
-        for scheduler in ['scheduler_events_forecasting', 'scheduler_events_fundamental',
-                          'scheduler_continuous']:
+        for scheduler in ['scheduler_events_forecasting']:
 
             # Schedule Settings
             settings = __settings.exc(scheduler=scheduler)
