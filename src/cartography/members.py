@@ -102,7 +102,7 @@ class Members:
 
         # Or
         if members.empty & self.__arguments.get('testing'):
-            latest = src.cartography.temporary.Temporary().__call__()
+            latest = src.cartography.temporary.Temporary()()
             self.__persist(data=latest)
             latest: geopandas.GeoDataFrame = latest.to_crs(epsg=int(reference.crs.srs.split(':')[1]))
             members = self.__members(latest=latest, reference=reference)
