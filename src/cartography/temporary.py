@@ -1,9 +1,9 @@
 """Module temporary.py"""
 import datetime
 import uuid
+import zoneinfo
 
 import geopandas
-import pytz
 
 import config
 
@@ -29,7 +29,7 @@ class Temporary:
         :return:
         """
 
-        baseline = datetime.datetime.now(pytz.utc)
+        baseline = datetime.datetime.now(zoneinfo.ZoneInfo('UTC'))
 
         try:
             frame = geopandas.read_file(
